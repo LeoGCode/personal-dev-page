@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "title": "Leonel — Software Engineer",
+    "description": "Personal developer portfolio and collaboration hub. Let's build something together."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "collaborate": "Let's Collaborate",
+    "menu": "Menu"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Leonel",
+    "title": "Software Engineer",
+    "subtitle": "I build reliable software and help teams ship faster. Open to collaboration, consulting, and open-source work.",
+    "cta_primary": "Let's Collaborate",
+    "cta_secondary": "View My Work"
+  },
+  "about": {
+    "title": "About Me",
+    "paragraph_1": "I'm a software engineer who cares deeply about building things that work well — for users and for the teams behind them. I specialize in full-stack development, system architecture, and turning complex problems into clean, maintainable solutions.",
+    "paragraph_2": "Currently, I'm building <nexora>Nexora Group</nexora>, a software consultancy focused on delivering high-quality digital products. I work across the entire stack — from React and Next.js frontends to PostgreSQL databases and Docker infrastructure.",
+    "paragraph_3": "I'm bilingual (English/Spanish) and based in Latin America. Whether you need a technical co-founder for your next project, architecture advice, or an extra pair of hands on your codebase — I'm open to the conversation."
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "subtitle": "Tools and technologies I work with daily.",
+    "categories": {
+      "languages": "Languages",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "infrastructure": "Infrastructure",
+      "tools": "Tools & Platforms"
+    },
+    "levels": {
+      "daily": "Daily driver",
+      "proficient": "Proficient",
+      "exploring": "Exploring"
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "A selection of things I've built or am building.",
+    "view_all": "View All Projects",
+    "view_project": "View Project",
+    "status": {
+      "active": "Active",
+      "in_progress": "In Progress",
+      "planned": "Planned"
+    },
+    "detail": {
+      "tech_stack": "Tech Stack",
+      "problem": "The Problem",
+      "solution": "The Solution",
+      "links": "Links",
+      "live_site": "Live Site",
+      "github": "GitHub",
+      "blog_post": "Related Post",
+      "interested": "Interested in something like this?",
+      "interested_cta": "Let's talk about your project"
+    }
+  },
+  "collaborate": {
+    "title": "Let's Build Something Together",
+    "subtitle": "Have an idea, a project, or just want to chat about tech? I'd love to hear from you.",
+    "types": {
+      "project": "Project Collaboration",
+      "consulting": "Consulting",
+      "opensource": "Open Source",
+      "speaking": "Speaking / Writing",
+      "other": "Other"
+    },
+    "fields": {
+      "name": "Your Name",
+      "email": "Email",
+      "type": "What are you looking for?",
+      "description": "Tell me about your project",
+      "budget": "Budget Range",
+      "timeline": "Timeline",
+      "referral": "How did you find me?"
+    },
+    "placeholders": {
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "type": "Select a collaboration type",
+      "description": "What do you want to build or discuss? The more detail, the better.",
+      "budget": "Select a range",
+      "timeline": "Select a timeline",
+      "referral": "Select an option"
+    },
+    "budgets": {
+      "unsure": "Not sure yet",
+      "under_1k": "Under $1,000",
+      "1k_5k": "$1,000 – $5,000",
+      "5k_15k": "$5,000 – $15,000",
+      "over_15k": "$15,000+"
+    },
+    "timelines": {
+      "no_rush": "No rush",
+      "1_3_months": "1 – 3 months",
+      "3_6_months": "3 – 6 months",
+      "asap": "ASAP"
+    },
+    "referrals": {
+      "google": "Google",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "referral": "Referral",
+      "other": "Other"
+    },
+    "submit": "Send Message",
+    "submitting": "Sending...",
+    "success_title": "Message sent!",
+    "success_message": "Thanks for reaching out. I'll get back to you within 48 hours.",
+    "error_title": "Something went wrong",
+    "error_message": "Please try again or email me directly.",
+    "try_again": "Try Again",
+    "optional": "optional"
+  },
+  "cta": {
+    "title": "Have an idea? Let's build it together.",
+    "subtitle": "I'm open to project collaboration, consulting, open-source contributions, and speaking opportunities.",
+    "button": "Start a Conversation"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Thoughts on building software, architecture decisions, and lessons learned.",
+    "read_more": "Read more",
+    "min_read": "min read",
+    "back": "Back to blog",
+    "all_posts": "All Posts"
+  },
+  "footer": {
+    "built_with": "Built with Next.js, Tailwind CSS, and Odoo",
+    "founder": "Founder of",
+    "resume": "Resume / CV",
+    "copyright": "© {year} Leonel. All rights reserved."
+  }
+}

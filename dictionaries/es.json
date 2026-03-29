@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "title": "Leonel — Ingeniero de Software",
+    "description": "Portafolio personal y espacio de colaboración. Construyamos algo juntos."
+  },
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "blog": "Blog",
+    "collaborate": "Colaboremos",
+    "menu": "Menú"
+  },
+  "hero": {
+    "greeting": "Hola, soy Leonel",
+    "title": "Ingeniero de Software",
+    "subtitle": "Construyo software confiable y ayudo a equipos a entregar más rápido. Abierto a colaboración, consultoría y trabajo open-source.",
+    "cta_primary": "Colaboremos",
+    "cta_secondary": "Ver mi trabajo"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "paragraph_1": "Soy ingeniero de software y me importa mucho construir cosas que funcionen bien — tanto para los usuarios como para los equipos detrás de ellas. Me especializo en desarrollo full-stack, arquitectura de sistemas y en convertir problemas complejos en soluciones limpias y mantenibles.",
+    "paragraph_2": "Actualmente estoy construyendo <nexora>Nexora Group</nexora>, una consultora de software enfocada en entregar productos digitales de alta calidad. Trabajo en todo el stack — desde frontends con React y Next.js hasta bases de datos PostgreSQL e infraestructura con Docker.",
+    "paragraph_3": "Soy bilingüe (inglés/español) y estoy basado en Latinoamérica. Ya sea que necesites un co-fundador técnico para tu próximo proyecto, asesoría en arquitectura, o un par de manos extra en tu código — estoy abierto a la conversación."
+  },
+  "skills": {
+    "title": "Stack Tecnológico",
+    "subtitle": "Herramientas y tecnologías con las que trabajo a diario.",
+    "categories": {
+      "languages": "Lenguajes",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "infrastructure": "Infraestructura",
+      "tools": "Herramientas y Plataformas"
+    },
+    "levels": {
+      "daily": "Uso diario",
+      "proficient": "Competente",
+      "exploring": "Explorando"
+    }
+  },
+  "projects": {
+    "title": "Proyectos Destacados",
+    "subtitle": "Una selección de cosas que he construido o estoy construyendo.",
+    "view_all": "Ver Todos los Proyectos",
+    "view_project": "Ver Proyecto",
+    "status": {
+      "active": "Activo",
+      "in_progress": "En Progreso",
+      "planned": "Planeado"
+    },
+    "detail": {
+      "tech_stack": "Stack Tecnológico",
+      "problem": "El Problema",
+      "solution": "La Solución",
+      "links": "Enlaces",
+      "live_site": "Sitio en Vivo",
+      "github": "GitHub",
+      "blog_post": "Post Relacionado",
+      "interested": "¿Te interesa algo así?",
+      "interested_cta": "Hablemos de tu proyecto"
+    }
+  },
+  "collaborate": {
+    "title": "Construyamos Algo Juntos",
+    "subtitle": "¿Tenés una idea, un proyecto, o simplemente querés charlar sobre tecnología? Me encantaría escucharte.",
+    "types": {
+      "project": "Colaboración en Proyecto",
+      "consulting": "Consultoría",
+      "opensource": "Open Source",
+      "speaking": "Charlas / Escritura",
+      "other": "Otro"
+    },
+    "fields": {
+      "name": "Tu Nombre",
+      "email": "Correo Electrónico",
+      "type": "¿Qué estás buscando?",
+      "description": "Contame sobre tu proyecto",
+      "budget": "Rango de Presupuesto",
+      "timeline": "Plazo",
+      "referral": "¿Cómo me encontraste?"
+    },
+    "placeholders": {
+      "name": "Juan Pérez",
+      "email": "juan@ejemplo.com",
+      "type": "Seleccioná un tipo de colaboración",
+      "description": "¿Qué querés construir o discutir? Mientras más detalle, mejor.",
+      "budget": "Seleccioná un rango",
+      "timeline": "Seleccioná un plazo",
+      "referral": "Seleccioná una opción"
+    },
+    "budgets": {
+      "unsure": "Todavía no estoy seguro",
+      "under_1k": "Menos de $1,000",
+      "1k_5k": "$1,000 – $5,000",
+      "5k_15k": "$5,000 – $15,000",
+      "over_15k": "$15,000+"
+    },
+    "timelines": {
+      "no_rush": "Sin apuro",
+      "1_3_months": "1 – 3 meses",
+      "3_6_months": "3 – 6 meses",
+      "asap": "Lo antes posible"
+    },
+    "referrals": {
+      "google": "Google",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "referral": "Referencia",
+      "other": "Otro"
+    },
+    "submit": "Enviar Mensaje",
+    "submitting": "Enviando...",
+    "success_title": "¡Mensaje enviado!",
+    "success_message": "Gracias por escribirme. Te respondo dentro de las próximas 48 horas.",
+    "error_title": "Algo salió mal",
+    "error_message": "Por favor intentá de nuevo o escribime directamente por email.",
+    "try_again": "Intentar de nuevo",
+    "optional": "opcional"
+  },
+  "cta": {
+    "title": "¿Tenés una idea? Construyámosla juntos.",
+    "subtitle": "Estoy abierto a colaboración en proyectos, consultoría, contribuciones open-source y oportunidades para dar charlas.",
+    "button": "Iniciá una Conversación"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Reflexiones sobre construir software, decisiones de arquitectura y lecciones aprendidas.",
+    "read_more": "Leer más",
+    "min_read": "min de lectura",
+    "back": "Volver al blog",
+    "all_posts": "Todos los Posts"
+  },
+  "footer": {
+    "built_with": "Hecho con Next.js, Tailwind CSS y Odoo",
+    "founder": "Fundador de",
+    "resume": "Currículum",
+    "copyright": "© {year} Leonel. Todos los derechos reservados."
+  }
+}
