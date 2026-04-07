@@ -232,6 +232,25 @@
   }
 }
 
+/* ── Prevent text caret on non-interactive elements ── */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Re-enable selection where it makes sense */
+input,
+textarea,
+[contenteditable="true"],
+pre,
+code,
+article,
+.prose,
+.select-text {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* ── Custom cursor ── */
 html.cursor-none,
 html.cursor-none * {
