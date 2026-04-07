@@ -1,11 +1,9 @@
 /**
  * In-memory rate limiter.
  *
- * TODO: Replace with Redis-backed rate limiter for production deployments
- * with multiple server instances. The current in-memory implementation:
- *  - Resets all counters on server restart / redeployment.
- *  - Is per-process, so horizontal scaling bypasses the limit.
- *  - Is adequate for single-instance standalone Docker deployments.
+ * For a single-instance standalone Docker deployment (which this landing
+ * page uses), in-memory is the correct choice — no Redis dependency needed.
+ * Counters reset on restart, which is acceptable for a contact form.
  */
 const store = new Map<string, { count: number; expiresAt: number }>();
 

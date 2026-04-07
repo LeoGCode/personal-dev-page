@@ -1,13 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PostHogProvider } from "@/components/posthog-provider";
+import { CursorGlow } from "@/components/cursor-glow";
 import "./globals.css";
-
-const CursorGlow = dynamic(
-  () => import("@/components/cursor-glow").then((m) => m.CursorGlow),
-  { ssr: false },
-);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
