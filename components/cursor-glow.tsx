@@ -271,7 +271,7 @@ export function CursorGlow() {
   return (
     <canvas
       ref={canvasRef}
-      aria-hidden
+      aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[9999]"
     />
   );

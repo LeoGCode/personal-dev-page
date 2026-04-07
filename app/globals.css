@@ -61,6 +61,7 @@
   --input: oklch(0.85 0 0);
   --ring: oklch(0.45 0.16 163);
   --radius: 0.625rem;
+  color-scheme: light;
 }
 
 .dark {
@@ -83,6 +84,7 @@
   --border: oklch(0.25 0 0);
   --input: oklch(0.25 0 0);
   --ring: oklch(0.6 0.18 163);
+  color-scheme: dark;
 }
 
 @layer base {
@@ -101,6 +103,11 @@
       background-color 0.2s ease,
       color 0.2s ease;
   }
+
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
 }
 
 /* ── Blog prose enhancements ── */
@@ -113,11 +120,13 @@
     margin-top: 2.5em;
     margin-bottom: 1em;
     border-left: 3px solid var(--primary);
+    scroll-margin-top: 5rem;
   }
 
   & h3 {
     margin-top: 2em;
     margin-bottom: 0.75em;
+    scroll-margin-top: 5rem;
   }
 
   /* Paragraphs — comfortable reading */
@@ -245,4 +254,10 @@ html.cursor-none * {
 
 .animate-shimmer {
   animation: shimmer 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer {
+    animation: none;
+  }
 }

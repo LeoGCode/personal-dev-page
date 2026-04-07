@@ -39,6 +39,7 @@ export function CollaborateForm() {
     register,
     handleSubmit,
     setValue,
+    setFocus,
     formState: { errors },
   } = useForm<CollaborateFormData>({
     resolver: zodResolver(collaborateFormSchema),
@@ -84,7 +85,7 @@ export function CollaborateForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center gap-4 py-16 text-center">
+      <div role="status" aria-live="polite" className="flex flex-col items-center gap-4 py-16 text-center">
         <CheckCircle className="h-12 w-12 text-primary" />
         <h3 className="font-mono text-xl font-bold">{t("success_title")}</h3>
         <p className="max-w-md text-muted-foreground">{t("success_message")}</p>
@@ -93,7 +94,15 @@ export function CollaborateForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit, (fieldErrors) => {
+        const firstField = Object.keys(fieldErrors)[0] as
+          | keyof CollaborateFormData
+          | undefined;
+        if (firstField) setFocus(firstField);
+      })}
+      className="space-y-6"
+    >
       {/* Honeypot */}
       <div className="absolute -left-[9999px]" aria-hidden="true">
         <input type="text" tabIndex={-1} {...register("honeypot")} />
@@ -105,10 +114,13 @@ export function CollaborateForm() {
         <Input
           id="name"
           placeholder={t("placeholders.name")}
+          autoComplete="name"
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "name-error" : undefined}
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-sm text-destructive">{errors.name.message}</p>
+          <p id="name-error" className="text-sm text-destructive">{errors.name.message}</p>
         )}
       </div>
 
@@ -119,10 +131,14 @@ export function CollaborateForm() {
           id="email"
           type="email"
           placeholder={t("placeholders.email")}
+          autoComplete="email"
+          spellCheck={false}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
           {...register("email")}
         />
         {errors.email && (
-          <p className="text-sm text-destructive">{errors.email.message}</p>
+          <p id="email-error" className="text-sm text-destructive">{errors.email.message}</p>
         )}
       </div>
 
@@ -150,7 +166,7 @@ export function CollaborateForm() {
           </SelectContent>
         </Select>
         {errors.collaborationType && (
-          <p className="text-sm text-destructive">
+          <p id="type-error" className="text-sm text-destructive">
             {errors.collaborationType.message}
           </p>
         )}
@@ -163,10 +179,12 @@ export function CollaborateForm() {
           id="description"
           rows={5}
           placeholder={t("placeholders.description")}
+          aria-invalid={!!errors.description}
+          aria-describedby={errors.description ? "description-error" : undefined}
           {...register("description")}
         />
         {errors.description && (
-          <p className="text-sm text-destructive">
+          <p id="description-error" className="text-sm text-destructive">
             {errors.description.message}
           </p>
         )}
@@ -249,7 +267,7 @@ export function CollaborateForm() {
 
       {/* Inline error banner */}
       {status === "error" && (
-        <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4">
+        <div role="alert" aria-live="assertive" className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4">
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
           <div className="flex-1">
             <p className="font-mono text-sm font-medium">

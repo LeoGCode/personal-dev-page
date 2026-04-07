@@ -43,6 +43,7 @@ export function ProjectCard({
     <motion.div
       whileHover={prefersReducedMotion ? undefined : { y: -6 }}
       transition={prefersReducedMotion ? undefined : { duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className="relative"
     >
       <Link
         href={`/projects/${slug}`}
@@ -67,31 +68,9 @@ export function ProjectCard({
                 >
                   {statusLabel}
                 </Badge>
+                {/* Spacer for external link icon rendered outside <a> */}
                 {url && (
-                  <motion.button
-                    type="button"
-                    whileHover={prefersReducedMotion ? undefined : { scale: 1.15, rotate: -12 }}
-                    whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
-                    transition={prefersReducedMotion ? undefined : {
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 17,
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      posthog?.capture("outbound_link_clicked", {
-                        url,
-                        label: name,
-                        context: "project_card",
-                      });
-                      window.open(url, "_blank", "noopener,noreferrer");
-                    }}
-                    aria-label={`Open ${name} in a new tab`}
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </motion.button>
+                  <span className="inline-flex h-4 w-4" aria-hidden="true" />
                 )}
               </div>
             </div>
@@ -123,6 +102,33 @@ export function ProjectCard({
           </CardContent>
         </Card>
       </Link>
+      {/* External link rendered outside <Link> to avoid invalid <a> nesting */}
+      {url && (
+        <motion.a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={prefersReducedMotion ? undefined : { scale: 1.15, rotate: -12 }}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+          transition={prefersReducedMotion ? undefined : {
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            posthog?.capture("outbound_link_clicked", {
+              url,
+              label: name,
+              context: "project_card",
+            });
+          }}
+          aria-label={`Open ${name} in a new tab`}
+          className="absolute right-4 top-4 z-10 text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ExternalLink className="h-4 w-4" />
+        </motion.a>
+      )}
     </motion.div>
   );
 }

@@ -72,6 +72,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f0f0f0" },
     { media: "(prefers-color-scheme: dark)", color: "#1e1e1e" },
@@ -91,6 +93,7 @@ export default function RootLayout({
     >
       <head>
         <script
+          id="theme-init"
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light")return;document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}})()`,
           }}

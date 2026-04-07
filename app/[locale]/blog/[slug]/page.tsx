@@ -83,7 +83,7 @@ export default async function BlogPostPage({
 							href="/blog"
 							className="group mb-10 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
 						>
-							<ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+							<ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
 							{t("back")}
 						</Link>
 					</BlogHeaderMotion>
@@ -107,7 +107,7 @@ export default async function BlogPostPage({
 						<BlogHeaderMotion index={3}>
 							<div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
 								<span className="inline-flex items-center gap-1.5">
-									<Calendar className="h-3.5 w-3.5 text-primary" />
+									<Calendar className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
 									{new Date(post.date).toLocaleDateString(locale, {
 										year: "numeric",
 										month: "long",
@@ -115,7 +115,7 @@ export default async function BlogPostPage({
 									})}
 								</span>
 								<span className="inline-flex items-center gap-1.5">
-									<Clock className="h-3.5 w-3.5 text-primary" />
+									<Clock className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
 									{post.readingTime}
 								</span>
 							</div>

@@ -14,6 +14,13 @@ export interface TechStackProps {
   skills: SkillCategory[];
   getCategoryLabel: (category: string) => string;
   levelLabels: { deep: string; augmented: string };
+  title?: string;
+  description?: string;
+  agentLayerTitle?: string;
+  agentLayerDescription?: string;
+  agentLayerMore?: string;
+  skillSingular?: string;
+  skillPlural?: string;
 }
 
 /* ── Defaults for Storybook & standalone use ── */

@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <div role="status" aria-live="polite" className="flex min-h-[60vh] items-center justify-center">
       <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">Loading…</span>
     </div>
   );
 }

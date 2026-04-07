@@ -198,7 +198,7 @@ export function Hero() {
           {/* Code snippet tile */}
           <BentoTile className="hidden md:flex flex-col" delay={0.1}>
             <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
-              <Code className="h-3.5 w-3.5" />
+              <Code className="h-3.5 w-3.5" aria-hidden="true" />
               <AnimatePresence mode="wait">
                 <motion.span
                   key={currentSnippet.label}
@@ -241,27 +241,27 @@ export function Hero() {
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Stats
+                {t("stats_label")}
               </span>
-              <Layers className="h-4 w-4 text-muted-foreground" />
+              <Layers className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             </div>
             <div className="mt-3 grid grid-cols-2 gap-4">
               <div>
                 <div className="font-mono text-2xl font-bold">
                   <AnimatedCounter target={5} />+
                 </div>
-                <div className="text-xs text-muted-foreground">Projects</div>
+                <div className="text-xs text-muted-foreground">{t("projects_label")}</div>
               </div>
               <div>
                 <div className="font-mono text-2xl font-bold">
                   <AnimatedCounter target={3} />
                 </div>
-                <div className="text-xs text-muted-foreground">Languages</div>
+                <div className="text-xs text-muted-foreground">{t("languages_label")}</div>
               </div>
             </div>
             <div className="mt-3 flex flex-wrap gap-1.5">
               <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                Full Stack
+                {t("full_stack")}
               </span>
               {FEATURED_SKILLS.map((skill) => (
                 <span
@@ -272,7 +272,7 @@ export function Hero() {
                 </span>
               ))}
               <span className="inline-block rounded-full border border-border/40 bg-muted/30 px-2.5 py-1 text-[11px] text-muted-foreground/60">
-                +{REMAINING_SKILL_COUNT} more
+                {t("more_skills", { count: REMAINING_SKILL_COUNT })}
               </span>
             </div>
           </BentoTile>
@@ -289,16 +289,16 @@ export function Hero() {
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
                 </span>
                 <span className="text-sm font-medium text-primary">
-                  Available
+                  {t("available")}
                 </span>
               </div>
-              <Activity className="h-4 w-4 text-muted-foreground" />
+              <Activity className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             </div>
             <p className="text-sm text-muted-foreground">
-              Open to shipping products end-to-end, consulting, and open-source work.
+              {t("available_description")}
             </p>
             <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
-              <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+              <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden="true" />
               <span className="text-xs text-primary/70">
                 {t("response_time")}
               </span>
@@ -319,7 +319,7 @@ export function Hero() {
           >
             <div>
               <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
-                <Sparkles className="h-3.5 w-3.5" />
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>{t("latest_project")}</span>
               </div>
               <h3 className="font-mono text-lg font-bold">

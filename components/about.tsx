@@ -37,7 +37,7 @@ export function About() {
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0, ease: "easeOut" }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0, ease: "easeOut" }}
             >
               {t("paragraph_1")}
             </motion.p>
@@ -46,7 +46,7 @@ export function About() {
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.1, ease: "easeOut" }}
             >
               {t.rich("paragraph_2", {
                 nexora: (chunks) => (
@@ -66,7 +66,7 @@ export function About() {
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.2, ease: "easeOut" }}
             >
               {t("paragraph_3")}
             </motion.p>

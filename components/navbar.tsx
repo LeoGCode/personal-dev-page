@@ -86,6 +86,7 @@ export function Navbar() {
               variant="ghost"
               size="sm"
               onClick={switchLocale}
+              aria-label={locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"}
               className="ml-1 font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}
@@ -102,6 +103,7 @@ export function Navbar() {
               variant="ghost"
               size="sm"
               onClick={switchLocale}
+              aria-label={locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"}
               className="font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}

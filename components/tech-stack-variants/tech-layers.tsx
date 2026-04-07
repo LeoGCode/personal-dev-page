@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -44,7 +44,15 @@ export default function TechLayers({
   skills,
   getCategoryLabel,
   levelLabels,
+  title = "Tech Stack",
+  description = "Layered tiers of proficiency — from deep expertise to AI-augmented reach.",
+  agentLayerTitle = "Agent Adaptability Layer",
+  agentLayerDescription = "My job is to solve the problem with the best tool available — not the closest one. AI agents make that possible by turning any technology into a productive one.",
+  agentLayerMore = "+ anything else the project requires",
+  skillSingular = "skill",
+  skillPlural = "skills",
 }: TechStackProps) {
+  const prefersReducedMotion = useReducedMotion();
   const counts = countByLevel(skills);
 
   return (
@@ -52,11 +60,10 @@ export default function TechLayers({
       {/* ── Title ── */}
       <div className="mx-auto mb-16 max-w-2xl text-center">
         <h2 className="font-mono text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-          Tech Stack
+          {title}
         </h2>
         <p className="mt-3 text-muted-foreground">
-          Layered tiers of proficiency — from deep expertise to
-          AI-augmented reach.
+          {description}
         </p>
       </div>
 
@@ -79,10 +86,10 @@ export default function TechLayers({
                 <motion.div
                   key={level}
                   className={cn(tier.wrapper, tier.minH)}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+                  whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{
+                  transition={prefersReducedMotion ? undefined : {
                     duration: 0.5,
                     delay: tierIndex * 0.15,
                     ease: "easeOut",
@@ -106,7 +113,7 @@ export default function TechLayers({
                       {levelLabels[level]}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {count} {count === 1 ? "skill" : "skills"}
+                      {count} {count === 1 ? skillSingular : skillPlural}
                     </span>
                   </div>
 
@@ -129,10 +136,10 @@ export default function TechLayers({
                             {catSkills.map((skill, skillIndex) => (
                               <motion.div
                                 key={skill.name}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.8 }}
+                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
                                 viewport={{ once: true, amount: 0.3 }}
-                                transition={{
+                                transition={prefersReducedMotion ? undefined : {
                                   duration: 0.25,
                                   delay:
                                     tierIndex * 0.15 + skillIndex * 0.03,
@@ -164,33 +171,33 @@ export default function TechLayers({
                Background fills edge-to-edge within the dashed border */}
           <motion.div
             className="relative overflow-hidden bg-emerald-500/5 px-6 py-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.2, ease: "easeOut" }}
           >
             {/* Shimmer overlay */}
-            <motion.div
-              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent"
-              animate={{ x: ["-100%", "100%"] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
+            {!prefersReducedMotion && (
+              <motion.div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            )}
 
             <div className="relative flex flex-col items-center gap-4 text-center">
               <span className="font-mono text-2xl text-emerald-400">
                 &#8734;
               </span>
               <p className="font-mono text-sm font-bold text-emerald-400">
-                Agent Adaptability Layer
+                {agentLayerTitle}
               </p>
               <p className="max-w-lg text-sm text-muted-foreground">
-                My job is to solve the problem with the best tool available —
-                not the closest one. AI agents make that possible by turning any
-                technology into a productive one.
+                {agentLayerDescription}
               </p>
 
               {/* Example technology badges */}
@@ -198,10 +205,10 @@ export default function TechLayers({
                 {agentBridgeExamples.map((tech, i) => (
                   <motion.div
                     key={tech}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.8 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{
+                    transition={prefersReducedMotion ? undefined : {
                       duration: 0.25,
                       delay: 0.3 + i * 0.04,
                       ease: "easeOut",
@@ -218,7 +225,7 @@ export default function TechLayers({
               </div>
 
               <p className="text-xs text-muted-foreground/50">
-                + anything else the project requires
+                {agentLayerMore}
               </p>
             </div>
           </motion.div>
@@ -260,6 +267,13 @@ export function TechLayersSection() {
         deep: t("levels.deep"),
         augmented: t("levels.augmented"),
       }}
+      title={t("title")}
+      description={t("layers_description")}
+      agentLayerTitle={t("agent_layer_title")}
+      agentLayerDescription={t("agent_layer_description")}
+      agentLayerMore={t("agent_layer_more")}
+      skillSingular={t("skill_singular")}
+      skillPlural={t("skill_plural")}
     />
   );
 }

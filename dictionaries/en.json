@@ -21,7 +21,14 @@
     "cta_primary": "Let's Collaborate",
     "cta_secondary": "View My Work",
     "response_time": "I typically respond within 24h",
-    "latest_project": "Latest project"
+    "latest_project": "Latest project",
+    "stats_label": "Stats",
+    "projects_label": "Projects",
+    "languages_label": "Languages",
+    "full_stack": "Full Stack",
+    "available": "Available",
+    "available_description": "Open to shipping products end-to-end, consulting, and open-source work.",
+    "more_skills": "+{count} more"
   },
   "about": {
     "title": "About Me",
@@ -47,7 +54,13 @@
     "levels": {
       "deep": "Deep",
       "augmented": "Augmented"
-    }
+    },
+    "layers_description": "Layered tiers of proficiency — from deep expertise to AI-augmented reach.",
+    "agent_layer_title": "Agent Adaptability Layer",
+    "agent_layer_description": "My job is to solve the problem with the best tool available — not the closest one. AI agents make that possible by turning any technology into a productive one.",
+    "agent_layer_more": "+ anything else the project requires",
+    "skill_singular": "skill",
+    "skill_plural": "skills"
   },
   "projects": {
     "title": "Featured Projects",

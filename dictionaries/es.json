@@ -21,7 +21,14 @@
     "cta_primary": "Colaboremos",
     "cta_secondary": "Ver mi trabajo",
     "response_time": "Suelo responder en menos de 24h",
-    "latest_project": "Proyecto reciente"
+    "latest_project": "Proyecto reciente",
+    "stats_label": "Estadísticas",
+    "projects_label": "Proyectos",
+    "languages_label": "Lenguajes",
+    "full_stack": "Full Stack",
+    "available": "Disponible",
+    "available_description": "Abierto a entregar productos de punta a punta, consultoría y trabajo open-source.",
+    "more_skills": "+{count} más"
   },
   "about": {
     "title": "Sobre mí",
@@ -47,7 +54,13 @@
     "levels": {
       "deep": "Profundo",
       "augmented": "Aumentado"
-    }
+    },
+    "layers_description": "Niveles de competencia — desde experiencia profunda hasta alcance aumentado con IA.",
+    "agent_layer_title": "Capa de Adaptabilidad con Agentes",
+    "agent_layer_description": "Mi trabajo es resolver el problema con la mejor herramienta disponible — no la más cercana. Los agentes de IA hacen eso posible al convertir cualquier tecnología en una productiva.",
+    "agent_layer_more": "+ cualquier otra cosa que el proyecto requiera",
+    "skill_singular": "habilidad",
+    "skill_plural": "habilidades"
   },
   "projects": {
     "title": "Proyectos Destacados",

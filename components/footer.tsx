@@ -115,7 +115,7 @@ export function Footer() {
                 })
               }
             >
-              Nexora Group
+              <span translate="no">Nexora Group</span>
             </a>
           </p>
 

@@ -63,7 +63,7 @@ export default async function BlogPage({
                   <CardHeader>
                     <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                       <span className="inline-flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
+                        <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
                         {new Date(post.date).toLocaleDateString(locale, {
                           year: "numeric",
                           month: "long",
@@ -71,7 +71,7 @@ export default async function BlogPage({
                         })}
                       </span>
                       <span className="inline-flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" />
+                        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
                         {post.readingTime}
                       </span>
                     </div>

@@ -30,6 +30,12 @@ const gradientStyle = `
     oklch(0.6 0.18 155)
   );
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-gradient-border {
+    animation: none;
+  }
+}
 `;
 
 export function CTABanner() {
