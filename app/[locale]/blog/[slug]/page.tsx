@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import * as runtime from "react/jsx-runtime";
 import rehypePrettyCode from "rehype-pretty-code";
 import { BlogArticleReveal, BlogHeaderMotion } from "@/components/blog-header";
@@ -70,7 +71,9 @@ export default async function BlogPostPage({
 
 	return (
 		<>
-			<BlogReadingProgress />
+			<Suspense>
+				<BlogReadingProgress />
+			</Suspense>
 
 			<section className="px-4 py-16">
 				<div className="mx-auto max-w-3xl">

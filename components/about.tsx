@@ -1,10 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 export function About() {
   const t = useTranslations("about");
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section className="px-4 py-24">
@@ -12,10 +13,10 @@ export function About() {
         {/* Animated gradient accent bar */}
         <motion.div
           className="hidden w-1 shrink-0 rounded-full bg-gradient-to-b from-primary via-primary/40 to-transparent sm:block"
-          initial={{ scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
+          initial={prefersReducedMotion ? undefined : { scaleY: 0 }}
+          whileInView={prefersReducedMotion ? undefined : { scaleY: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.8, ease: "easeOut" }}
           style={{ originY: 0 }}
         />
 
@@ -23,18 +24,18 @@ export function About() {
         <div>
           <motion.h2
             className="font-mono text-2xl font-bold tracking-tight sm:text-3xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
           >
             {t("title")}
           </motion.h2>
 
           <div className="mt-8 space-y-5 leading-relaxed text-muted-foreground">
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0, ease: "easeOut" }}
             >
@@ -42,8 +43,8 @@ export function About() {
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             >
@@ -53,7 +54,7 @@ export function About() {
                     href="https://nexoragroup.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline underline-offset-4 transition-all hover:text-primary/80 hover:underline-offset-8"
+                    className="text-primary underline underline-offset-4 transition-[color,text-underline-offset] hover:text-primary/80 hover:underline-offset-8"
                   >
                     {chunks}
                   </a>
@@ -62,8 +63,8 @@ export function About() {
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             >

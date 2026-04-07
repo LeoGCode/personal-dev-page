@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { cache } from "react";
 import { z } from "zod";
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
@@ -65,7 +66,7 @@ export function getBlogPosts(locale: string): BlogPost[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getBlogPost(slug: string, locale: string): BlogPost | null {
+export const getBlogPost = cache(function getBlogPost(slug: string, locale: string): BlogPost | null {
   const filePath = path.join(BLOG_DIR, `${slug}.${locale}.mdx`);
 
   if (!fs.existsSync(filePath)) return null;
@@ -82,4 +83,4 @@ export function getBlogPost(slug: string, locale: string): BlogPost | null {
     readingTime: stats.text,
     content,
   };
-}
+});

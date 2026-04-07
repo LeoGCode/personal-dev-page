@@ -1,16 +1,23 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, RotateCcw } from "lucide-react";
 
 export default function ErrorPage({
+  error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
   const t = useTranslations("error");
+
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
 
   return (
     <section className="flex min-h-[60vh] items-center justify-center px-4">

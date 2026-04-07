@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { ProjectStatus } from "@/lib/shared/status-styles";
 
 interface LocalizedText {
@@ -30,12 +31,12 @@ export const projects: Project[] = [
     slug: "nexora-group",
     title: "Nexora Group",
     description: {
-      en: "Multi-landing SaaS platform for a software consultancy. Config-driven architecture serving 22+ service landing pages from a single Next.js app.",
-      es: "Plataforma SaaS multi-landing para una consultora de software. Arquitectura basada en configuración que sirve 22+ páginas de servicios desde una sola app Next.js.",
+      en: "Full-stack SaaS platform I built end-to-end — a single Next.js app serving 22+ branded landing pages through config-driven architecture, with AI-powered lead qualification piped into Odoo CRM.",
+      es: "Plataforma SaaS full-stack que construí de punta a punta — una sola app Next.js sirviendo 22+ landing pages con arquitectura config-driven e integración de IA para calificación de leads conectada a Odoo CRM.",
     },
     longDescription: {
-      en: "Nexora Group is a full-stack SaaS platform built for a software consultancy that needed to scale its web presence across dozens of services without duplicating codebases. A single Next.js application drives 22+ landing pages through a configuration-driven architecture, where each service's content, layout, and metadata are defined declaratively. The platform integrates directly with Odoo CRM for lead management, uses PostgreSQL for persistent data, and runs as a containerized service behind Traefik on a shared Hetzner VPS.",
-      es: "Nexora Group es una plataforma SaaS full-stack construida para una consultora de software que necesitaba escalar su presencia web a través de docenas de servicios sin duplicar código. Una sola aplicación Next.js alimenta 22+ páginas de aterrizaje mediante una arquitectura basada en configuración, donde el contenido, diseño y metadatos de cada servicio se definen declarativamente. La plataforma se integra directamente con Odoo CRM para gestión de leads, usa PostgreSQL para datos persistentes, y corre como un servicio contenedorizado detrás de Traefik en un VPS compartido de Hetzner.",
+      en: "I built Nexora Group end-to-end as a one-person team — from infrastructure to production. It's a full-stack SaaS platform that scales a software consultancy's web presence across dozens of services without duplicating code. A single Next.js application drives 22+ branded landing pages through a configuration-driven architecture. I set up the entire infrastructure: PostgreSQL database, Redis caching, Docker containerization, Traefik reverse proxy with CrowdSec security, and automated backups. Then I integrated AI-powered lead qualification pipelines that automatically score and route leads into Odoo CRM — turning what used to be manual work into an automated workflow.",
+      es: "Construí Nexora Group de punta a punta como equipo de una persona — desde infraestructura hasta producción. Es una plataforma SaaS full-stack que escala la presencia web de una consultora de software sin duplicar código. Una sola app Next.js alimenta 22+ landing pages mediante arquitectura config-driven. Monté toda la infraestructura: base de datos PostgreSQL, caché Redis, contenedorización Docker, reverse proxy Traefik con seguridad CrowdSec y backups automatizados. Luego integré pipelines de calificación de leads con IA que automáticamente puntúan y rutean leads a Odoo CRM — convirtiendo trabajo manual en un flujo automatizado.",
     },
     status: "active",
     tech: [
@@ -50,16 +51,16 @@ export const projects: Project[] = [
     ],
     highlights: {
       en: [
-        "Config-driven architecture serving 22+ landing pages from a single codebase",
-        "Odoo CRM integration for automated lead capture and management",
-        "Containerized deployment with Traefik reverse proxy and CrowdSec security",
-        "Shared infrastructure with PostgreSQL, Redis, and automated backups",
+        "Shipped solo — from infrastructure setup to production deployment",
+        "Config-driven architecture serving 22+ branded landing pages from a single codebase",
+        "Full DevOps: Docker, Traefik reverse proxy, CrowdSec security, automated backups",
+        "AI-powered lead qualification automating what was previously manual CRM work",
       ],
       es: [
-        "Arquitectura basada en configuración sirviendo 22+ landing pages desde un solo codebase",
-        "Integración con Odoo CRM para captura y gestión automatizada de leads",
-        "Despliegue contenedorizado con Traefik como reverse proxy y seguridad CrowdSec",
-        "Infraestructura compartida con PostgreSQL, Redis y backups automatizados",
+        "Entregado solo — desde setup de infraestructura hasta deployment en producción",
+        "Arquitectura config-driven sirviendo 22+ landing pages desde un solo codebase",
+        "DevOps completo: Docker, Traefik reverse proxy, seguridad CrowdSec, backups automatizados",
+        "Calificación de leads con IA automatizando trabajo CRM que antes era manual",
       ],
     },
     live: "https://nexoragroup.com",
@@ -68,12 +69,12 @@ export const projects: Project[] = [
     slug: "ai-credit-analyzer",
     title: "AI Credit Analyzer",
     description: {
-      en: "AI-powered credit analysis tool combining XGBoost models with Claude API for automated risk assessment and report generation.",
-      es: "Herramienta de análisis crediticio potenciada por IA que combina modelos XGBoost con la API de Claude para evaluación de riesgo automatizada y generación de reportes.",
+      en: "End-to-end credit analysis platform for financial institutions — Django backend, Next.js frontend, and AI integration (XGBoost + Claude API) that cut assessment time from hours to seconds.",
+      es: "Plataforma de análisis crediticio de punta a punta para instituciones financieras — backend Django, frontend Next.js e integración de IA (XGBoost + Claude API) que redujo el tiempo de evaluación de horas a segundos.",
     },
     longDescription: {
-      en: "The AI Credit Analyzer is a hybrid ML/LLM system designed for financial institutions that need fast, accurate credit risk assessments. It combines a trained XGBoost model for quantitative scoring with Claude API for qualitative narrative generation, producing comprehensive credit reports in seconds. The Django backend handles model inference and data pipelines, while the Next.js frontend provides an intuitive interface for analysts to review, adjust, and approve assessments.",
-      es: "El AI Credit Analyzer es un sistema híbrido ML/LLM diseñado para instituciones financieras que necesitan evaluaciones de riesgo crediticio rápidas y precisas. Combina un modelo XGBoost entrenado para scoring cuantitativo con la API de Claude para generación narrativa cualitativa, produciendo reportes crediticios completos en segundos. El backend en Django maneja la inferencia del modelo y pipelines de datos, mientras el frontend en Next.js provee una interfaz intuitiva para que los analistas revisen, ajusten y aprueben evaluaciones.",
+      en: "I built the AI Credit Analyzer as a complete product for financial institutions that need fast, accurate credit risk assessments. The Django backend handles data ingestion, processing pipelines, and model inference. The Next.js frontend gives analysts an intuitive interface to review, adjust, and approve assessments. Then I layered in AI to make the product 10x more powerful: an XGBoost model handles quantitative scoring while Claude API generates qualitative narrative reports — producing comprehensive credit assessments in seconds instead of hours.",
+      es: "Construí el AI Credit Analyzer como un producto completo para instituciones financieras que necesitan evaluaciones de riesgo rápidas y precisas. El backend Django maneja ingesta de datos, pipelines de procesamiento e inferencia de modelos. El frontend Next.js da a los analistas una interfaz intuitiva para revisar, ajustar y aprobar evaluaciones. Luego integré IA para hacer el producto 10x más potente: un modelo XGBoost maneja el scoring cuantitativo mientras Claude API genera reportes narrativos — produciendo evaluaciones completas en segundos en lugar de horas.",
     },
     status: "in_progress",
     tech: [
@@ -87,16 +88,16 @@ export const projects: Project[] = [
     ],
     highlights: {
       en: [
-        "Hybrid ML/LLM pipeline combining XGBoost scoring with Claude API narrative generation",
-        "Django backend with model inference and data processing pipelines",
-        "Next.js frontend for analyst review and approval workflows",
-        "Automated report generation reducing assessment time from hours to seconds",
+        "Full product built solo: Django backend, Next.js frontend, PostgreSQL database",
+        "AI integration: XGBoost scoring + Claude API narrative generation",
+        "Analyst workflow with review, adjustment, and approval interfaces",
+        "Reduced assessment time from hours to seconds with automated report generation",
       ],
       es: [
-        "Pipeline híbrido ML/LLM combinando scoring XGBoost con generación narrativa de Claude API",
-        "Backend en Django con inferencia de modelos y pipelines de procesamiento de datos",
-        "Frontend en Next.js para flujos de revisión y aprobación de analistas",
-        "Generación automatizada de reportes reduciendo el tiempo de evaluación de horas a segundos",
+        "Producto completo construido solo: backend Django, frontend Next.js, base de datos PostgreSQL",
+        "Integración de IA: scoring XGBoost + generación narrativa con Claude API",
+        "Flujo de trabajo para analistas con interfaces de revisión, ajuste y aprobación",
+        "Tiempo de evaluación reducido de horas a segundos con generación automatizada de reportes",
       ],
     },
   },
@@ -104,27 +105,27 @@ export const projects: Project[] = [
     slug: "openclaw-mobile",
     title: "OpenClaw Mobile",
     description: {
-      en: "Android accessibility app with LLM-powered device control, enabling hands-free interaction through natural language commands.",
-      es: "App de accesibilidad Android con control de dispositivo potenciado por LLM, habilitando interacción manos libres mediante comandos en lenguaje natural.",
+      en: "Android accessibility app I'm building for hands-free device interaction — Kotlin native app with LLM integration that translates voice commands into system-wide actions.",
+      es: "App de accesibilidad Android que estoy construyendo para interacción manos libres — app nativa Kotlin con integración de LLM que traduce comandos de voz en acciones del sistema.",
     },
     longDescription: {
-      en: "OpenClaw Mobile is an Android accessibility application that leverages large language models to provide hands-free device control through natural language. Users can navigate apps, compose messages, and perform complex multi-step actions using voice commands that are interpreted by an LLM and translated into accessibility service actions. The app is designed for users with motor disabilities but benefits anyone who needs hands-free phone interaction.",
-      es: "OpenClaw Mobile es una aplicación de accesibilidad Android que aprovecha modelos de lenguaje para proveer control del dispositivo manos libres a través de lenguaje natural. Los usuarios pueden navegar apps, componer mensajes y realizar acciones complejas de múltiples pasos usando comandos de voz que son interpretados por un LLM y traducidos en acciones del servicio de accesibilidad. La app está diseñada para usuarios con discapacidades motrices pero beneficia a cualquiera que necesite interacción manos libres con el teléfono.",
+      en: "I'm building OpenClaw Mobile as a native Android app for users with motor disabilities who need hands-free phone interaction. The product is built with Kotlin, integrates with Android's Accessibility Service for system-wide device control, and uses Room DB for local data persistence. The AI layer is what makes it powerful: an LLM interprets natural language voice commands and translates them into accessibility actions, enabling users to navigate apps, compose messages, and chain complex multi-step actions from a single voice command.",
+      es: "Estoy construyendo OpenClaw Mobile como una app Android nativa para usuarios con discapacidades motrices que necesitan interacción manos libres. El producto está construido con Kotlin, se integra con el Accessibility Service de Android para control del dispositivo y usa Room DB para persistencia local. La capa de IA es lo que lo hace potente: un LLM interpreta comandos de voz en lenguaje natural y los traduce en acciones de accesibilidad, permitiendo navegar apps, componer mensajes y encadenar acciones complejas desde un solo comando de voz.",
     },
     status: "planned",
     tech: ["Kotlin", "Android", "LLM", "Accessibility API", "Room DB"],
     highlights: {
       en: [
-        "LLM-powered natural language interpretation for device control",
-        "Android Accessibility Service integration for system-wide interaction",
+        "Native Kotlin Android app with Accessibility Service integration",
+        "Room DB for local data persistence and offline capability",
+        "LLM integration translating natural language into device actions",
         "Multi-step action chaining from single voice commands",
-        "Designed for motor disability accessibility with universal appeal",
       ],
       es: [
-        "Interpretación de lenguaje natural potenciada por LLM para control del dispositivo",
-        "Integración con Android Accessibility Service para interacción a nivel de sistema",
+        "App Android nativa en Kotlin con integración de Accessibility Service",
+        "Room DB para persistencia local y capacidad offline",
+        "Integración de LLM traduciendo lenguaje natural en acciones del dispositivo",
         "Encadenamiento de acciones de múltiples pasos desde comandos de voz individuales",
-        "Diseñado para accesibilidad de discapacidad motriz con atractivo universal",
       ],
     },
   },
@@ -132,27 +133,27 @@ export const projects: Project[] = [
     slug: "electricity-billing",
     title: "Electricity Billing Analyzer",
     description: {
-      en: "Utility plan analysis tool with OCR bill scanning and cost simulation to help users find the most cost-effective electricity plan.",
-      es: "Herramienta de análisis de planes de servicios con escaneo OCR de facturas y simulación de costos para ayudar a encontrar el plan eléctrico más económico.",
+      en: "Utility bill analysis platform — FastAPI backend, Next.js frontend, PostgreSQL database — with an AI-powered pipeline (OCR + LLMs) that extracts bill data and simulates cost savings across plans.",
+      es: "Plataforma de análisis de facturas eléctricas — backend FastAPI, frontend Next.js, base de datos PostgreSQL — con pipeline de IA (OCR + LLMs) que extrae datos y simula ahorros entre planes.",
     },
     longDescription: {
-      en: "The Electricity Billing Analyzer helps consumers and small businesses understand their electricity costs and find better rate plans. Users scan their bills using OCR, and the system extracts consumption data to simulate costs across available utility plans. The tool accounts for time-of-use rates, seasonal variations, and demand charges to provide accurate cost projections and savings estimates.",
-      es: "El Electricity Billing Analyzer ayuda a consumidores y pequeñas empresas a entender sus costos eléctricos y encontrar mejores planes tarifarios. Los usuarios escanean sus facturas usando OCR, y el sistema extrae datos de consumo para simular costos en los planes disponibles. La herramienta considera tarifas por horario de uso, variaciones estacionales y cargos por demanda para proveer proyecciones de costo precisas y estimaciones de ahorro.",
+      en: "I'm building this as a complete product that helps consumers and small businesses find the most cost-effective electricity plan. The FastAPI backend handles data processing and simulation engines, the Next.js frontend provides an intuitive upload and comparison interface, and PostgreSQL stores consumption history. The AI layer is what makes it powerful: an autonomous pipeline uses OCR to scan uploaded bills, then LLMs extract and structure consumption data, which feeds into simulation engines comparing costs across utility plans — accounting for time-of-use rates, seasonal variations, and demand charges.",
+      es: "Estoy construyendo esto como un producto completo que ayuda a consumidores y empresas a encontrar el plan eléctrico más económico. El backend FastAPI maneja procesamiento de datos y motores de simulación, el frontend Next.js provee una interfaz intuitiva de carga y comparación, y PostgreSQL almacena el historial de consumo. La capa de IA es lo que lo hace potente: un pipeline autónomo usa OCR para escanear facturas, luego LLMs extraen y estructuran datos de consumo que alimentan simulaciones comparando costos entre planes — considerando tarifas por horario, variaciones estacionales y cargos por demanda.",
     },
     status: "in_progress",
     tech: ["Python", "FastAPI", "OCR", "Next.js", "TypeScript", "PostgreSQL"],
     highlights: {
       en: [
-        "OCR-based bill scanning for automatic consumption data extraction",
-        "Cost simulation across multiple utility rate plans",
-        "Time-of-use and seasonal rate analysis",
-        "Savings projections with plan switching recommendations",
+        "Full-stack product: FastAPI backend, Next.js frontend, PostgreSQL database",
+        "AI-powered document pipeline: OCR scanning + LLM data extraction",
+        "Cost simulation engine comparing multiple utility rate plans",
+        "Savings projections with actionable plan switching recommendations",
       ],
       es: [
-        "Escaneo de facturas basado en OCR para extracción automática de datos de consumo",
-        "Simulación de costos en múltiples planes tarifarios",
-        "Análisis de tarifas por horario de uso y variaciones estacionales",
-        "Proyecciones de ahorro con recomendaciones de cambio de plan",
+        "Producto full-stack: backend FastAPI, frontend Next.js, base de datos PostgreSQL",
+        "Pipeline de documentos con IA: escaneo OCR + extracción de datos con LLM",
+        "Motor de simulación de costos comparando múltiples planes tarifarios",
+        "Proyecciones de ahorro con recomendaciones accionables de cambio de plan",
       ],
     },
   },
@@ -160,12 +161,12 @@ export const projects: Project[] = [
     slug: "esthetician",
     title: "Esthetician Platform",
     description: {
-      en: "Digital presence platform for beauty professionals with online booking, client CRM, and automated appointment communications.",
-      es: "Plataforma de presencia digital para profesionales de belleza con reservas online, CRM de clientes y comunicaciones automatizadas de citas.",
+      en: "Complete SaaS product for beauty professionals — Next.js app with booking system, client CRM, automated email communications, and a customizable public-facing website.",
+      es: "Producto SaaS completo para profesionales de belleza — app Next.js con sistema de reservas, CRM de clientes, comunicaciones automatizadas y sitio web público personalizable.",
     },
     longDescription: {
-      en: "The Esthetician Platform is a complete digital solution for beauty and skincare professionals who need a professional online presence without the complexity of enterprise software. It combines a customizable public-facing website with an integrated booking system, client CRM, and automated communications. Clients can browse services, book appointments, and receive reminders, while the professional manages everything from a single dashboard.",
-      es: "La Plataforma para Esteticistas es una solución digital completa para profesionales de belleza y cuidado de la piel que necesitan una presencia online profesional sin la complejidad del software empresarial. Combina un sitio web público personalizable con un sistema de reservas integrado, CRM de clientes y comunicaciones automatizadas. Los clientes pueden explorar servicios, reservar citas y recibir recordatorios, mientras el profesional gestiona todo desde un solo panel.",
+      en: "I'm building the Esthetician Platform as a complete digital product for beauty and skincare professionals who need a professional online presence without enterprise software complexity. It's a full-stack Next.js application with PostgreSQL (via Drizzle ORM), combining a customizable public website, integrated booking system, client CRM, and automated email communications via Resend. Clients browse services, book appointments, and receive reminders — while the professional manages everything from a single dashboard. A product built end-to-end by one engineer.",
+      es: "Estoy construyendo la Plataforma para Esteticistas como un producto digital completo para profesionales de belleza que necesitan presencia online profesional sin la complejidad del software empresarial. Es una app full-stack Next.js con PostgreSQL (via Drizzle ORM), combinando sitio web personalizable, sistema de reservas, CRM de clientes y comunicaciones automatizadas por email vía Resend. Los clientes exploran servicios, reservan citas y reciben recordatorios — mientras el profesional gestiona todo desde un solo panel. Un producto construido de punta a punta por un solo ingeniero.",
     },
     status: "planned",
     tech: [
@@ -178,13 +179,13 @@ export const projects: Project[] = [
     ],
     highlights: {
       en: [
-        "Customizable public website for professional branding",
+        "End-to-end product: frontend, backend, database, and email infrastructure",
         "Integrated booking system with calendar management",
         "Client CRM with appointment history and preferences",
         "Automated email reminders and follow-ups via Resend",
       ],
       es: [
-        "Sitio web público personalizable para branding profesional",
+        "Producto de punta a punta: frontend, backend, base de datos e infraestructura de email",
         "Sistema de reservas integrado con gestión de calendario",
         "CRM de clientes con historial de citas y preferencias",
         "Recordatorios y seguimientos automatizados por email vía Resend",
@@ -193,9 +194,9 @@ export const projects: Project[] = [
   },
 ];
 
-export function getProjectBySlug(slug: string): Project | undefined {
+export const getProjectBySlug = cache(function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
-}
+});
 
 export function getAllProjectSlugs(): string[] {
   return projects.map((p) => p.slug);

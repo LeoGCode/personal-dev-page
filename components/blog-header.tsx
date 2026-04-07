@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 const fadeUp = {
@@ -23,6 +23,12 @@ export function BlogHeaderMotion({
 	children: ReactNode;
 	index: number;
 }) {
+	const prefersReducedMotion = useReducedMotion();
+
+	if (prefersReducedMotion) {
+		return <div>{children}</div>;
+	}
+
 	return (
 		<motion.div
 			custom={index}
@@ -36,6 +42,12 @@ export function BlogHeaderMotion({
 }
 
 export function BlogArticleReveal({ children }: { children: ReactNode }) {
+	const prefersReducedMotion = useReducedMotion();
+
+	if (prefersReducedMotion) {
+		return <div>{children}</div>;
+	}
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}

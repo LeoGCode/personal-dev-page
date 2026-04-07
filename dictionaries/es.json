@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "Leonel — Ingeniero de Software",
-    "description": "Portafolio personal y espacio de colaboración. Construyamos algo juntos."
+    "title": "Leonel — Ingeniero Full-Stack",
+    "description": "Entrego productos de punta a punta e integro IA para hacerlos 10x más potentes."
   },
   "home": {
-    "meta_title": "Leonel — Ingeniero de Software",
-    "meta_description": "Portafolio personal y espacio de colaboración. Ingeniero full-stack especializado en Next.js, TypeScript y arquitectura de sistemas."
+    "meta_title": "Leonel — Ingeniero Full-Stack",
+    "meta_description": "Ingeniero Full-Stack que entrega productos completos — desde infraestructura y backend hasta frontend — e integra IA, agentes y LLMs para hacerlos 10x más potentes."
   },
   "nav": {
     "home": "Inicio",
@@ -16,32 +16,37 @@
   },
   "hero": {
     "greeting": "Hola, soy Leonel",
-    "title": "Ingeniero de Software",
-    "subtitle": "Construyo software confiable y ayudo a equipos a entregar más rápido. Abierto a colaboración, consultoría y trabajo open-source.",
+    "title": "Ingeniero Full-Stack",
+    "subtitle": "Entrego productos de punta a punta — desde infraestructura y DevOps hasta backend y frontend — e integro IA, agentes y LLMs para hacerlos 10x más potentes.",
     "cta_primary": "Colaboremos",
-    "cta_secondary": "Ver mi trabajo"
+    "cta_secondary": "Ver mi trabajo",
+    "response_time": "Suelo responder en menos de 24h",
+    "latest_project": "Proyecto reciente"
   },
   "about": {
     "title": "Sobre mí",
-    "paragraph_1": "Soy ingeniero de software y me importa mucho construir cosas que funcionen bien — tanto para los usuarios como para los equipos detrás de ellas. Me especializo en desarrollo full-stack, arquitectura de sistemas y en convertir problemas complejos en soluciones limpias y mantenibles.",
-    "paragraph_2": "Actualmente estoy construyendo <nexora>Nexora Group</nexora>, una consultora de software enfocada en entregar productos digitales de alta calidad. Trabajo en todo el stack — desde frontends con React y Next.js hasta bases de datos PostgreSQL e infraestructura con Docker.",
-    "paragraph_3": "Soy bilingüe (inglés/español) y estoy basado en Latinoamérica. Ya sea que necesites un co-fundador técnico para tu próximo proyecto, asesoría en arquitectura, o un par de manos extra en tu código — estoy abierto a la conversación."
+    "paragraph_1": "Soy un Ingeniero Full-Stack que entrega productos completos como un one-man army — desde infraestructura y DevOps, pasando por APIs y bases de datos, hasta frontends pulidos. Cuando un producto necesita capacidades de IA, integro LLMs, flujos de trabajo con agentes y automatización inteligente para hacerlo dramáticamente más potente.",
+    "paragraph_2": "Actualmente estoy construyendo <nexora>Nexora Group</nexora>, una consultora de software donde entrego productos digitales de punta a punta. Trabajo en todo el stack — frontends con React y Next.js, backends con Python y Node.js, bases de datos PostgreSQL, infraestructura Docker — e integro IA cuando genera valor real.",
+    "paragraph_3": "Soy bilingüe (inglés/español) y estoy basado en Latinoamérica. Ya sea que necesites a alguien para llevar un producto de cero a producción, agregar capacidades de IA a una plataforma existente, o simplemente un ingeniero experimentado que entrega — estoy abierto a la conversación."
   },
   "skills": {
     "title": "Stack Tecnológico",
     "subtitle": "Herramientas y tecnologías con las que trabajo a diario.",
+    "foundation": "Fundación",
+    "horizon": "En el Horizonte",
     "categories": {
       "languages": "Lenguajes",
       "frontend": "Frontend",
       "backend": "Backend",
-      "observability": "Observabilidad",
       "infrastructure": "Infraestructura",
+      "data_dbs": "Bases de Datos y Datos",
+      "ai_llm": "Integración de IA y LLMs",
+      "observability": "Observabilidad",
       "tools": "Herramientas y Plataformas"
     },
     "levels": {
-      "daily": "Uso diario",
-      "proficient": "Competente",
-      "exploring": "Explorando"
+      "deep": "Profundo",
+      "augmented": "Aumentado"
     }
   },
   "projects": {
@@ -91,8 +96,7 @@
     "title": "Construyamos Algo Juntos",
     "subtitle": "¿Tenés una idea, un proyecto, o simplemente querés charlar sobre tecnología? Me encantaría escucharte.",
     "types": {
-      "project": "Colaboración en Proyecto",
-      "consulting": "Consultoría",
+      "project": "Producto de Punta a Punta",      "ai_agent": "Integración de IA / Agentes",      "consulting": "Consultoría Técnica",
       "opensource": "Open Source",
       "speaking": "Charlas / Escritura",
       "other": "Otro"
@@ -145,8 +149,8 @@
     "optional": "opcional"
   },
   "cta": {
-    "title": "¿Tenés una idea? Construyámosla juntos.",
-    "subtitle": "Estoy abierto a colaboración en proyectos, consultoría, contribuciones open-source y oportunidades para dar charlas.",
+    "title": "¿Tenés una idea de producto? Yo la entrego.",
+    "subtitle": "De cero a producción — full-stack, DevOps e integración de IA incluidos. Hablemos de lo que necesitás construir.",
     "button": "Iniciá una Conversación"
   },
   "blog": {

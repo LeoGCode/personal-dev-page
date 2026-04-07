@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
 import {
@@ -37,11 +37,12 @@ export function ProjectCard({
   statusLabel,
 }: ProjectCardProps) {
   const posthog = usePostHog();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
+      whileHover={prefersReducedMotion ? undefined : { y: -6 }}
+      transition={prefersReducedMotion ? undefined : { duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
     >
       <Link
         href={`/projects/${slug}`}
@@ -53,7 +54,7 @@ export function ProjectCard({
           })
         }
       >
-        <Card className="flex h-full flex-col transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
+        <Card className="flex h-full flex-col transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
           <CardHeader>
             <div className="flex items-start justify-between gap-2">
               <CardTitle className="font-mono text-lg transition-colors duration-200 group-hover:text-primary">
@@ -69,9 +70,9 @@ export function ProjectCard({
                 {url && (
                   <motion.button
                     type="button"
-                    whileHover={{ scale: 1.15, rotate: -12 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
+                    whileHover={prefersReducedMotion ? undefined : { scale: 1.15, rotate: -12 }}
+                    whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+                    transition={prefersReducedMotion ? undefined : {
                       type: "spring",
                       stiffness: 400,
                       damping: 17,
@@ -103,8 +104,8 @@ export function ProjectCard({
               {stack.map((tech) => (
                 <motion.div
                   key={tech}
-                  whileHover={{ scale: 1.05, y: -1 }}
-                  transition={{
+                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05, y: -1 }}
+                  transition={prefersReducedMotion ? undefined : {
                     type: "spring",
                     stiffness: 500,
                     damping: 20,

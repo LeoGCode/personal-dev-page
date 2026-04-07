@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Mail, FileText, ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { usePostHog } from "posthog-js/react";
 
 function GithubIcon({ className }: { className?: string }) {
@@ -45,6 +45,7 @@ const socialLinks = [
 export function Footer() {
   const t = useTranslations("footer");
   const posthog = usePostHog();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <footer>
@@ -52,8 +53,8 @@ export function Footer() {
       <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+        whileInView={prefersReducedMotion ? undefined : { opacity: 1 }}
         viewport={{ once: true }}
         className="mx-auto max-w-5xl px-4 py-12"
       >
@@ -68,9 +69,9 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="rounded-md p-2 text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 aria-label={link.ariaLabel}
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                whileHover={prefersReducedMotion ? undefined : { scale: 1.1, y: -2 }}
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+                transition={prefersReducedMotion ? undefined : { type: "spring", stiffness: 400, damping: 17 }}
                 onClick={() =>
                   posthog?.capture("outbound_link_clicked", {
                     url: link.href,
@@ -79,7 +80,7 @@ export function Footer() {
                   })
                 }
               >
-                <link.icon className="h-5 w-5" />
+                <link.icon className="h-5 w-5" aria-hidden="true" />
               </motion.a>
             ))}
             {/* Resume link */}

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 
 const gradientStyle = `
@@ -34,16 +34,17 @@ const gradientStyle = `
 
 export function CTABanner() {
   const t = useTranslations("cta");
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section className="px-4 py-24">
       <style dangerouslySetInnerHTML={{ __html: gradientStyle }} />
       <motion.div
         className="mx-auto max-w-3xl"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={prefersReducedMotion ? undefined : { opacity: 0, y: 30 }}
+        whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={prefersReducedMotion ? undefined : { duration: 0.6, ease: "easeOut" }}
       >
         <div className="relative overflow-hidden rounded-2xl p-[2px]">
           {/* Animated rotating gradient border */}

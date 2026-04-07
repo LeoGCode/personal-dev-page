@@ -39,6 +39,10 @@ export function BlogReadingProgress() {
 
 	return (
 		<motion.div
+			role="progressbar"
+			aria-label="Reading progress"
+			aria-valuemin={0}
+			aria-valuemax={100}
 			className="fixed top-0 left-0 right-0 z-50 h-[3px] origin-left bg-primary"
 			style={{ scaleX }}
 		/>

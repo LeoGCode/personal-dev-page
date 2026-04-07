@@ -8,12 +8,12 @@ export async function getEmailService(): Promise<EmailService> {
   if (_instance) return _instance;
 
   if (process.env.NODE_ENV === "production" || process.env.RESEND_API_KEY) {
-    const { ResendEmailService } = await import("./resend");
-    _instance = new ResendEmailService();
+    const { createResendService } = await import("./resend");
+    _instance = createResendService();
   } else {
-    const { LocalEmailService } = await import("./local");
-    _instance = new LocalEmailService();
+    const { createLocalService } = await import("./local");
+    _instance = createLocalService();
   }
 
-  return _instance!;
+  return _instance;
 }

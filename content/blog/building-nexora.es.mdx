@@ -23,7 +23,7 @@ Las variantes se resuelven en build time con una estrategia simple de merge: con
 
 ## El Pipeline de Leads
 
-Cada landing incluye un formulario de contacto que pasa por un pipeline estricto: validación del lado del cliente con Zod, re-validación del lado del servidor en un route handler de Next.js, y después una llamada JSON-RPC a Odoo CRM. Cada lead se etiqueta automáticamente con la landing de origen, tipo de servicio, idioma y variante — así la vista de ventas en Odoo muestra exactamente de dónde vino cada lead.
+Cada landing incluye un formulario de contacto que pasa por un pipeline estricto: validación del lado del cliente con Zod, re-validación del lado del servidor en un route handler de Next.js, y después un paso de calificación impulsado por IA usando un LLM. El agente extrae intención estructurada (presupuesto, plazos, necesidades de integración de IA) y hace una llamada JSON-RPC a Odoo CRM. Cada lead se etiqueta automáticamente con la landing de origen, intención inferida, idioma y variante — así la vista de ventas en Odoo muestra exactamente de dónde vino cada lead y qué quieren.
 
 La protección contra spam usa un campo honeypot más rate limiting respaldado por Redis por IP. Sin CAPTCHAs, sin fricción.
 

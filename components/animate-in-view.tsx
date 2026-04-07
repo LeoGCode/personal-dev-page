@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type TargetAndTransition } from "motion/react";
+import { motion, useReducedMotion, type TargetAndTransition } from "motion/react";
 import type { ReactNode } from "react";
 
 type AnimationVariant = "fade-up" | "fade-left" | "fade-right" | "scale";
@@ -38,7 +38,13 @@ export function AnimateInView({
   delay?: number;
   className?: string;
 }) {
+  const prefersReducedMotion = useReducedMotion();
   const v = variants[variant];
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}

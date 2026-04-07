@@ -28,11 +28,11 @@ import {
  *
  * Prerequisites:
  *   docker compose --profile odoo up -d          # start Odoo + DB
- *   npm run odoo:init                             # create database & configure CRM
+ *   pnpm run odoo:init                             # create database & configure CRM
  *   docker compose --profile dev up dev           # start the Next.js app
  *
  * Run:
- *   npm run e2e:odoo
+ *   pnpm run e2e:odoo
  */
 
 // Unique identifier so each test run creates a distinct lead
@@ -49,7 +49,7 @@ test.describe("Odoo CRM — Lead Lifecycle", () => {
     const available = await isOdooAvailable(request);
     test.skip(
       !available,
-      "Odoo is not running — start it with: docker compose --profile odoo up -d && npm run odoo:init",
+      "Odoo is not running — start it with: docker compose --profile odoo up -d && pnpm run odoo:init",
     );
   });
 

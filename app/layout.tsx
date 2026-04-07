@@ -1,7 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PostHogProvider } from "@/components/posthog-provider";
 import "./globals.css";
+
+const CursorGlow = dynamic(
+  () => import("@/components/cursor-glow").then((m) => m.CursorGlow),
+  { ssr: false },
+);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,26 +23,30 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: {
-    default: "Leonel — Software Engineer",
+    default: "Leonel — Full-Stack Engineer",
     template: "%s | Leonel",
   },
   description:
-    "Personal developer portfolio and collaboration hub. Let's build something together.",
+    "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
   metadataBase: new URL(siteUrl),
   keywords: [
+    "full-stack engineer",
     "software engineer",
-    "full-stack developer",
-    "web development",
-    "portfolio",
-    "collaboration",
+    "AI integration",
+    "LLM",
+    "agentic workflows",
+    "product builder",
     "Next.js",
     "TypeScript",
     "React",
+    "Python",
+    "FastAPI",
+    "Docker",
   ],
   openGraph: {
-    title: "Leonel — Software Engineer",
+    title: "Leonel — Full-Stack Engineer",
     description:
-      "Personal developer portfolio and collaboration hub. Let's build something together.",
+      "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
     url: siteUrl,
     siteName: "Leonel",
     type: "website",
@@ -44,14 +54,28 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leonel — Software Engineer",
+    title: "Leonel — Full-Stack Engineer",
     description:
-      "Personal developer portfolio and collaboration hub. Let's build something together.",
+      "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f0f0f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e1e1e" },
+  ],
 };
 
 export default function RootLayout({
@@ -61,6 +85,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
@@ -72,6 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <CursorGlow />
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>

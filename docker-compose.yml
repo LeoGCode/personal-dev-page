@@ -6,17 +6,10 @@ services:
     restart: unless-stopped
     ports:
       - "${APP_PORT:-3000}:3000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/personal_site
       - ODOO_URL=http://odoo:8069
       - ODOO_DB=${ODOO_DB:-nexora}
       - ODOO_PERSONAL_TEAM_ID=${ODOO_PERSONAL_TEAM_ID:-}
-      - REDIS_URL=redis://redis:6379
       - RESEND_API_KEY=${RESEND_API_KEY:-}
       - EMAIL_FROM=${EMAIL_FROM:-hello@leoneldev.com}
       - NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-}
@@ -36,18 +29,12 @@ services:
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
       mailpit:
         condition: service_healthy
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/personal_site
       - ODOO_URL=http://odoo:8069
       - ODOO_DB=${ODOO_DB:-nexora}
       - ODOO_PERSONAL_TEAM_ID=${ODOO_PERSONAL_TEAM_ID:-}
-      - REDIS_URL=redis://redis:6379
       - RESEND_API_KEY=${RESEND_API_KEY:-}
       - EMAIL_FROM=${EMAIL_FROM:-hello@leoneldev.com}
       - NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-}
@@ -70,42 +57,6 @@ services:
       timeout: 5s
       retries: 30
       start_period: 30s
-
-  # ── PostgreSQL ──────────────────────────────────────────────
-  postgres:
-    image: postgres:18
-    container_name: personal-site-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: personal_site
-    ports:
-      - "${POSTGRES_PORT:-5433}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d personal_site"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
-
-  # ── Redis ───────────────────────────────────────────────────
-  redis:
-    image: redis:7-alpine
-    container_name: personal-site-redis
-    restart: unless-stopped
-    ports:
-      - "${REDIS_PORT:-6380}:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
 
   # ── Mailpit (local email) ──────────────────────────────────
   mailpit:
@@ -173,8 +124,6 @@ services:
       - odoo
 
 volumes:
-  postgres_data:
-  redis_data:
   dev_node_modules:
   dev_next:
   odoo_data:

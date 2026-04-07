@@ -12,7 +12,7 @@ import {
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 const navLinks = [
   { href: "/", key: "home" },
@@ -26,6 +26,7 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const otherLocale = locale === "en" ? "es" : "en";
 
@@ -34,15 +35,15 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md transition-[background-color,border-color] duration-300">
       <nav className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link
           href="/"
           className="font-mono text-lg font-bold tracking-tight transition-colors duration-200"
         >
           <motion.span
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
+            whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
             className="inline-block"
           >
             Leonel
@@ -76,16 +77,16 @@ export function Navbar() {
           <Button
             asChild
             size="sm"
-            className="group ml-2 transition-all duration-200 hover:shadow-md hover:shadow-primary/10"
+            className="group ml-2 transition-colors duration-200 hover:shadow-md hover:shadow-primary/10"
           >
             <Link href="/collaborate">{t("collaborate")}</Link>
           </Button>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }} whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}>
             <Button
               variant="ghost"
               size="sm"
               onClick={switchLocale}
-              className="ml-1 font-mono text-xs transition-all duration-200"
+              className="ml-1 font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}
             </Button>
@@ -96,12 +97,12 @@ export function Navbar() {
         {/* Mobile navigation */}
         <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }} whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}>
             <Button
               variant="ghost"
               size="sm"
               onClick={switchLocale}
-              className="font-mono text-xs transition-all duration-200"
+              className="font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}
             </Button>
@@ -109,7 +110,7 @@ export function Navbar() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <motion.div whileTap={{ rotate: 90 }}>
+                <motion.div whileTap={prefersReducedMotion ? undefined : { rotate: 90 }}>
                   <Menu className="h-5 w-5" />
                 </motion.div>
                 <span className="sr-only">{t("menu")}</span>
@@ -121,8 +122,8 @@ export function Navbar() {
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.key}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={prefersReducedMotion ? undefined : { opacity: 0, x: 20 }}
+                    animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                   >
                     <Link
@@ -139,8 +140,8 @@ export function Navbar() {
                   </motion.div>
                 ))}
                 <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={prefersReducedMotion ? undefined : { opacity: 0, x: 20 }}
+                  animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
                   transition={{ delay: navLinks.length * 0.05 }}
                 >
                   <Button asChild className="mt-2">

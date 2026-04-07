@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "Leonel — Software Engineer",
-    "description": "Personal developer portfolio and collaboration hub. Let's build something together."
+    "title": "Leonel — Full-Stack Engineer",
+    "description": "I ship products end-to-end and leverage AI to make them 10x more powerful."
   },
   "home": {
-    "meta_title": "Leonel — Software Engineer",
-    "meta_description": "Personal developer portfolio and collaboration hub. Full-stack engineer specializing in Next.js, TypeScript, and system architecture."
+    "meta_title": "Leonel — Full-Stack Engineer",
+    "meta_description": "Full-Stack Engineer who ships end-to-end products — from infra and backend to frontend — and integrates AI, agents, and LLMs to make them 10x more powerful."
   },
   "nav": {
     "home": "Home",
@@ -16,32 +16,37 @@
   },
   "hero": {
     "greeting": "Hi, I'm Leonel",
-    "title": "Software Engineer",
-    "subtitle": "I build reliable software and help teams ship faster. Open to collaboration, consulting, and open-source work.",
+    "title": "Full-Stack Engineer",
+    "subtitle": "I ship products end-to-end — from infrastructure and DevOps to backend and frontend — and leverage AI, agents, and LLMs to make them 10x more powerful.",
     "cta_primary": "Let's Collaborate",
-    "cta_secondary": "View My Work"
+    "cta_secondary": "View My Work",
+    "response_time": "I typically respond within 24h",
+    "latest_project": "Latest project"
   },
   "about": {
     "title": "About Me",
-    "paragraph_1": "I'm a software engineer who cares deeply about building things that work well — for users and for the teams behind them. I specialize in full-stack development, system architecture, and turning complex problems into clean, maintainable solutions.",
-    "paragraph_2": "Currently, I'm building <nexora>Nexora Group</nexora>, a software consultancy focused on delivering high-quality digital products. I work across the entire stack — from React and Next.js frontends to PostgreSQL databases and Docker infrastructure.",
-    "paragraph_3": "I'm bilingual (English/Spanish) and based in Latin America. Whether you need a technical co-founder for your next project, architecture advice, or an extra pair of hands on your codebase — I'm open to the conversation."
+    "paragraph_1": "I'm a Full-Stack Engineer who ships entire products as a one-man army — from infrastructure and DevOps, through backend APIs and databases, to polished frontends. When a product needs AI capabilities, I integrate LLMs, agentic workflows, and intelligent automation to make it dramatically more powerful.",
+    "paragraph_2": "Currently, I'm building <nexora>Nexora Group</nexora>, a software consultancy where I deliver end-to-end digital products. I work across the entire stack — React and Next.js frontends, Python and Node.js backends, PostgreSQL databases, Docker infrastructure — and layer in AI when it creates real value.",
+    "paragraph_3": "I'm bilingual (English/Spanish) and based in Latin America. Whether you need someone to take a product from zero to production, add AI capabilities to an existing platform, or just an experienced engineer who ships — I'm open to the conversation."
   },
   "skills": {
     "title": "Tech Stack",
     "subtitle": "Tools and technologies I work with daily.",
+    "foundation": "Foundation",
+    "horizon": "On the Horizon",
     "categories": {
       "languages": "Languages",
       "frontend": "Frontend",
       "backend": "Backend",
-      "observability": "Observability",
       "infrastructure": "Infrastructure",
+      "data_dbs": "Databases & Data",
+      "ai_llm": "AI & LLM Integration",
+      "observability": "Observability",
       "tools": "Tools & Platforms"
     },
     "levels": {
-      "daily": "Daily driver",
-      "proficient": "Proficient",
-      "exploring": "Exploring"
+      "deep": "Deep",
+      "augmented": "Augmented"
     }
   },
   "projects": {
@@ -91,8 +96,9 @@
     "title": "Let's Build Something Together",
     "subtitle": "Have an idea, a project, or just want to chat about tech? I'd love to hear from you.",
     "types": {
-      "project": "Project Collaboration",
-      "consulting": "Consulting",
+      "project": "End-to-End Product Build",
+      "ai_agent": "AI / Agent Integration",
+      "consulting": "Technical Consulting",
       "opensource": "Open Source",
       "speaking": "Speaking / Writing",
       "other": "Other"
@@ -145,8 +151,8 @@
     "optional": "optional"
   },
   "cta": {
-    "title": "Have an idea? Let's build it together.",
-    "subtitle": "I'm open to project collaboration, consulting, open-source contributions, and speaking opportunities.",
+    "title": "Have a product idea? I'll ship it.",
+    "subtitle": "From zero to production — full-stack, DevOps, and AI integration included. Let's talk about what you need built.",
     "button": "Start a Conversation"
   },
   "blog": {

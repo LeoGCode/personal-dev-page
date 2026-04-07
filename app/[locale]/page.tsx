@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { SkillsGrid } from "@/components/skills-grid";
+import { TechLayersSection } from "@/components/tech-stack-variants/tech-layers";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { CTABanner } from "@/components/cta-banner";
 import { AnimateInView } from "@/components/animate-in-view";
@@ -43,7 +43,7 @@ export default async function HomePage({
         <About />
       </AnimateInView>
       <AnimateInView delay={0.1}>
-        <SkillsGrid />
+        <TechLayersSection />
       </AnimateInView>
       <AnimateInView variant="fade-up" delay={0.05}>
         <FeaturedProjects locale={locale} />

@@ -142,6 +142,7 @@ export function CollaborateForm() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="project">{t("types.project")}</SelectItem>
+            <SelectItem value="ai_agent">{t("types.ai_agent")}</SelectItem>
             <SelectItem value="consulting">{t("types.consulting")}</SelectItem>
             <SelectItem value="opensource">{t("types.opensource")}</SelectItem>
             <SelectItem value="speaking">{t("types.speaking")}</SelectItem>

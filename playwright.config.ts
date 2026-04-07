@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const RECORD_VIDEO = process.env.RECORD_VIDEO === "true";
 
-// APP_PORT is set by scripts/ports.sh (sourced by npm scripts).
+// APP_PORT is set by scripts/ports.sh (sourced by pnpm scripts).
 // Fallback to 3000 for direct invocation.
 const APP_PORT = Number(process.env.APP_PORT || 3000);
 const BASE_URL = process.env.BASE_URL ?? `http://localhost:${APP_PORT}`;
@@ -60,8 +60,8 @@ export default defineConfig({
       },
     },
     // Showcase — full walkthrough of the site for video recording.
-    // Requires: docker compose up postgres redis (+ mailpit for email verification)
-    // Run with: npm run e2e:showcase
+    // Requires: docker compose up mailpit
+    // Run with: pnpm run e2e:showcase
     {
       name: "showcase",
       testMatch: ["**/full-showcase*"],
@@ -87,8 +87,8 @@ export default defineConfig({
     },
     // Odoo CRM — full lead lifecycle from form submission to CRM closure.
     // Requires: docker compose --profile odoo up (+ dev profile for the app)
-    //           npm run odoo:init  (first time only)
-    // Run with: npm run e2e:odoo
+    //           pnpm run odoo:init  (first time only)
+    // Run with: pnpm run e2e:odoo
     {
       name: "odoo-crm",
       testMatch: ["**/odoo-crm*"],

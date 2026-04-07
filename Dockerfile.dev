@@ -1,6 +1,7 @@
 FROM node:24-alpine
 
 RUN apk add --no-cache libc6-compat wget su-exec
+RUN corepack enable pnpm
 
 # Create app directory owned by the built-in "node" user (UID 1000)
 # so generated files match the host user and avoid root ownership.
@@ -11,9 +12,9 @@ HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=30 \
   CMD wget -qO- http://localhost:3000 || exit 1
 
 # Start as root only to fix volume permissions, then drop to "node"
-# for npm install and the dev server.  Named volumes (node_modules,
+# for pnpm install and the dev server.  Named volumes (node_modules,
 # .next) are created by Docker as root — chown them before use.
 CMD ["sh", "-c", "\
   chown node:node /app/node_modules /app/.next 2>/dev/null; \
-  exec su-exec node sh -c 'npm install --prefer-offline && npx next dev --hostname 0.0.0.0 --port 3000' \
+  exec su-exec node sh -c 'pnpm install && pnpm next dev --hostname 0.0.0.0 --port 3000' \
 "]

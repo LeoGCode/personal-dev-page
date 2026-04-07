@@ -15,7 +15,7 @@ import {
  * every page so the recorded video doubles as a site presentation.
  *
  * Prerequisites:
- *   docker compose up postgres redis mailpit
+ *   docker compose up mailpit
  *
  * Run with:
  *   RECORD_VIDEO=true npx playwright test full-showcase --project=desktop-chrome

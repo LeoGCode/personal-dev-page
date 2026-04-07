@@ -1,15 +1,25 @@
-const ODOO_URL = process.env.ODOO_URL || "http://localhost:8069";
-const ODOO_DB = process.env.ODOO_DB || "nexora";
-const ODOO_USER = process.env.ODOO_USER || "admin";
-const ODOO_PASSWORD = process.env.ODOO_PASSWORD || "admin";
+const ODOO_URL = process.env.ODOO_URL;
+const ODOO_DB = process.env.ODOO_DB;
+const ODOO_USER = process.env.ODOO_USER;
+const ODOO_PASSWORD = process.env.ODOO_PASSWORD;
+
+function assertOdooConfig() {
+  if (!ODOO_URL || !ODOO_DB || !ODOO_USER || !ODOO_PASSWORD) {
+    throw new Error(
+      "Missing Odoo configuration. Set ODOO_URL, ODOO_DB, ODOO_USER, and ODOO_PASSWORD environment variables.",
+    );
+  }
+}
 
 let cachedUid: number | null = null;
+let cachedUidExpiresAt = 0;
+const UID_TTL_MS = 3_600_000; // 1 hour
 
 async function jsonRpc(
   url: string,
   method: string,
   params: Record<string, unknown>,
-) {
+): Promise<unknown> {
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -31,7 +41,9 @@ async function jsonRpc(
 }
 
 async function authenticate(): Promise<number> {
-  if (cachedUid) return cachedUid;
+  assertOdooConfig();
+
+  if (cachedUid && Date.now() < cachedUidExpiresAt) return cachedUid;
 
   const uid = await jsonRpc(`${ODOO_URL}/jsonrpc`, "call", {
     service: "common",
@@ -40,8 +52,9 @@ async function authenticate(): Promise<number> {
   });
 
   if (!uid) throw new Error("Odoo authentication failed");
-  cachedUid = uid;
-  return uid;
+  cachedUid = uid as number;
+  cachedUidExpiresAt = Date.now() + UID_TTL_MS;
+  return cachedUid;
 }
 
 export async function odooRpc(
@@ -67,8 +80,10 @@ export async function createCrmLead(data: {
   tags: string[];
   teamId?: number;
 }) {
-  const tagIds = await ensureTags(data.tags);
-  const uid = await authenticate();
+  const [tagIds, uid] = await Promise.all([
+    ensureTags(data.tags),
+    authenticate(),
+  ]);
 
   return odooRpc("crm.lead", "create", [
     {
@@ -87,29 +102,29 @@ export async function createCrmLead(data: {
 }
 
 async function ensureTags(tagNames: string[]): Promise<number[]> {
-  const ids: number[] = [];
-  for (const name of tagNames) {
-    const existing = await odooRpc("crm.tag", "search", [
-      [["name", "=", name]],
-    ]);
-    if (existing.length > 0) {
-      ids.push(existing[0]);
-    } else {
+  const results = await Promise.all(
+    tagNames.map(async (name) => {
+      const existing = (await odooRpc("crm.tag", "search", [
+        [["name", "=", name]],
+      ])) as number[];
+      if (existing.length > 0) {
+        return existing[0];
+      }
       try {
-        const newId = await odooRpc("crm.tag", "create", [{ name }]);
-        ids.push(newId);
+        return (await odooRpc("crm.tag", "create", [{ name }])) as number;
       } catch {
         // Handle race condition: tag was created between our search and create
-        const retry = await odooRpc("crm.tag", "search", [
+        const retry = (await odooRpc("crm.tag", "search", [
           [["name", "=", name]],
-        ]);
+        ])) as number[];
         if (retry.length > 0) {
-          ids.push(retry[0]);
+          return retry[0];
         }
+        throw new Error(`Failed to create or find tag: ${name}`);
       }
-    }
-  }
-  return ids;
+    }),
+  );
+  return results;
 }
 
 export function buildCrmTags(data: {

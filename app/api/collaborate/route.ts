@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import { collaborateSchema } from "@/lib/schemas/collaborate";
 import { createCrmLead, buildCrmTags } from "@/lib/odoo";
-import { checkRateLimit } from "@/lib/redis";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { getEmailService } from "@/lib/email";
 import {
   renderConfirmationEmail,
@@ -9,39 +10,68 @@ import {
 } from "@/lib/email/templates";
 
 const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || "";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
+
+function getClientIp(request: Request): string {
+  // x-real-ip is set by most reverse proxies and is more reliable
+  // than x-forwarded-for which can be spoofed by the client.
+  // In production, ensure your reverse proxy sets this header.
+  return (
+    request.headers.get("x-real-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  );
+}
 
 export async function POST(request: Request) {
   try {
+    // CORS validation
+    const origin = request.headers.get("origin");
+    if (SITE_URL && origin && origin !== SITE_URL) {
+      return NextResponse.json(
+        { error: "Forbidden" },
+        { status: 403 },
+      );
+    }
+
     const body = await request.json();
 
     // Honeypot check
     if (body.honeypot) {
+      console.warn("[security] Honeypot triggered", {
+        ip: getClientIp(request),
+      });
       return NextResponse.json({ success: true });
     }
 
     // Validate
     const result = collaborateSchema.safeParse(body);
     if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
       return NextResponse.json(
-        { error: "Validation failed", details: result.error.flatten() },
+        {
+          error: "Validation failed",
+          fields: Object.keys(fieldErrors),
+        },
         { status: 400 },
       );
     }
 
     const data = result.data;
 
-    // Rate limiting (RATE_LIMIT_MAX can be raised for E2E testing)
-    const ip = request.headers.get("x-forwarded-for") || "unknown";
+    // Rate limiting
+    const ip = getClientIp(request);
     const maxAttempts = Number(process.env.RATE_LIMIT_MAX) || 3;
     const allowed = await checkRateLimit(ip, maxAttempts);
     if (!allowed) {
+      console.warn("[security] Rate limit exceeded", { ip });
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
         { status: 429 },
       );
     }
 
-    // Create CRM lead in Odoo
+    // Build CRM tags and lead description synchronously (no I/O)
     const tags = buildCrmTags({
       collaborationType: data.collaborationType,
       budget: data.budget,
@@ -59,74 +89,90 @@ export async function POST(request: Request) {
       data.description,
     ].join("\n");
 
-    try {
-      await createCrmLead({
-        name: `${data.collaborationType}: ${data.name}`,
-        contactName: data.name,
-        email: data.email,
-        description: leadDescription,
-        tags,
-      });
-    } catch (odooError) {
-      // Log but don't fail — the lead data is still in the request
-      console.error("Odoo CRM sync failed:", odooError);
+    // Return success immediately — do CRM sync and emails in the background
+    const response = NextResponse.json({ success: true });
+
+    // Add CORS headers
+    if (SITE_URL) {
+      response.headers.set("Access-Control-Allow-Origin", SITE_URL);
     }
 
-    // Send confirmation email to the person who submitted the form
-    const emailService = await getEmailService();
+    after(async () => {
+      const emailService = await getEmailService();
 
-    try {
-      const confirmation = await renderConfirmationEmail({
-        name: data.name,
-        collaborationType: data.collaborationType,
-        budget: data.budget,
-        timeline: data.timeline,
-        locale: data.locale,
-      });
-
-      await emailService.send({
-        to: data.email,
-        subject:
-          data.locale === "es"
-            ? "¡Gracias por tu mensaje!"
-            : "Thanks for reaching out!",
-        text: confirmation.text,
-        html: confirmation.html,
-      });
-    } catch (emailError) {
-      console.error("Confirmation email failed:", emailError);
-    }
-
-    // Send notification email to the site owner
-    if (NOTIFICATION_EMAIL) {
-      try {
-        const notification = await renderNotificationEmail({
-          name: data.name,
+      const results = await Promise.allSettled([
+        // CRM lead creation
+        createCrmLead({
+          name: `${data.collaborationType}: ${data.name}`,
+          contactName: data.name,
           email: data.email,
-          collaborationType: data.collaborationType,
-          description: data.description,
-          budget: data.budget,
-          timeline: data.timeline,
-          referral: data.referral,
-          locale: data.locale,
-        });
+          description: leadDescription,
+          tags,
+        }),
 
-        await emailService.send({
-          to: NOTIFICATION_EMAIL,
-          subject:
-            data.locale === "es"
-              ? `Nuevo lead: ${data.collaborationType} — ${data.name}`
-              : `New lead: ${data.collaborationType} — ${data.name}`,
-          text: notification.text,
-          html: notification.html,
-        });
-      } catch (notifyError) {
-        console.error("Owner notification email failed:", notifyError);
-      }
-    }
+        // Confirmation email
+        (async () => {
+          const confirmation = await renderConfirmationEmail({
+            name: data.name,
+            collaborationType: data.collaborationType,
+            budget: data.budget,
+            timeline: data.timeline,
+            locale: data.locale,
+          });
+          await emailService.send({
+            to: data.email,
+            subject:
+              data.locale === "es"
+                ? "¡Gracias por tu mensaje!"
+                : "Thanks for reaching out!",
+            text: confirmation.text,
+            html: confirmation.html,
+          });
+        })(),
 
-    return NextResponse.json({ success: true });
+        // Notification email (only if configured)
+        ...(NOTIFICATION_EMAIL
+          ? [
+              (async () => {
+                const notification = await renderNotificationEmail({
+                  name: data.name,
+                  email: data.email,
+                  collaborationType: data.collaborationType,
+                  description: data.description,
+                  budget: data.budget,
+                  timeline: data.timeline,
+                  referral: data.referral,
+                  locale: data.locale,
+                });
+                await emailService.send({
+                  to: NOTIFICATION_EMAIL,
+                  subject:
+                    data.locale === "es"
+                      ? `Nuevo lead: ${data.collaborationType} — ${data.name}`
+                      : `New lead: ${data.collaborationType} — ${data.name}`,
+                  text: notification.text,
+                  html: notification.html,
+                });
+              })(),
+            ]
+          : []),
+      ]);
+
+      // Log failures to Sentry
+      results.forEach((result, index) => {
+        if (result.status === "rejected") {
+          const labels = ["CRM lead creation", "Confirmation email", "Notification email"];
+          Sentry.captureException(result.reason, {
+            tags: { operation: labels[index] ?? "unknown" },
+          });
+          console.error(`${labels[index] ?? "Operation"} failed:`, result.reason);
+        }
+      });
+    });
+
+    return response;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Collaborate API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },

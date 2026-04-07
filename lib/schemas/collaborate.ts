@@ -5,6 +5,7 @@ export const collaborateFormSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   collaborationType: z.enum([
     "project",
+    "ai_agent",
     "consulting",
     "opensource",
     "speaking",
