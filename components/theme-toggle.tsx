@@ -1,45 +1,40 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
+
+function getSnapshot() {
+  const stored = localStorage.getItem("theme");
+  return stored === "light" ? "light" : "dark";
+}
+
+function getServerSnapshot() {
+  return "dark" as const;
+}
+
 export function ThemeToggle() {
-  const [dark, setDark] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  const t = useTranslations("common");
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const dark = theme === "dark";
 
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("theme");
-    const isDark = stored ? stored === "dark" : true;
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
-  }, []);
-
-  function toggle() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
-  }
-
-  if (!mounted) {
-    return (
-      <Button variant="ghost" size="icon" disabled>
-        <Moon className="h-4 w-4" />
-        <span className="sr-only">Toggle theme</span>
-      </Button>
-    );
-  }
+  const toggle = useCallback(() => {
+    const next = dark ? "light" : "dark";
+    localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle("dark", next === "dark");
+    window.dispatchEvent(new StorageEvent("storage"));
+  }, [dark]);
 
   return (
     <Button variant="ghost" size="icon" onClick={toggle}>
-      {dark ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
-      <span className="sr-only">Toggle theme</span>
+      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      <span className="sr-only">{t("toggle_theme")}</span>
     </Button>
   );
 }

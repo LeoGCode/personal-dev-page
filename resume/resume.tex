@@ -1,0 +1,199 @@
+%-------------------------
+% AI Engineer Resume - Leonel Guerrero
+% Optimized for ATS & AI/Agentic Engineering roles (2026)
+%-------------------------
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.65in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+\usepackage{multicol}
+
+%----------COLORS----------
+\definecolor{primary}{HTML}{1a1a2e}
+\definecolor{accent}{HTML}{0f3460}
+\definecolor{linkcolor}{HTML}{1565C0}
+
+%----------FORMATTING----------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkcolor,
+    urlcolor=linkcolor,
+    pdfborder={0 0 0}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% Section formatting
+\titleformat{\section}{
+    \vspace{-6pt}\scshape\raggedright\large\bfseries\color{primary}
+}{}{0em}{}[\color{accent}\titlerule\vspace{-4pt}]
+
+% Subsection formatting
+\titleformat{\subsection}[runin]{
+    \bfseries
+}{}{0em}{}[]
+
+% Custom commands
+\newcommand{\resumeHeading}[4]{
+    \vspace{-1pt}
+    \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small #2} \\
+        \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+    \vspace{2pt}
+    \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small #2} \\
+        \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeItem}[1]{\item\small{#1}\vspace{-2pt}}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.2in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+%-------------------------------------------
+%                 DOCUMENT
+%-------------------------------------------
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge\bfseries\color{primary} Leonel Guerrero} \\[6pt]
+    {\large Software Engineer $\cdot$ AI-Integrated Systems $\cdot$ Agentic Workflows} \\[6pt]
+    \small
+    \faIcon{map-marker-alt}\ Dallas, TX \quad
+    \faIcon{phone}\ +1 (945) 338-0177 \quad
+    \faIcon{envelope}\ \href{mailto:leonelisaacguerrero@gmail.com}{leonelisaacguerrero@gmail.com} \\[3pt]
+    \faIcon{linkedin}\ \href{https://www.linkedin.com/in/leogcode}{linkedin.com/in/leogcode} \quad
+    \faIcon{github}\ \href{https://github.com/leogcode}{github.com/leogcode} \quad
+    \faIcon{globe}\ \href{https://leonelguerrero.com}{leonelguerrero.com}
+\end{center}
+
+%----------SUMMARY----------
+\section{Professional Summary}
+Software Engineer with 5+ years of experience building production full-stack systems, now specializing in AI-integrated applications and agentic workflows. Proven track record designing scalable APIs, real-time platforms, and cross-platform mobile applications. Experienced in architecting systems with LLM orchestration, agent-driven development pipelines, and AI-powered tooling. Bilingual (English/Spanish) -- authorized to work in the US (no sponsorship needed).
+
+%----------TECHNICAL SKILLS----------
+\section{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+    \textbf{AI \& LLM:} & LangChain, LangGraph, RAG Pipelines, Prompt Engineering, Context Engineering, Vector Databases, Agent Orchestration, Multi-Agent Systems, MCP (Model Context Protocol), Structured Outputs, Function Calling \\[3pt]
+    \textbf{Languages:} & Python, TypeScript, JavaScript, SQL, Java, HTML5, CSS3 \\[3pt]
+    \textbf{Frontend:} & React, Next.js, React Native, Tailwind CSS, Zustand, Streaming UI \\[3pt]
+    \textbf{Backend:} & Node.js, FastAPI, Spring Framework, REST APIs, GraphQL, WebSockets \\[3pt]
+    \textbf{Data \& DBs:} & PostgreSQL, PGVector, MongoDB, Redis, Drizzle ORM, Amazon S3, Pinecone \\[3pt]
+    \textbf{DevOps \& Cloud:} & Docker, CI/CD, GitHub Actions, AWS, Vercel, Linux, Nginx \\[3pt]
+    \textbf{Observability:} & OpenTelemetry, Grafana, Grafana Alloy, Loki, Prometheus, Tempo, Alertmanager, Sentry, PostHog \\[3pt]
+    \textbf{Tools \& Testing:} & Git, Playwright, Vitest, ESLint, Zod Schema Validation \\
+\end{tabularx}
+
+%----------EXPERIENCE----------
+\section{Professional Experience}
+
+\resumeSubheading
+    {Acid Tango}{April 2025 -- Present}
+    {Full Stack Engineer -- AI-Integrated Systems}{Remote}
+\resumeItemListStart
+    \resumeItem{Architect and develop AI-ready full-stack applications with Next.js, TypeScript, and PostgreSQL, designing structured data pipelines compatible with LLM ingestion and retrieval-augmented generation.}
+    \resumeItem{Implement real-time streaming interfaces and API layers optimized for AI inference services, structured output parsing with Zod schemas, and agent-driven workflow integration.}
+    \resumeItem{Build production monitoring and observability pipelines using Sentry and PostHog, tracking system performance metrics applicable to AI service latency and reliability monitoring.}
+    \resumeItem{Design containerized microservice architectures with Docker for reproducible deployment of AI-backed services and scalable application infrastructure.}
+\resumeItemListEnd
+
+\resumeSubheading
+    {tiigre App}{January 2024 -- April 2025}
+    {Full Stack Engineer \& Mobile Developer}{Caracas, Venezuela}
+\resumeItemListStart
+    \resumeItem{Designed and developed cross-platform mobile applications for Android and iOS using React Native, implementing responsive interfaces with structured input/output validation patterns used in AI function calling.}
+    \resumeItem{Built full-stack web applications integrating frontend frameworks with backend APIs, delivering scalable solutions processing thousands of daily user interactions with sub-second response times.}
+    \resumeItem{Collaborated with cross-functional teams to translate business requirements into technical specifications, applying the same decomposition methodology used in agentic task orchestration.}
+    \resumeItem{Implemented end-to-end testing with Playwright and schema-driven validation with Zod, establishing automated evaluation pipelines applicable to AI system reliability testing.}
+\resumeItemListEnd
+
+\resumeSubheading
+    {Modu, LLC}{January 2022 -- December 2023}
+    {Software Engineer}{Caracas, Venezuela}
+\resumeItemListStart
+    \resumeItem{Developed production applications across the full stack using React, Node.js, and PostgreSQL, building the API design and data modeling expertise critical for AI service architectures.}
+    \resumeItem{Built a cross-platform mobile application with React Native, enhancing product accessibility and demonstrating expertise in multi-platform deployment strategies used for AI-powered apps.}
+    \resumeItem{Led Agile development practices across cross-functional teams, managing iterative delivery cycles and sprint-based workflows aligned with rapid AI prototyping methodologies.}
+    \resumeItem{Mastered diverse technology stacks including HTML, CSS, JavaScript, React, and Node.js, building the polyglot engineering foundation required for modern AI system integration.}
+\resumeItemListEnd
+
+\resumeSubheading
+    {Self-Employed}{May 2021 -- April 2022}
+    {Freelance Software Developer}{Caracas, Venezuela}
+\resumeItemListStart
+    \resumeItem{Delivered custom web applications for multiple clients across diverse industries, developing tailored solutions with adaptive technology selection -- the same approach used in designing AI agent tool ecosystems.}
+    \resumeItem{Resolved complex technical challenges including debugging and optimizing codebases, delivering innovative solutions that exceeded client expectations and built systematic problem-solving skills essential for LLM debugging and prompt optimization.}
+    \resumeItem{Demonstrated proficiency across multiple programming languages and frameworks, adapting to project-specific requirements with rapid technology adoption.}
+\resumeItemListEnd
+
+\resumeSubheading
+    {HLC Electronic}{September 2018 -- February 2021}
+    {Computer Technician}{Caracas, Venezuela}
+\resumeItemListStart
+    \resumeItem{Troubleshot hardware and software issues across desktop, laptop, and peripheral systems, developing deep systems-level understanding of compute infrastructure underlying AI workloads.}
+    \resumeItem{Installed, configured, and maintained operating systems (Windows, macOS, Linux) and software applications, building the Linux administration and environment management skills used in AI model deployment.}
+\resumeItemListEnd
+
+%----------EDUCATION----------
+\section{Education}
+
+\resumeSubheading
+    {Universidad Sim\'{o}n Bol\'{i}var}{September 2018 -- December 2024}
+    {Bachelor of Engineering -- Computer Engineering}{Caracas, Venezuela}
+\resumeItemListStart
+    \resumeItem{Relevant coursework: Algorithms, Data Structures, Distributed Systems, Databases, Software Engineering, Statistics}
+\resumeItemListEnd
+
+\resumeSubheading
+    {Platzi}{February 2019}
+    {Certificate -- Computer Science}{}
+
+%----------PUBLICATIONS----------
+\section{Publications}
+\resumeSubHeadingListStart
+    \item\small\textbf{Energy Optimization through a Multidimensional Distributed Scheduling Approach} -- Research on distributed computing optimization, applicable to multi-agent workload distribution and LLM inference scheduling. \vspace{-2pt}
+    \item\small\textbf{An Evaluation of the Impact of End-to-End Query Optimization Strategies on Energy Consumption} -- Research on query optimization with direct applications to vector database retrieval and RAG pipeline efficiency.
+\resumeSubHeadingListEnd
+
+%----------CERTIFICATIONS----------
+\section{Certifications}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=0.15in, label={\small\faIcon{certificate}}, itemsep=-2pt]
+    \small
+    \item Curso de Fundamentos de Bases de Datos
+    \item Curso Profesional de Git y GitHub
+    \item Curso de Django
+    \item Curso de Fundamentos de .NET
+    \item Curso de Fundamentos de Electricidad y Electr\'{o}nica
+\end{itemize}
+\end{multicols}
+
+%----------ADDITIONAL----------
+\section{Additional}
+\begin{itemize}[leftmargin=0.15in, label={}, itemsep=-2pt]
+    \small
+    \item \textbf{Languages:} English (Fluent), Spanish (Native)
+    \item \textbf{Work Authorization:} Authorized to work in the US (valid work permit -- no sponsorship needed)
+    \item \textbf{Interests:} Open-source AI tooling, Multi-agent system design, LLM-driven developer productivity
+\end{itemize}
+
+\end{document}

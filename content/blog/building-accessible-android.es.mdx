@@ -1,0 +1,42 @@
+---
+title: "Construyendo una App Android Accesible con Integración de LLM"
+date: "2026-03-25"
+tags: ["android", "accesibilidad", "llm", "kotlin"]
+description: "Cómo OpenClaw usa la API de Accesibilidad de Android para despacho de gestos, lectura de pantalla y comandos en lenguaje natural con un LLM."
+---
+
+# Construyendo una App Android Accesible con Integración de LLM
+
+OpenClaw empezó con una pregunta simple: ¿qué pasa si podés controlar tu teléfono Android con lenguaje natural? No a través de un asistente de voz que abre apps, sino a través de un servicio de accesibilidad real que lee la pantalla, entiende el contexto, y despacha gestos por vos.
+
+## La API de Accesibilidad de Android
+
+El `AccessibilityService` de Android es una de las APIs más poderosas y menos comprendidas de la plataforma. Le da a tu app un stream en tiempo real de todo lo que pasa en pantalla: árboles de nodos UI, descripciones de contenido, cambios de ventana, y eventos de notificaciones.
+
+OpenClaw se registra como un servicio de accesibilidad y mantiene un modelo en vivo del estado actual de la pantalla. Cada vez que la UI cambia, el servicio recibe un `AccessibilityEvent`, recorre el árbol de nodos, y construye una representación estructurada de lo que es visible — botones, campos de texto, etiquetas, y sus posiciones.
+
+El desafío crítico es el rendimiento. El árbol de nodos puede contener cientos de nodos, y los eventos se disparan rápidamente durante animaciones y scroll. OpenClaw hace debounce de las actualizaciones y usa una estrategia de diffing para procesar solo cambios significativos, manteniendo el uso de CPU al mínimo.
+
+## Despacho de Gestos
+
+El `AccessibilityService` puede despachar gestos a través de `dispatchGesture()`, que acepta un `GestureDescription` — una secuencia de trazos con coordenadas y timing. Así es como OpenClaw traduce comandos de alto nivel ("scrolleá abajo", "tocá el botón de búsqueda") en eventos táctiles físicos.
+
+Construir un despacho de gestos confiable requirió resolver el mapeo de coordenadas. El árbol de nodos de accesibilidad provee los bounds de pantalla para cada elemento, pero esos bounds se mueven durante animaciones y después de eventos del teclado virtual. OpenClaw espera un frame estable antes de despachar, y valida que el nodo destino todavía exista post-gesto.
+
+## Lectura del Estado de Pantalla
+
+Los árboles de nodos crudos no son útiles para un LLM. OpenClaw los transforma en un formato de texto estructurado que captura lo importante: elementos interactivos con sus etiquetas, jerarquía de contenido, y relaciones espaciales. Una pantalla con una barra de búsqueda, tres tarjetas de resultados, y una barra de navegación inferior se convierte en una descripción de texto concisa que cabe dentro de un prompt.
+
+Esta transformación es el puente entre el sistema de vistas de Android y el modelo de lenguaje. Hacerlo bien significó iterar sobre qué información realmente necesita el LLM para tomar decisiones correctas — demasiado detalle causa confusión, muy poco causa acciones incorrectas.
+
+## Integración de LLM para Comandos en Lenguaje Natural
+
+El usuario habla o escribe un comando como "abrí mi último email" o "apagá el WiFi." OpenClaw envía el estado actual de la pantalla más el comando a un LLM, que devuelve un plan de acción estructurado: una secuencia de taps, swipes, entradas de texto, y esperas.
+
+El plan de acción se ejecuta paso a paso, con el estado de pantalla re-evaluado después de cada acción. Si la siguiente pantalla predicha por el LLM no coincide con la realidad (por ejemplo, apareció un diálogo), re-planifica desde el estado actual. Este enfoque de loop cerrado maneja la imprevisibilidad de las UIs reales de Android mucho mejor que un plan de un solo intento.
+
+## Lecciones Aprendidas
+
+Las APIs de accesibilidad fueron diseñadas para lectores de pantalla, no para automatización. Muchas apps tienen descripciones de contenido pobres o elementos interactivos sin etiqueta. OpenClaw recurre a OCR y heurísticas visuales cuando el árbol de nodos es insuficiente, pero los mejores resultados vienen de apps que siguen las guías de accesibilidad de Android.
+
+El LLM no es la parte difícil — la parte difícil es construir un puente confiable entre contenido de pantalla no estructurado y acciones estructuradas. Si ese puente está bien hecho, el modelo de lenguaje se vuelve notablemente capaz.

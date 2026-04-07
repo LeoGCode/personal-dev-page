@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { getTranslations } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { CollaborateForm } from "@/components/collaborate-form";
 
-export const metadata: Metadata = {
-  title: "Let's Collaborate",
-  description: "Have a project idea? Let's build something together.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "collaborate" });
+
+  return {
+    title: t("meta_title"),
+    description: t("meta_description"),
+  };
+}
 
 export default async function CollaboratePage({
   params,
@@ -25,9 +33,7 @@ export default async function CollaboratePage({
           <h1 className="font-mono text-3xl font-bold tracking-tight sm:text-4xl">
             {t("title")}
           </h1>
-          <p className="mt-3 text-muted-foreground">
-            {t("subtitle")}
-          </p>
+          <p className="mt-3 text-muted-foreground">{t("subtitle")}</p>
         </div>
         <CollaborateForm />
       </div>

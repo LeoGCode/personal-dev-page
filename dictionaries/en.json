@@ -3,6 +3,10 @@
     "title": "Leonel — Software Engineer",
     "description": "Personal developer portfolio and collaboration hub. Let's build something together."
   },
+  "home": {
+    "meta_title": "Leonel — Software Engineer",
+    "meta_description": "Personal developer portfolio and collaboration hub. Full-stack engineer specializing in Next.js, TypeScript, and system architecture."
+  },
   "nav": {
     "home": "Home",
     "projects": "Projects",
@@ -30,6 +34,7 @@
       "languages": "Languages",
       "frontend": "Frontend",
       "backend": "Backend",
+      "observability": "Observability",
       "infrastructure": "Infrastructure",
       "tools": "Tools & Platforms"
     },
@@ -49,6 +54,11 @@
       "in_progress": "In Progress",
       "planned": "Planned"
     },
+    "all_title": "All Projects",
+    "all_subtitle": "Everything I've built or am building.",
+    "back_to_projects": "Back to projects",
+    "no_projects": "No projects yet. Check back soon.",
+    "highlights": "Highlights",
     "detail": {
       "tech_stack": "Tech Stack",
       "problem": "The Problem",
@@ -61,7 +71,23 @@
       "interested_cta": "Let's talk about your project"
     }
   },
+  "common": {
+    "toggle_theme": "Toggle theme",
+    "skip_to_content": "Skip to content"
+  },
+  "not_found": {
+    "title": "Page not found",
+    "message": "The page you're looking for doesn't exist or has been moved.",
+    "back_home": "Back to home"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "An unexpected error occurred. Please try again.",
+    "retry": "Try again"
+  },
   "collaborate": {
+    "meta_title": "Let's Collaborate",
+    "meta_description": "Have a project idea? Let's build something together.",
     "title": "Let's Build Something Together",
     "subtitle": "Have an idea, a project, or just want to chat about tech? I'd love to hear from you.",
     "types": {
@@ -129,7 +155,8 @@
     "read_more": "Read more",
     "min_read": "min read",
     "back": "Back to blog",
-    "all_posts": "All Posts"
+    "all_posts": "All Posts",
+    "no_posts": "No posts yet. Check back soon."
   },
   "footer": {
     "built_with": "Built with Next.js, Tailwind CSS, and Odoo",

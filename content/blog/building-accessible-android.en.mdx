@@ -1,0 +1,42 @@
+---
+title: "Building an Accessibility-First Android App with LLM Integration"
+date: "2026-03-25"
+tags: ["android", "accessibility", "llm", "kotlin"]
+description: "How OpenClaw uses Android's Accessibility API for gesture dispatch, screen reading, and natural language commands powered by an LLM."
+---
+
+# Building an Accessibility-First Android App with LLM Integration
+
+OpenClaw started with a simple question: what if you could control your Android phone with natural language? Not through a voice assistant that launches apps, but through an actual accessibility service that reads the screen, understands context, and dispatches gestures on your behalf.
+
+## The Android Accessibility API
+
+Android's `AccessibilityService` is one of the most powerful and least understood APIs on the platform. It gives your app a real-time stream of everything happening on screen: UI node trees, content descriptions, window changes, and notification events.
+
+OpenClaw registers as an accessibility service and maintains a live model of the current screen state. Every time the UI changes, the service receives an `AccessibilityEvent`, walks the node tree, and builds a structured representation of what is visible — buttons, text fields, labels, and their positions.
+
+The critical challenge is performance. The node tree can contain hundreds of nodes, and events fire rapidly during animations and scrolling. OpenClaw debounces updates and uses a diffing strategy to only process meaningful changes, keeping CPU usage minimal.
+
+## Gesture Dispatch
+
+The `AccessibilityService` can dispatch gestures through `dispatchGesture()`, which accepts a `GestureDescription` — a sequence of stroke paths with coordinates and timing. This is how OpenClaw translates high-level commands ("scroll down", "tap the search button") into physical touch events.
+
+Building reliable gesture dispatch required solving coordinate mapping. The accessibility node tree provides screen bounds for every element, but those bounds shift during animations and after soft keyboard events. OpenClaw waits for a stable frame before dispatching, and validates that the target node still exists post-gesture.
+
+## Screen State Reading
+
+Raw node trees are not useful for an LLM. OpenClaw transforms them into a structured text format that captures what matters: interactive elements with their labels, content hierarchy, and spatial relationships. A screen with a search bar, three result cards, and a bottom nav becomes a concise text description that fits within a prompt.
+
+This transformation is the bridge between Android's view system and the language model. Getting it right meant iterating on what information the LLM actually needs to make correct decisions — too much detail causes confusion, too little causes wrong actions.
+
+## LLM Integration for Natural Language Commands
+
+The user speaks or types a command like "open my last email" or "turn off WiFi." OpenClaw sends the current screen state plus the command to an LLM, which returns a structured action plan: a sequence of taps, swipes, text inputs, and waits.
+
+The action plan executes step by step, with the screen state re-evaluated after each action. If the LLM's predicted next screen does not match reality (e.g., a dialog appeared), it re-plans from the current state. This closed-loop approach handles the unpredictability of real Android UIs far better than a single-shot plan.
+
+## Lessons Learned
+
+Accessibility APIs were designed for screen readers, not automation. Many apps have poor content descriptions or unlabeled interactive elements. OpenClaw falls back to OCR and visual heuristics when the node tree is insufficient, but the best results come from apps that follow Android's accessibility guidelines.
+
+The LLM is not the hard part — the hard part is building a reliable bridge between unstructured screen content and structured actions. Get that bridge right, and the language model becomes remarkably capable.

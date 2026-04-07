@@ -5,7 +5,11 @@ const ODOO_PASSWORD = process.env.ODOO_PASSWORD || "admin";
 
 let cachedUid: number | null = null;
 
-async function jsonRpc(url: string, method: string, params: Record<string, unknown>) {
+async function jsonRpc(
+  url: string,
+  method: string,
+  params: Record<string, unknown>,
+) {
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -19,7 +23,9 @@ async function jsonRpc(url: string, method: string, params: Record<string, unkno
 
   const data = await response.json();
   if (data.error) {
-    throw new Error(data.error.data?.message || data.error.message || "Odoo RPC error");
+    throw new Error(
+      data.error.data?.message || data.error.message || "Odoo RPC error",
+    );
   }
   return data.result;
 }
@@ -42,7 +48,7 @@ export async function odooRpc(
   model: string,
   method: string,
   args: unknown[],
-  kwargs: Record<string, unknown> = {}
+  kwargs: Record<string, unknown> = {},
 ) {
   const uid = await authenticate();
 
@@ -62,6 +68,7 @@ export async function createCrmLead(data: {
   teamId?: number;
 }) {
   const tagIds = await ensureTags(data.tags);
+  const uid = await authenticate();
 
   return odooRpc("crm.lead", "create", [
     {
@@ -69,8 +76,12 @@ export async function createCrmLead(data: {
       contact_name: data.contactName,
       email_from: data.email,
       description: data.description,
-      team_id: data.teamId || Number(process.env.ODOO_PERSONAL_TEAM_ID) || false,
+      team_id:
+        data.teamId || Number(process.env.ODOO_PERSONAL_TEAM_ID) || false,
       tag_ids: tagIds.map((id: number) => [4, id]),
+      // Assign to the authenticated Odoo user so they receive
+      // internal notifications and the lead appears in "My Pipeline"
+      user_id: uid,
     },
   ]);
 }
@@ -78,12 +89,24 @@ export async function createCrmLead(data: {
 async function ensureTags(tagNames: string[]): Promise<number[]> {
   const ids: number[] = [];
   for (const name of tagNames) {
-    const existing = await odooRpc("crm.tag", "search", [[["name", "=", name]]]);
+    const existing = await odooRpc("crm.tag", "search", [
+      [["name", "=", name]],
+    ]);
     if (existing.length > 0) {
       ids.push(existing[0]);
     } else {
-      const newId = await odooRpc("crm.tag", "create", [{ name }]);
-      ids.push(newId);
+      try {
+        const newId = await odooRpc("crm.tag", "create", [{ name }]);
+        ids.push(newId);
+      } catch {
+        // Handle race condition: tag was created between our search and create
+        const retry = await odooRpc("crm.tag", "search", [
+          [["name", "=", name]],
+        ]);
+        if (retry.length > 0) {
+          ids.push(retry[0]);
+        }
+      }
     }
   }
   return ids;

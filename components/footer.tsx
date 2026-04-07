@@ -1,7 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Mail, FileText } from "lucide-react";
+import { Mail, FileText, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
+import { usePostHog } from "posthog-js/react";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -22,48 +24,77 @@ function LinkedinIcon({ className }: { className?: string }) {
 const socialLinks = [
   {
     key: "github",
-    href: "https://github.com/leonel",
+    href: "https://github.com/LeoGCode",
     icon: GithubIcon,
+    ariaLabel: "GitHub profile",
   },
   {
     key: "linkedin",
-    href: "https://linkedin.com/in/leonel",
+    href: "https://linkedin.com/in/leogcode",
     icon: LinkedinIcon,
+    ariaLabel: "LinkedIn profile",
   },
   {
     key: "email",
     href: "mailto:hello@leoneldev.com",
     icon: Mail,
+    ariaLabel: "Send email",
   },
 ];
 
 export function Footer() {
   const t = useTranslations("footer");
+  const posthog = usePostHog();
 
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-5xl px-4 py-12">
+    <footer>
+      {/* Gradient top border */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="mx-auto max-w-5xl px-4 py-12"
+      >
         <div className="flex flex-col items-center gap-6 text-center">
           {/* Social links */}
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => (
-              <a
+              <motion.a
                 key={link.key}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
-                aria-label={link.key}
+                className="rounded-md p-2 text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                aria-label={link.ariaLabel}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                onClick={() =>
+                  posthog?.capture("outbound_link_clicked", {
+                    url: link.href,
+                    label: link.key,
+                    context: "footer",
+                  })
+                }
               >
                 <link.icon className="h-5 w-5" />
-              </a>
+              </motion.a>
             ))}
+            {/* Resume link */}
             <a
               href="/resume.pdf"
-              className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
+              className="group inline-flex items-center gap-1 rounded-md p-2 text-muted-foreground transition-colors duration-200 hover:text-foreground"
               aria-label={t("resume")}
+              onClick={() =>
+                posthog?.capture("resume_downloaded", {
+                  context: "footer",
+                })
+              }
             >
               <FileText className="h-5 w-5" />
+              <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
             </a>
           </div>
 
@@ -74,31 +105,28 @@ export function Footer() {
               href="https://nexoragroup.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
+              className="text-primary underline underline-offset-4 hover:text-primary/80 transition-colors duration-200"
+              onClick={() =>
+                posthog?.capture("outbound_link_clicked", {
+                  url: "https://nexoragroup.com",
+                  label: "nexora",
+                  context: "footer",
+                })
+              }
             >
               Nexora Group
             </a>
           </p>
 
-          {/* Resume link (text) */}
-          <a
-            href="/resume.pdf"
-            className="text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
-          >
-            {t("resume")}
-          </a>
-
           {/* Built with */}
-          <p className="text-xs text-muted-foreground">
-            {t("built_with")}
-          </p>
+          <p className="text-xs text-muted-foreground">{t("built_with")}</p>
 
           {/* Copyright */}
           <p className="text-xs text-muted-foreground">
             {t("copyright", { year: String(new Date().getFullYear()) })}
           </p>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 }

@@ -2,7 +2,13 @@ import { NextResponse } from "next/server";
 import { collaborateSchema } from "@/lib/schemas/collaborate";
 import { createCrmLead, buildCrmTags } from "@/lib/odoo";
 import { checkRateLimit } from "@/lib/redis";
-import { resend, EMAIL_FROM } from "@/lib/resend";
+import { getEmailService } from "@/lib/email";
+import {
+  renderConfirmationEmail,
+  renderNotificationEmail,
+} from "@/lib/email/templates";
+
+const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || "";
 
 export async function POST(request: Request) {
   try {
@@ -18,19 +24,20 @@ export async function POST(request: Request) {
     if (!result.success) {
       return NextResponse.json(
         { error: "Validation failed", details: result.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const data = result.data;
 
-    // Rate limiting
+    // Rate limiting (RATE_LIMIT_MAX can be raised for E2E testing)
     const ip = request.headers.get("x-forwarded-for") || "unknown";
-    const allowed = await checkRateLimit(ip);
+    const maxAttempts = Number(process.env.RATE_LIMIT_MAX) || 3;
+    const allowed = await checkRateLimit(ip, maxAttempts);
     if (!allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -42,20 +49,22 @@ export async function POST(request: Request) {
       locale: data.locale,
     });
 
+    const leadDescription = [
+      `Type: ${data.collaborationType}`,
+      `Budget: ${data.budget || "Not specified"}`,
+      `Timeline: ${data.timeline || "Not specified"}`,
+      `Referral: ${data.referral || "Not specified"}`,
+      `Language: ${data.locale}`,
+      "",
+      data.description,
+    ].join("\n");
+
     try {
       await createCrmLead({
         name: `${data.collaborationType}: ${data.name}`,
         contactName: data.name,
         email: data.email,
-        description: [
-          `Type: ${data.collaborationType}`,
-          `Budget: ${data.budget || "Not specified"}`,
-          `Timeline: ${data.timeline || "Not specified"}`,
-          `Referral: ${data.referral || "Not specified"}`,
-          `Language: ${data.locale}`,
-          "",
-          data.description,
-        ].join("\n"),
+        description: leadDescription,
         tags,
       });
     } catch (odooError) {
@@ -63,18 +72,57 @@ export async function POST(request: Request) {
       console.error("Odoo CRM sync failed:", odooError);
     }
 
-    // Send confirmation email
+    // Send confirmation email to the person who submitted the form
+    const emailService = await getEmailService();
+
     try {
-      await resend.emails.send({
-        from: EMAIL_FROM,
+      const confirmation = await renderConfirmationEmail({
+        name: data.name,
+        collaborationType: data.collaborationType,
+        budget: data.budget,
+        timeline: data.timeline,
+        locale: data.locale,
+      });
+
+      await emailService.send({
         to: data.email,
-        subject: data.locale === "es" ? "¡Gracias por tu mensaje!" : "Thanks for reaching out!",
-        text: data.locale === "es"
-          ? `Hola ${data.name},\n\nGracias por contactarme. Revisaré tu mensaje y te responderé dentro de las próximas 48 horas.\n\n— Leonel`
-          : `Hi ${data.name},\n\nThanks for reaching out. I'll review your message and get back to you within 48 hours.\n\n— Leonel`,
+        subject:
+          data.locale === "es"
+            ? "¡Gracias por tu mensaje!"
+            : "Thanks for reaching out!",
+        text: confirmation.text,
+        html: confirmation.html,
       });
     } catch (emailError) {
       console.error("Confirmation email failed:", emailError);
+    }
+
+    // Send notification email to the site owner
+    if (NOTIFICATION_EMAIL) {
+      try {
+        const notification = await renderNotificationEmail({
+          name: data.name,
+          email: data.email,
+          collaborationType: data.collaborationType,
+          description: data.description,
+          budget: data.budget,
+          timeline: data.timeline,
+          referral: data.referral,
+          locale: data.locale,
+        });
+
+        await emailService.send({
+          to: NOTIFICATION_EMAIL,
+          subject:
+            data.locale === "es"
+              ? `Nuevo lead: ${data.collaborationType} — ${data.name}`
+              : `New lead: ${data.collaborationType} — ${data.name}`,
+          text: notification.text,
+          html: notification.html,
+        });
+      } catch (notifyError) {
+        console.error("Owner notification email failed:", notifyError);
+      }
     }
 
     return NextResponse.json({ success: true });
@@ -82,7 +130,7 @@ export async function POST(request: Request) {
     console.error("Collaborate API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

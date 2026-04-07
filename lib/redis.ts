@@ -1,6 +1,9 @@
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
-async function redisCommand(command: string, ...args: string[]): Promise<string | null> {
+async function redisCommand(
+  command: string,
+  ...args: string[]
+): Promise<string | null> {
   const url = new URL(REDIS_URL);
   // Use a simple HTTP-based approach or direct TCP
   // For simplicity, use fetch to a Redis REST API if available
@@ -46,7 +49,10 @@ function inMemoryFallback(command: string, ...args: string[]): string | null {
   return null;
 }
 
-export async function checkRateLimit(ip: string, maxAttempts = 3): Promise<boolean> {
+export async function checkRateLimit(
+  ip: string,
+  maxAttempts = 3,
+): Promise<boolean> {
   const key = `collab:${ip}`;
   const count = await redisCommand("INCR", key);
   if (Number(count) === 1) {

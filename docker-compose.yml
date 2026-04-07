@@ -1,29 +1,77 @@
 services:
+  # ── Production app ──────────────────────────────────────────
   app:
     build: .
-    container_name: personal-site-dev
+    container_name: personal-site-app
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "${APP_PORT:-3000}:3000"
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/personal_site
       - ODOO_URL=http://odoo:8069
-      - ODOO_DB=nexora
+      - ODOO_DB=${ODOO_DB:-nexora}
+      - ODOO_PERSONAL_TEAM_ID=${ODOO_PERSONAL_TEAM_ID:-}
       - REDIS_URL=redis://redis:6379
-      - RESEND_API_KEY=${RESEND_API_KEY}
-      - EMAIL_FROM=hello@leoneldev.com
-      - NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}
-      - NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST}
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - EMAIL_FROM=${EMAIL_FROM:-hello@leoneldev.com}
+      - NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-}
+      - NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY:-}
+      - NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST:-}
+      - MAILPIT_SMTP_HOST=mailpit
+      - MAILPIT_SMTP_PORT=1025
     profiles:
       - full
 
+  # ── Development app (hot reload) ───────────────────────────
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: personal-site-dev
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/personal_site
+      - ODOO_URL=http://odoo:8069
+      - ODOO_DB=${ODOO_DB:-nexora}
+      - ODOO_PERSONAL_TEAM_ID=${ODOO_PERSONAL_TEAM_ID:-}
+      - REDIS_URL=redis://redis:6379
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - EMAIL_FROM=${EMAIL_FROM:-hello@leoneldev.com}
+      - NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-}
+      - NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY:-}
+      - NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST:-}
+      - NEXT_PUBLIC_SITE_URL=http://localhost:${APP_PORT:-3000}
+      - MAILPIT_SMTP_HOST=mailpit
+      - MAILPIT_SMTP_PORT=1025
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX:-100}
+      - WATCHPACK_POLLING=true
+    volumes:
+      - .:/app
+      - dev_node_modules:/app/node_modules
+      - dev_next:/app/.next
+    profiles:
+      - dev
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  # ── PostgreSQL ──────────────────────────────────────────────
   postgres:
     image: postgres:18
     container_name: personal-site-postgres
@@ -33,27 +81,102 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: personal_site
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d personal_site"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
+  # ── Redis ───────────────────────────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: personal-site-redis
     restart: unless-stopped
     ports:
-      - "6380:6379"
+      - "${REDIS_PORT:-6380}:6379"
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
 
+  # ── Mailpit (local email) ──────────────────────────────────
   mailpit:
     image: axllent/mailpit:latest
     container_name: personal-site-mailpit
     restart: unless-stopped
     ports:
-      - "8025:8025"
-      - "1025:1025"
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8025/api/v1/info || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  # ── Odoo CRM ──────────────────────────────────────────────
+  odoo:
+    image: odoo:18
+    container_name: personal-site-odoo
+    restart: unless-stopped
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+    ports:
+      - "${ODOO_PORT:-8069}:8069"
+    environment:
+      - HOST=odoo-db
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD=odoo
+    volumes:
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+      - odoo_data:/var/lib/odoo
+      - odoo_addons:/mnt/extra-addons
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8069/web/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    profiles:
+      - odoo
+
+  # ── Odoo PostgreSQL (dedicated — Odoo manages its own DB) ─
+  odoo-db:
+    image: postgres:18
+    container_name: personal-site-odoo-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    ports:
+      - "${ODOO_DB_PORT:-5434}:5432"
+    volumes:
+      - odoo_db_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    profiles:
+      - odoo
 
 volumes:
   postgres_data:
   redis_data:
+  dev_node_modules:
+  dev_next:
+  odoo_data:
+  odoo_addons:
+  odoo_db_data:

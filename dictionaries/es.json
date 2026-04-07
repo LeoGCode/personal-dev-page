@@ -3,6 +3,10 @@
     "title": "Leonel — Ingeniero de Software",
     "description": "Portafolio personal y espacio de colaboración. Construyamos algo juntos."
   },
+  "home": {
+    "meta_title": "Leonel — Ingeniero de Software",
+    "meta_description": "Portafolio personal y espacio de colaboración. Ingeniero full-stack especializado en Next.js, TypeScript y arquitectura de sistemas."
+  },
   "nav": {
     "home": "Inicio",
     "projects": "Proyectos",
@@ -30,6 +34,7 @@
       "languages": "Lenguajes",
       "frontend": "Frontend",
       "backend": "Backend",
+      "observability": "Observabilidad",
       "infrastructure": "Infraestructura",
       "tools": "Herramientas y Plataformas"
     },
@@ -49,6 +54,11 @@
       "in_progress": "En Progreso",
       "planned": "Planeado"
     },
+    "all_title": "Todos los Proyectos",
+    "all_subtitle": "Todo lo que he construido o estoy construyendo.",
+    "back_to_projects": "Volver a proyectos",
+    "no_projects": "Todavía no hay proyectos. Volvé pronto.",
+    "highlights": "Destacados",
     "detail": {
       "tech_stack": "Stack Tecnológico",
       "problem": "El Problema",
@@ -61,7 +71,23 @@
       "interested_cta": "Hablemos de tu proyecto"
     }
   },
+  "common": {
+    "toggle_theme": "Cambiar tema",
+    "skip_to_content": "Ir al contenido"
+  },
+  "not_found": {
+    "title": "Página no encontrada",
+    "message": "La página que buscás no existe o fue movida.",
+    "back_home": "Volver al inicio"
+  },
+  "error": {
+    "title": "Algo salió mal",
+    "message": "Ocurrió un error inesperado. Por favor intentá de nuevo.",
+    "retry": "Intentar de nuevo"
+  },
   "collaborate": {
+    "meta_title": "Colaboremos",
+    "meta_description": "¿Tenés una idea de proyecto? Construyamos algo juntos.",
     "title": "Construyamos Algo Juntos",
     "subtitle": "¿Tenés una idea, un proyecto, o simplemente querés charlar sobre tecnología? Me encantaría escucharte.",
     "types": {
@@ -129,7 +155,8 @@
     "read_more": "Leer más",
     "min_read": "min de lectura",
     "back": "Volver al blog",
-    "all_posts": "Todos los Posts"
+    "all_posts": "Todos los Posts",
+    "no_posts": "Todavía no hay publicaciones. Volvé pronto."
   },
   "footer": {
     "built_with": "Hecho con Next.js, Tailwind CSS y Odoo",

@@ -1,20 +1,36 @@
 ---
-title: "Cómo construí 990 landing pages con una sola app de Next.js"
-date: "2026-04-15"
-tags: ["nextjs", "arquitectura", "odoo"]
-description: "La estrategia multi-landing basada en configuración detrás de Nexora Group."
+title: "Cómo construí 22+ landings de marca desde una sola app Next.js"
+date: "2026-03-15"
+tags: ["nextjs", "arquitectura", "odoo", "typescript"]
+description: "La estrategia multi-landing basada en configuración detrás de Nexora Group — un solo codebase, 22+ servicios, cero copy-paste."
 ---
 
-# Cómo construí 990 landing pages con una sola app de Next.js
+# Cómo construí 22+ landings de marca desde una sola app Next.js
 
-Próximamente — un análisis profundo de la arquitectura detrás del sistema multi-landing de Nexora Group.
+Cuando manejás una consultora de software que ofrece más de 22 servicios en múltiples mercados, necesitás muchas landing pages. Construir cada una a mano es una pesadilla de mantenimiento. Así que construí un sistema que las genera todas desde archivos de configuración.
 
-## El Problema
+## La Arquitectura Basada en Configuración
 
-Cuando sos una consultora de software que ofrece más de 22 servicios en múltiples mercados, necesitás muchas landing pages. Pero construir y mantener cientos de páginas individuales no es sostenible.
+Cada landing page en Nexora está definida por un solo objeto de configuración en TypeScript. Cada config declara el nombre del servicio, el copy del hero, bloques de features, testimonios, preguntas frecuentes y variantes de CTA. La app de Next.js lee estas configs en build time y genera páginas completamente estáticas — una por servicio, por idioma.
 
-## La Solución
+La clave: las landing pages son 90% estructura, 10% contenido. Al extraer el contenido en configs tipadas y mantener el layout en componentes compartidos, eliminé la duplicación por completo. Agregar una nueva landing de servicio toma unos 15 minutos escribiendo copy, no código.
 
-Una sola aplicación Next.js que genera todas las landing pages desde archivos de configuración. Cada servicio tiene su propio subdominio, cada variante de mercado tiene su propia URL, y todo comparte la misma biblioteca de componentes.
+## El Sistema de Variantes
 
-Más detalles próximamente.
+No todos los mercados necesitan el mismo mensaje. El sistema de variantes permite que cada config declare overrides para audiencias específicas. Un mismo servicio puede tener una variante "startup" que enfatiza velocidad y costo, y una variante "enterprise" que enfatiza compliance y SLAs — mismos componentes, diferente copy y orden.
+
+Las variantes se resuelven en build time con una estrategia simple de merge: config base + overrides de variante. TypeScript asegura que cada variante satisfaga el schema completo de la página, así que no hay sorpresas en runtime.
+
+## El Pipeline de Leads
+
+Cada landing incluye un formulario de contacto que pasa por un pipeline estricto: validación del lado del cliente con Zod, re-validación del lado del servidor en un route handler de Next.js, y después una llamada JSON-RPC a Odoo CRM. Cada lead se etiqueta automáticamente con la landing de origen, tipo de servicio, idioma y variante — así la vista de ventas en Odoo muestra exactamente de dónde vino cada lead.
+
+La protección contra spam usa un campo honeypot más rate limiting respaldado por Redis por IP. Sin CAPTCHAs, sin fricción.
+
+## Lo Que Aprendí
+
+La lección más grande fue que **las buenas abstracciones generan interés compuesto**. Las primeras cinco landings requirieron esfuerzo real de ingeniería para que el sistema quedara bien. Las landings seis a veintidós fueron mayormente escribir objetos de configuración tipo YAML. Cuando hay un cambio de diseño, se propaga a todos lados instantáneamente.
+
+La segunda lección: tipá tus configs agresivamente. TypeScript atrapó docenas de campos faltantes y typos que habrían sido bugs silenciosos en un setup menos estricto.
+
+Si estás construyendo un sitio de marketing multi-página y te encontrás copiando componentes entre páginas, pará. Extraé la estructura, parametrizá el contenido, y dejá que la herramienta de build haga el resto.

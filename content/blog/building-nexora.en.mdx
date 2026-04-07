@@ -1,20 +1,36 @@
 ---
-title: "How I Built 990 Landing Pages with One Next.js App"
-date: "2026-04-15"
-tags: ["nextjs", "architecture", "odoo"]
-description: "The config-driven multi-landing strategy behind Nexora Group."
+title: "How I Built 22+ Branded Landings from One Next.js App"
+date: "2026-03-15"
+tags: ["nextjs", "architecture", "odoo", "typescript"]
+description: "The config-driven multi-landing strategy behind Nexora Group — one codebase, 22+ services, zero copy-paste."
 ---
 
-# How I Built 990 Landing Pages with One Next.js App
+# How I Built 22+ Branded Landings from One Next.js App
 
-Coming soon — a deep dive into the architecture behind Nexora Group's config-driven multi-landing system.
+When you run a software consultancy that offers 22+ services across multiple markets, you need a lot of landing pages. Building each one by hand is a maintenance nightmare. So I built a system that generates all of them from configuration files.
 
-## The Problem
+## The Config-Driven Architecture
 
-When you're a software consultancy offering 22+ services across multiple markets, you need a lot of landing pages. But building and maintaining hundreds of individual pages isn't sustainable.
+Every landing page in Nexora is defined by a single TypeScript configuration object. Each config declares the service name, hero copy, feature blocks, testimonials, FAQ items, and CTA variants. The Next.js app reads these configs at build time and generates fully static pages — one per service, per locale.
 
-## The Solution
+The key insight: landing pages are 90% structure, 10% content. By extracting the content into typed configs and keeping the layout in shared components, I eliminated duplication entirely. Adding a new service landing takes about 15 minutes of writing copy, not code.
 
-A single Next.js application that generates all landing pages from configuration files. Each service gets its own subdomain, each market variant gets its own URL, and everything shares the same component library.
+## The Variant System
 
-More details coming soon.
+Not every market needs the same messaging. The variant system lets each config declare overrides for specific audiences. A single service can have a "startup" variant emphasizing speed and cost, and an "enterprise" variant emphasizing compliance and SLAs — same components, different copy and ordering.
+
+Variants are resolved at build time through a simple merge strategy: base config + variant overrides. TypeScript ensures every variant satisfies the full page schema, so there are no runtime surprises.
+
+## The Lead Pipeline
+
+Every landing includes a contact form that flows through a strict pipeline: client-side validation with Zod, server-side re-validation in a Next.js route handler, and then a JSON-RPC call to Odoo CRM. Each lead is automatically tagged with the source landing, service type, locale, and variant — so the sales view in Odoo shows exactly where every lead came from.
+
+Spam protection uses a honeypot field plus Redis-backed rate limiting per IP. No CAPTCHAs, no friction.
+
+## What I Learned
+
+The biggest lesson was that **good abstractions pay compound interest**. The first five landings took real engineering effort to get the system right. Landings six through twenty-two were mostly writing YAML-like config objects. When a design change happens, it propagates everywhere instantly.
+
+The second lesson: type your configs aggressively. TypeScript caught dozens of missing fields and typos that would have been silent bugs in a less strict setup.
+
+If you are building a multi-page marketing site and find yourself copying components between pages, stop. Extract the structure, parameterize the content, and let the build tool do the rest.

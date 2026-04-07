@@ -18,7 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePostHog } from "posthog-js/react";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -26,8 +27,13 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 export function CollaborateForm() {
   const t = useTranslations("collaborate");
   const locale = useLocale();
+  const posthog = usePostHog();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    posthog?.capture("collaborate_form_viewed");
+  }, [posthog]);
 
   const {
     register,
@@ -44,6 +50,9 @@ export function CollaborateForm() {
   async function onSubmit(data: CollaborateFormData) {
     setStatus("submitting");
     setErrorMessage("");
+    posthog?.capture("collaborate_form_submitted", {
+      collaboration_type: data.collaborationType,
+    });
 
     try {
       const response = await fetch("/api/collaborate", {
@@ -57,11 +66,18 @@ export function CollaborateForm() {
         throw new Error(body.error || "Something went wrong");
       }
 
+      posthog?.capture("collaborate_form_success", {
+        collaboration_type: data.collaborationType,
+      });
       setStatus("success");
     } catch (err) {
-      setErrorMessage(
-        err instanceof Error ? err.message : "Something went wrong"
-      );
+      const message =
+        err instanceof Error ? err.message : "Something went wrong";
+      posthog?.capture("collaborate_form_error", {
+        collaboration_type: data.collaborationType,
+        error: message,
+      });
+      setErrorMessage(message);
       setStatus("error");
     }
   }
@@ -71,24 +87,7 @@ export function CollaborateForm() {
       <div className="flex flex-col items-center gap-4 py-16 text-center">
         <CheckCircle className="h-12 w-12 text-primary" />
         <h3 className="font-mono text-xl font-bold">{t("success_title")}</h3>
-        <p className="max-w-md text-muted-foreground">
-          {t("success_message")}
-        </p>
-      </div>
-    );
-  }
-
-  if (status === "error") {
-    return (
-      <div className="flex flex-col items-center gap-4 py-16 text-center">
-        <AlertCircle className="h-12 w-12 text-destructive" />
-        <h3 className="font-mono text-xl font-bold">{t("error_title")}</h3>
-        <p className="max-w-md text-muted-foreground">
-          {errorMessage || t("error_message")}
-        </p>
-        <Button variant="outline" onClick={() => setStatus("idle")}>
-          {t("try_again")}
-        </Button>
+        <p className="max-w-md text-muted-foreground">{t("success_message")}</p>
       </div>
     );
   }
@@ -132,7 +131,10 @@ export function CollaborateForm() {
         <Label htmlFor="collaborationType">{t("fields.type")}</Label>
         <Select
           onValueChange={(value) =>
-            setValue("collaborationType", value as CollaborateFormData["collaborationType"])
+            setValue(
+              "collaborationType",
+              value as CollaborateFormData["collaborationType"],
+            )
           }
         >
           <SelectTrigger>
@@ -243,6 +245,28 @@ export function CollaborateForm() {
           </SelectContent>
         </Select>
       </div>
+
+      {/* Inline error banner */}
+      {status === "error" && (
+        <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
+          <div className="flex-1">
+            <p className="font-mono text-sm font-medium">
+              {t("error_title")}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {errorMessage || t("error_message")}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setStatus("idle")}
+            className="shrink-0 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+          >
+            {t("try_again")}
+          </button>
+        </div>
+      )}
 
       {/* Submit */}
       <Button

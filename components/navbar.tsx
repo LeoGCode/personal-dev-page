@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "motion/react";
 
 const navLinks = [
   { href: "/", key: "home" },
@@ -32,79 +34,121 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md transition-all duration-300">
       <nav className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="font-mono text-lg font-bold tracking-tight">
-          Leonel
+        <Link
+          href="/"
+          className="font-mono text-lg font-bold tracking-tight transition-colors duration-200"
+        >
+          <motion.span
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-block"
+          >
+            Leonel
+          </motion.span>
         </Link>
 
         {/* Desktop navigation */}
         <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.key}
-              href={link.href}
-              className={`rounded-md px-3 py-2 text-sm transition-colors hover:text-foreground ${
-                pathname === link.href
-                  ? "text-foreground"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {t(link.key)}
-            </Link>
-          ))}
-          <Button asChild size="sm" className="ml-2">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.key}
+                href={link.href}
+                className={`relative rounded-md px-3 py-2 text-sm transition-colors hover:text-foreground ${
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-primary/40 after:transition-all after:duration-300 hover:after:w-full"
+                }`}
+              >
+                {t(link.key)}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-primary"
+                  />
+                )}
+              </Link>
+            );
+          })}
+          <Button
+            asChild
+            size="sm"
+            className="group ml-2 transition-all duration-200 hover:shadow-md hover:shadow-primary/10"
+          >
             <Link href="/collaborate">{t("collaborate")}</Link>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={switchLocale}
-            className="ml-1 font-mono text-xs"
-          >
-            {otherLocale.toUpperCase()}
-          </Button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={switchLocale}
+              className="ml-1 font-mono text-xs transition-all duration-200"
+            >
+              {otherLocale.toUpperCase()}
+            </Button>
+          </motion.div>
+          <ThemeToggle />
         </div>
 
         {/* Mobile navigation */}
         <div className="flex items-center gap-1 md:hidden">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={switchLocale}
-            className="font-mono text-xs"
-          >
-            {otherLocale.toUpperCase()}
-          </Button>
+          <ThemeToggle />
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={switchLocale}
+              className="font-mono text-xs transition-all duration-200"
+            >
+              {otherLocale.toUpperCase()}
+            </Button>
+          </motion.div>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
+                <motion.div whileTap={{ rotate: 90 }}>
+                  <Menu className="h-5 w-5" />
+                </motion.div>
                 <span className="sr-only">{t("menu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-64">
               <SheetTitle className="font-mono">Leonel</SheetTitle>
               <div className="mt-6 flex flex-col gap-2">
-                {navLinks.map((link) => (
-                  <Link
+                {navLinks.map((link, i) => (
+                  <motion.div
                     key={link.key}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={`rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent ${
-                      pathname === link.href
-                        ? "text-foreground"
-                        : "text-muted-foreground"
-                    }`}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
                   >
-                    {t(link.key)}
-                  </Link>
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent ${
+                        pathname === link.href
+                          ? "text-foreground"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {t(link.key)}
+                    </Link>
+                  </motion.div>
                 ))}
-                <Button asChild className="mt-2">
-                  <Link href="/collaborate" onClick={() => setOpen(false)}>
-                    {t("collaborate")}
-                  </Link>
-                </Button>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                >
+                  <Button asChild className="mt-2">
+                    <Link href="/collaborate" onClick={() => setOpen(false)}>
+                      {t("collaborate")}
+                    </Link>
+                  </Button>
+                </motion.div>
               </div>
             </SheetContent>
           </Sheet>

@@ -2,92 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
-import { useState } from "react";
-
-type SkillLevel = "daily" | "proficient" | "exploring";
-
-interface Skill {
-  name: string;
-  level: SkillLevel;
-}
-
-interface SkillCategory {
-  category: string;
-  items: Skill[];
-}
-
-const skills: SkillCategory[] = [
-  {
-    category: "languages",
-    items: [
-      { name: "TypeScript", level: "daily" },
-      { name: "Python", level: "proficient" },
-      { name: "Go", level: "exploring" },
-    ],
-  },
-  {
-    category: "frontend",
-    items: [
-      { name: "React", level: "daily" },
-      { name: "Next.js", level: "daily" },
-      { name: "Tailwind CSS", level: "daily" },
-      { name: "Motion", level: "proficient" },
-    ],
-  },
-  {
-    category: "backend",
-    items: [
-      { name: "Node.js", level: "daily" },
-      { name: "PostgreSQL", level: "daily" },
-      { name: "Redis", level: "proficient" },
-      { name: "Drizzle ORM", level: "proficient" },
-    ],
-  },
-  {
-    category: "infrastructure",
-    items: [
-      { name: "Docker", level: "daily" },
-      { name: "Linux", level: "daily" },
-      { name: "Traefik", level: "proficient" },
-      { name: "GitHub Actions", level: "proficient" },
-    ],
-  },
-  {
-    category: "tools",
-    items: [
-      { name: "Git", level: "daily" },
-      { name: "Odoo", level: "proficient" },
-      { name: "PostHog", level: "proficient" },
-      { name: "Cloudflare", level: "proficient" },
-    ],
-  },
-];
-
-const levelColors: Record<SkillLevel, string> = {
-  daily: "border-primary/50 bg-primary/10 text-primary",
-  proficient: "border-border bg-secondary text-secondary-foreground",
-  exploring: "border-border bg-muted text-muted-foreground",
-};
-
-function SkillTag({ skill, levelLabel }: { skill: Skill; levelLabel: string }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      className={`relative cursor-default rounded-md border px-3 py-1.5 text-sm transition-colors ${levelColors[skill.level]}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.15 }}
-    >
-      {hovered ? (
-        <span className="font-mono text-xs">{levelLabel}</span>
-      ) : (
-        skill.name
-      )}
-    </motion.div>
-  );
-}
+import { Badge } from "@/components/ui/badge";
+import { skills, levelColors } from "@/content/skills";
 
 export function SkillsGrid() {
   const t = useTranslations("skills");
@@ -99,41 +15,58 @@ export function SkillsGrid() {
           <h2 className="font-mono text-2xl font-bold tracking-tight sm:text-3xl">
             {t("title")}
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            {t("subtitle")}
-          </p>
+          <p className="mt-3 text-muted-foreground">{t("subtitle")}</p>
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((group) => (
-            <div key={group.category}>
-              <h3 className="mb-3 font-mono text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((group, i) => (
+            <motion.div
+              key={group.category}
+              className="group relative rounded-2xl border border-border/40 bg-card/80 backdrop-blur-sm p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-[0_0_24px_-6px_theme(colors.emerald.500/15%)]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              whileHover={{ y: -4 }}
+            >
+              <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400/80">
                 {t(`categories.${group.category}`)}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {group.items.map((skill) => (
-                  <SkillTag
+                  <motion.div
                     key={skill.name}
-                    skill={skill}
-                    levelLabel={t(`levels.${skill.level}`)}
-                  />
+                    whileHover={{ scale: 1.08 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 17,
+                    }}
+                  >
+                    <Badge
+                      variant="outline"
+                      className={`${levelColors[skill.level]} rounded-lg px-3 py-1`}
+                    >
+                      {skill.name}
+                    </Badge>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-6 text-xs text-muted-foreground">
+        <div className="mt-10 flex items-center justify-center gap-8 text-sm text-muted-foreground">
           <span className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-primary/50" />
+            <span className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_6px_theme(colors.emerald.500/40%)]" />
             {t("levels.daily")}
           </span>
           <span className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
+            <span className="h-3 w-3 rounded-full bg-sky-500 shadow-[0_0_6px_theme(colors.sky.500/40%)]" />
             {t("levels.proficient")}
           </span>
           <span className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-muted" />
+            <span className="h-3 w-3 rounded-full bg-amber-500 shadow-[0_0_6px_theme(colors.amber.500/40%)]" />
             {t("levels.exploring")}
           </span>
         </div>

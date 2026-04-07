@@ -1,0 +1,38 @@
+---
+title: "De la Idea al Deploy: Mi Estrategia Docker Compose de Dev a Prod"
+date: "2026-03-20"
+tags: ["docker", "devops", "traefik", "infraestructura"]
+description: "Cómo uso un solo stack de Docker Compose para desarrollo local y producción — con Mailpit, MinIO, Traefik y Let's Encrypt en un solo VPS."
+---
+
+# De la Idea al Deploy: Mi Estrategia Docker Compose de Dev a Prod
+
+Cada proyecto que construyo corre sobre el mismo patrón de infraestructura: un solo stack de Docker Compose que funciona idénticamente en desarrollo y producción. La única diferencia es qué archivo override cargás. Así funciona y por qué elegí este enfoque sobre alternativas más complejas.
+
+## Desarrollo Local: Mailpit y MinIO
+
+En desarrollo, necesito email y almacenamiento de objetos sin tocar servicios reales. Mailpit reemplaza cualquier proveedor SMTP — cada email saliente cae en una interfaz web local en `localhost:8025` en vez de enviarse realmente. MinIO actúa como reemplazo de almacenamiento S3-compatible. Ambos son contenedores individuales con cero configuración.
+
+El archivo `docker-compose.override.yml` intercambia las URLs de servicios de producción por sus equivalentes locales. El código de la aplicación nunca se entera de la diferencia porque la interfaz es idéntica: SMTP es SMTP, S3 es S3.
+
+Esto significa que incorporar un nuevo desarrollador toma un solo comando: `docker compose up`. Sin API keys, sin cuentas sandbox, sin "pedile a alguien el archivo .env."
+
+## Producción: Traefik y Let's Encrypt
+
+En producción, Traefik se sienta delante de todo como reverse proxy. Lee las labels de los contenedores para descubrir servicios, rutea tráfico por dominio, y provisiona certificados TLS automáticamente a través de Let's Encrypt. Agregar un nuevo servicio al stack significa agregar un contenedor con las labels correctas — Traefik se encarga del resto.
+
+El override de producción intercambia Mailpit por Resend (envío real de emails) y MinIO por cualquier proveedor S3-compatible que tenga sentido. Las variables de entorno controlan qué servicios son reales y cuáles son mocks.
+
+## La Arquitectura de VPS Compartido
+
+Todos mis proyectos — Nexora Group, este sitio personal, OpenClaw — corren en un solo VPS de Hetzner. Comparten PostgreSQL, Redis, Odoo, y herramientas de monitoreo (PostHog, Uptime Kuma). CrowdSec maneja la detección de intrusiones a nivel de Traefik.
+
+El trade-off clave: un VPS compartido es más barato y simple que Kubernetes o configuraciones multi-servidor, pero implica deploys coordinados. Uso una estrategia blue-green simple con health checks — el nuevo contenedor debe pasar su health check antes de que Traefik le rutee tráfico.
+
+Los backups corren cada noche: dumps de PostgreSQL a un volumen offsite encriptado, snapshots de Redis junto con ellos. Uptime Kuma me alerta en menos de 60 segundos si algo se cae.
+
+## ¿Por Qué No Kubernetes?
+
+Para un desarrollador solo corriendo un puñado de servicios, Kubernetes agrega complejidad operacional sin beneficio proporcional. Docker Compose me da infraestructura declarativa, ambientes reproducibles, y deploys de un solo comando. Cuando lo supere, la arquitectura containerizada hace que la migración a K8s sea directa — pero ese día todavía no llegó.
+
+La filosofía es simple: usá la herramienta más simple que resuelva el problema, y asegurate de que escale al siguiente nivel de complejidad sin necesitar una reescritura.
