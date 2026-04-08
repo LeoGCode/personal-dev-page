@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { CursorGlow } from "@/components/cursor-glow";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -74,14 +75,16 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
