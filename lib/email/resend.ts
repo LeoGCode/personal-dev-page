@@ -1,7 +1,6 @@
 import { Resend } from "resend";
 import type { EmailService, SendEmailParams } from "./base";
-
-const EMAIL_FROM = process.env.EMAIL_FROM || "Leonel <hello@leogcode.dev>";
+import { EMAIL_FROM } from "@/lib/site";
 
 export function createResendService(): EmailService {
   const apiKey = process.env.RESEND_API_KEY;

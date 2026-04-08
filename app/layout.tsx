@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { CursorGlow } from "@/components/cursor-glow";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,17 +15,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-const siteUrl = rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`;
-
 export const metadata: Metadata = {
   title: {
-    default: "Leonel — Full-Stack Engineer",
-    template: "%s | Leonel",
+    default: `${SITE_NAME} — Full-Stack Engineer`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
     "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   keywords: [
     "full-stack engineer",
     "software engineer",
@@ -40,17 +38,17 @@ export const metadata: Metadata = {
     "Docker",
   ],
   openGraph: {
-    title: "Leonel — Full-Stack Engineer",
+    title: `${SITE_NAME} — Full-Stack Engineer`,
     description:
       "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
-    url: siteUrl,
-    siteName: "Leonel",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leonel — Full-Stack Engineer",
+    title: `${SITE_NAME} — Full-Stack Engineer`,
     description:
       "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
   },

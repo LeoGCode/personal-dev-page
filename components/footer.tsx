@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Mail, FileText, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { usePostHog } from "posthog-js/react";
+import { SITE_EMAIL } from "@/lib/site";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -36,7 +37,7 @@ const socialLinks = [
   },
   {
     key: "email",
-    href: "mailto:hello@leogcode.dev",
+    href: `mailto:${SITE_EMAIL}`,
     icon: Mail,
     ariaLabel: "Send email",
   },

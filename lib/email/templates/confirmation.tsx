@@ -10,6 +10,7 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import { SITE_DOMAIN } from "@/lib/site";
 
 // ── i18n ─────────────────────────────────────────────────────────
 
@@ -24,8 +25,7 @@ const copy = {
     budget: "Budget",
     timeline: "Timeline",
     sign_off: "Talk soon,",
-    footer:
-      "You received this email because you submitted a collaboration request on leogcode.dev.",
+    footer: `You received this email because you submitted a collaboration request on ${SITE_DOMAIN}.`,
   },
   es: {
     preview: (name: string) =>
@@ -37,10 +37,9 @@ const copy = {
     budget: "Presupuesto",
     timeline: "Plazo",
     sign_off: "Hablamos pronto,",
-    footer:
-      "Recibiste este email porque enviaste una solicitud de colaboración en leogcode.dev.",
+    footer: `Recibiste este email porque enviaste una solicitud de colaboración en ${SITE_DOMAIN}.`,
   },
-} as const;
+};
 
 const typeLabels: Record<string, Record<string, string>> = {
   en: {

@@ -8,9 +8,7 @@ import {
   renderConfirmationEmail,
   renderNotificationEmail,
 } from "@/lib/email/templates";
-
-const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || "";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
+import { NOTIFICATION_EMAIL, SITE_URL } from "@/lib/site";
 
 /**
  * Build the set of allowed origins from SITE_URL.

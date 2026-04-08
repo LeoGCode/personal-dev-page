@@ -1,8 +1,8 @@
 import type { EmailService, SendEmailParams } from "./base";
+import { EMAIL_FROM } from "@/lib/site";
 
 const MAILPIT_SMTP_HOST = process.env.MAILPIT_SMTP_HOST || "localhost";
 const MAILPIT_SMTP_PORT = Number(process.env.MAILPIT_SMTP_PORT || "1025");
-const EMAIL_FROM = process.env.EMAIL_FROM || "Leonel <hello@leogcode.dev>";
 
 /**
  * Local email service that sends via Mailpit SMTP for development.
