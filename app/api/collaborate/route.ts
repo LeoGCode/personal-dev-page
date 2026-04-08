@@ -13,6 +13,36 @@ const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || "";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 /**
+ * Build the set of allowed origins from SITE_URL.
+ *
+ * Accepts both the configured URL and its www / non-www counterpart so the
+ * CORS check doesn't break when Cloudflare (or any other proxy) redirects
+ * between the two variants.
+ */
+function getAllowedOrigins(siteUrl: string): Set<string> {
+  const origins = new Set<string>();
+  if (!siteUrl) return origins;
+
+  origins.add(siteUrl);
+
+  try {
+    const parsed = new URL(siteUrl);
+    if (parsed.hostname.startsWith("www.")) {
+      parsed.hostname = parsed.hostname.slice(4);
+    } else {
+      parsed.hostname = `www.${parsed.hostname}`;
+    }
+    origins.add(parsed.origin);
+  } catch {
+    // invalid URL — stick with the raw value only
+  }
+
+  return origins;
+}
+
+const allowedOrigins = getAllowedOrigins(SITE_URL);
+
+/**
  * Extract the client IP from reverse-proxy headers.
  *
  * Works on both self-hosted and Vercel deployments:
@@ -39,7 +69,7 @@ export async function POST(request: Request) {
   try {
     // CORS validation
     const origin = request.headers.get("origin");
-    if (SITE_URL && origin && origin !== SITE_URL) {
+    if (allowedOrigins.size > 0 && origin && !allowedOrigins.has(origin)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -93,9 +123,10 @@ export async function POST(request: Request) {
     // Return success immediately — do CRM sync and emails in the background
     const response = NextResponse.json({ success: true });
 
-    // Add CORS headers
-    if (SITE_URL) {
-      response.headers.set("Access-Control-Allow-Origin", SITE_URL);
+    // Add CORS headers — mirror the validated origin so both www and
+    // non-www variants receive the correct Access-Control-Allow-Origin.
+    if (origin && allowedOrigins.has(origin)) {
+      response.headers.set("Access-Control-Allow-Origin", origin);
     }
 
     after(async () => {
