@@ -1,12 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  FolderKanban,
-  BookOpen,
-  MessageSquare,
-} from "lucide-react";
+import { ArrowLeft, FolderKanban, BookOpen, MessageSquare } from "lucide-react";
 
 const quickLinks = [
   {
