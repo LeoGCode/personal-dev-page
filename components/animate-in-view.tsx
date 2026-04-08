@@ -1,6 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion, type TargetAndTransition } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+  type TargetAndTransition,
+} from "motion/react";
 import type { ReactNode } from "react";
 
 type AnimationVariant = "fade-up" | "fade-left" | "fade-right" | "scale";

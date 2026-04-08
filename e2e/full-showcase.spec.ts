@@ -78,10 +78,7 @@ async function scrollPage(page: Page) {
 /** Click a navbar link by its visible text. Opens the mobile menu first if needed. */
 async function clickNavLink(page: Page, name: string | RegExp) {
   // Try the desktop nav first
-  let link = page
-    .getByRole("navigation")
-    .getByRole("link", { name })
-    .first();
+  let link = page.getByRole("navigation").getByRole("link", { name }).first();
 
   if (!(await link.isVisible({ timeout: 1_000 }).catch(() => false))) {
     // Mobile — open the hamburger menu (Sheet).
@@ -197,7 +194,9 @@ test("Full showcase — navigate every page + submit collaboration form + verify
     .getByRole("link", { name: /collaborate|colaborar/i })
     .first();
 
-  if (!(await collaborateLink.isVisible({ timeout: 1_000 }).catch(() => false))) {
+  if (
+    !(await collaborateLink.isVisible({ timeout: 1_000 }).catch(() => false))
+  ) {
     const menuBtn = page.getByRole("button", { name: /men[uú]/i });
     if (await menuBtn.isVisible({ timeout: 1_000 }).catch(() => false)) {
       await menuBtn.click();
@@ -264,7 +263,10 @@ test("Full showcase — navigate every page + submit collaboration form + verify
   // Referral
   await page.getByRole("combobox").nth(3).click();
   await page.waitForTimeout(300);
-  await page.getByRole("option", { name: /github/i }).first().click();
+  await page
+    .getByRole("option", { name: /github/i })
+    .first()
+    .click();
   await page.waitForTimeout(PAUSE);
 
   // Scroll to show the filled form
@@ -283,10 +285,9 @@ test("Full showcase — navigate every page + submit collaboration form + verify
   // =====================================================================
   // MAILPIT — verify both emails arrived (confirmation + notification)
   // =====================================================================
-  const MAILPIT_UI =
-    process.env.MAILPIT_UI_PORT
-      ? `http://localhost:${process.env.MAILPIT_UI_PORT}`
-      : MAILPIT_API.replace("/api/v1", "");
+  const MAILPIT_UI = process.env.MAILPIT_UI_PORT
+    ? `http://localhost:${process.env.MAILPIT_UI_PORT}`
+    : MAILPIT_API.replace("/api/v1", "");
 
   let mailpitAvailable = true;
   try {
@@ -336,9 +337,7 @@ test("Full showcase — navigate every page + submit collaboration form + verify
     await page.waitForTimeout(PAUSE);
 
     // Click the notification email to preview it
-    const notifyRow = page
-      .locator(`text=${notificationEmail.Subject}`)
-      .first();
+    const notifyRow = page.locator(`text=${notificationEmail.Subject}`).first();
     if (await notifyRow.isVisible({ timeout: 3000 }).catch(() => false)) {
       await notifyRow.click();
       await page.waitForTimeout(PAUSE);

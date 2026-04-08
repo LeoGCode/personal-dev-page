@@ -48,9 +48,7 @@ export default async function BlogPage({
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            {t("no_posts")}
-          </p>
+          <p className="text-center text-muted-foreground">{t("no_posts")}</p>
         ) : (
           <div className="space-y-6">
             {posts.map((post) => (

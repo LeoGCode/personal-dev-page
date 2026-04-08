@@ -3,8 +3,21 @@
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { Link } from "@/lib/i18n/navigation";
-import { motion, AnimatePresence, useMotionValue, animate, useReducedMotion } from "motion/react";
-import { Code, Layers, Activity, ArrowRight, Sparkles, Clock } from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  animate,
+  useReducedMotion,
+} from "motion/react";
+import {
+  Code,
+  Layers,
+  Activity,
+  ArrowRight,
+  Sparkles,
+  Clock,
+} from "lucide-react";
 import { useState, useEffect, type ReactNode } from "react";
 import { projects } from "@/content/projects";
 import { skills } from "@/content/skills";
@@ -119,8 +132,16 @@ function BentoTile({
       className={`rounded-2xl border border-border/60 bg-card p-6 shadow-sm dark:shadow-none transition-colors hover:border-primary/30 ${className}`}
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
       animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-      transition={prefersReducedMotion ? undefined : { duration: 0.5, delay, ease: "easeOut" }}
-      whileHover={prefersReducedMotion ? undefined : { y: -4, transition: { duration: 0.2 } }}
+      transition={
+        prefersReducedMotion
+          ? undefined
+          : { duration: 0.5, delay, ease: "easeOut" }
+      }
+      whileHover={
+        prefersReducedMotion
+          ? undefined
+          : { y: -4, transition: { duration: 0.2 } }
+      }
     >
       {children}
     </motion.div>
@@ -243,20 +264,27 @@ export function Hero() {
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {t("stats_label")}
               </span>
-              <Layers className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+              <Layers
+                className="h-4 w-4 text-muted-foreground"
+                aria-hidden="true"
+              />
             </div>
             <div className="mt-3 grid grid-cols-2 gap-4">
               <div>
                 <div className="font-mono text-2xl font-bold">
                   <AnimatedCounter target={5} />+
                 </div>
-                <div className="text-xs text-muted-foreground">{t("projects_label")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("projects_label")}
+                </div>
               </div>
               <div>
                 <div className="font-mono text-2xl font-bold">
                   <AnimatedCounter target={3} />
                 </div>
-                <div className="text-xs text-muted-foreground">{t("languages_label")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("languages_label")}
+                </div>
               </div>
             </div>
             <div className="mt-3 flex flex-wrap gap-1.5">
@@ -292,13 +320,19 @@ export function Hero() {
                   {t("available")}
                 </span>
               </div>
-              <Activity className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+              <Activity
+                className="h-4 w-4 text-muted-foreground"
+                aria-hidden="true"
+              />
             </div>
             <p className="text-sm text-muted-foreground">
               {t("available_description")}
             </p>
             <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
-              <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden="true" />
+              <Clock
+                className="h-3.5 w-3.5 shrink-0 text-primary/70"
+                aria-hidden="true"
+              />
               <span className="text-xs text-primary/70">
                 {t("response_time")}
               </span>

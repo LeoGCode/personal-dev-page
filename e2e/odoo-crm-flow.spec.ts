@@ -368,8 +368,14 @@ test.describe("Odoo CRM — Lead Lifecycle", () => {
     // Navigate to the Spanish locale collaborate page
     await goTo(page, "/collaborate", "es");
 
-    await page.getByLabel(/nombre/i).first().fill(esTestName);
-    await page.getByLabel(/correo/i).first().fill(esTestEmail);
+    await page
+      .getByLabel(/nombre/i)
+      .first()
+      .fill(esTestName);
+    await page
+      .getByLabel(/correo/i)
+      .first()
+      .fill(esTestEmail);
 
     // Select collaboration type
     await page.getByRole("combobox").first().click();

@@ -66,9 +66,7 @@ function CardContent({
   ref,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> }) {
-  return (
-    <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-  );
+  return <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />;
 }
 
 function CardFooter({

@@ -73,7 +73,14 @@ export const agentBridgeExamples: string[] = [
 /* ── Level meta (color, glow, ring classes) ── */
 export const levelMeta: Record<
   SkillLevel,
-  { color: string; glow: string; dot: string; ring: string; text: string; bg: string }
+  {
+    color: string;
+    glow: string;
+    dot: string;
+    ring: string;
+    text: string;
+    bg: string;
+  }
 > = {
   deep: {
     color: "emerald",

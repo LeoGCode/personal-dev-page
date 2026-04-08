@@ -20,22 +20,17 @@ const levels: SkillLevel[] = ["deep", "augmented"];
 
 const tierStyles: Record<SkillLevel, { wrapper: string; minH: string }> = {
   deep: {
-    wrapper:
-      "rounded-xl border border-border/40 bg-card/90 p-6",
+    wrapper: "rounded-xl border border-border/40 bg-card/90 p-6",
     minH: "min-h-[140px]",
   },
   augmented: {
-    wrapper:
-      "rounded-xl border border-border/40 bg-card/70 p-5",
+    wrapper: "rounded-xl border border-border/40 bg-card/70 p-5",
     minH: "",
   },
 };
 
 /* ── Get skills in a category for a specific level ── */
-function getCategorySkillsByLevel(
-  category: SkillCategory,
-  level: SkillLevel,
-) {
+function getCategorySkillsByLevel(category: SkillCategory, level: SkillLevel) {
   return category.items.filter((s) => s.level === level);
 }
 
@@ -62,9 +57,7 @@ export default function TechLayers({
         <h2 className="font-mono text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {title}
         </h2>
-        <p className="mt-3 text-muted-foreground">
-          {description}
-        </p>
+        <p className="mt-3 text-muted-foreground">{description}</p>
       </div>
 
       {/* ── Outer dashed border — wraps tiers + agent layer ── */}
@@ -86,14 +79,22 @@ export default function TechLayers({
                 <motion.div
                   key={level}
                   className={cn(tier.wrapper, tier.minH)}
-                  initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-                  whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                  initial={
+                    prefersReducedMotion ? undefined : { opacity: 0, y: 20 }
+                  }
+                  whileInView={
+                    prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+                  }
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={prefersReducedMotion ? undefined : {
-                    duration: 0.5,
-                    delay: tierIndex * 0.15,
-                    ease: "easeOut",
-                  }}
+                  transition={
+                    prefersReducedMotion
+                      ? undefined
+                      : {
+                          duration: 0.5,
+                          delay: tierIndex * 0.15,
+                          ease: "easeOut",
+                        }
+                  }
                 >
                   {/* Level header */}
                   <div className="mb-4 flex items-center gap-3">
@@ -105,10 +106,7 @@ export default function TechLayers({
                       )}
                     />
                     <span
-                      className={cn(
-                        "font-mono text-sm font-bold",
-                        meta.text,
-                      )}
+                      className={cn("font-mono text-sm font-bold", meta.text)}
                     >
                       {levelLabels[level]}
                     </span>
@@ -136,15 +134,27 @@ export default function TechLayers({
                             {catSkills.map((skill, skillIndex) => (
                               <motion.div
                                 key={skill.name}
-                                initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.8 }}
-                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
+                                initial={
+                                  prefersReducedMotion
+                                    ? undefined
+                                    : { opacity: 0, scale: 0.8 }
+                                }
+                                whileInView={
+                                  prefersReducedMotion
+                                    ? undefined
+                                    : { opacity: 1, scale: 1 }
+                                }
                                 viewport={{ once: true, amount: 0.3 }}
-                                transition={prefersReducedMotion ? undefined : {
-                                  duration: 0.25,
-                                  delay:
-                                    tierIndex * 0.15 + skillIndex * 0.03,
-                                  ease: "easeOut",
-                                }}
+                                transition={
+                                  prefersReducedMotion
+                                    ? undefined
+                                    : {
+                                        duration: 0.25,
+                                        delay:
+                                          tierIndex * 0.15 + skillIndex * 0.03,
+                                        ease: "easeOut",
+                                      }
+                                }
                               >
                                 <Badge
                                   variant="outline"
@@ -172,9 +182,15 @@ export default function TechLayers({
           <motion.div
             className="relative overflow-hidden bg-emerald-500/5 px-6 py-8"
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            whileInView={
+              prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+            }
             viewport={{ once: true, amount: 0.3 }}
-            transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            transition={
+              prefersReducedMotion
+                ? undefined
+                : { duration: 0.5, delay: 0.2, ease: "easeOut" }
+            }
           >
             {/* Shimmer overlay */}
             {!prefersReducedMotion && (
@@ -205,14 +221,26 @@ export default function TechLayers({
                 {agentBridgeExamples.map((tech, i) => (
                   <motion.div
                     key={tech}
-                    initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.8 }}
-                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
+                    initial={
+                      prefersReducedMotion
+                        ? undefined
+                        : { opacity: 0, scale: 0.8 }
+                    }
+                    whileInView={
+                      prefersReducedMotion
+                        ? undefined
+                        : { opacity: 1, scale: 1 }
+                    }
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={prefersReducedMotion ? undefined : {
-                      duration: 0.25,
-                      delay: 0.3 + i * 0.04,
-                      ease: "easeOut",
-                    }}
+                    transition={
+                      prefersReducedMotion
+                        ? undefined
+                        : {
+                            duration: 0.25,
+                            delay: 0.3 + i * 0.04,
+                            ease: "easeOut",
+                          }
+                    }
                   >
                     <Badge
                       variant="outline"

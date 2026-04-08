@@ -17,9 +17,9 @@ test.describe("Collaborate Form", () => {
     await page.getByRole("button", { name: /send message/i }).click();
 
     // Should show validation errors for required fields
-    await expect(
-      page.getByText(/required|at least/i).first(),
-    ).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/required|at least/i).first()).toBeVisible({
+      timeout: 5000,
+    });
   });
 
   test("submits form successfully", async ({ page }) => {
@@ -38,7 +38,10 @@ test.describe("Collaborate Form", () => {
 
     // Select collaboration type — Radix Select renders as combobox
     await page.getByRole("combobox").first().click();
-    await page.getByRole("option", { name: /project/i }).first().click();
+    await page
+      .getByRole("option", { name: /project/i })
+      .first()
+      .click();
 
     // Fill description
     await page
@@ -50,9 +53,9 @@ test.describe("Collaborate Form", () => {
     await page.getByRole("button", { name: /send message/i }).click();
 
     // Wait for success state
-    await expect(
-      page.getByText(/message sent/i),
-    ).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText(/message sent/i)).toBeVisible({
+      timeout: 10000,
+    });
   });
 
   test("renders form in Spanish locale", async ({ page }) => {

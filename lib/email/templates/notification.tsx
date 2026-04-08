@@ -144,9 +144,7 @@ export default function NotificationEmail({
     },
     {
       label: t.labels.timeline,
-      value: timeline
-        ? timelineLabels[lang]?.[timeline] || timeline
-        : "—",
+      value: timeline ? timelineLabels[lang]?.[timeline] || timeline : "—",
     },
     {
       label: t.labels.referral,
@@ -158,7 +156,12 @@ export default function NotificationEmail({
   return (
     <Html lang={lang}>
       <Head />
-      <Preview>{t.preview(name, typeLabels[lang]?.[collaborationType] || collaborationType)}</Preview>
+      <Preview>
+        {t.preview(
+          name,
+          typeLabels[lang]?.[collaborationType] || collaborationType,
+        )}
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           {/* Green header bar */}
@@ -195,9 +198,7 @@ export default function NotificationEmail({
               <Text style={messageText}>{description}</Text>
             </Section>
 
-            <Text style={hintText}>
-              {t.reply_hint(email)}
-            </Text>
+            <Text style={hintText}>{t.reply_hint(email)}</Text>
           </Section>
 
           {/* Footer */}

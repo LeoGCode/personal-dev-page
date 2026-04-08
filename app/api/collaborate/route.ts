@@ -40,10 +40,7 @@ export async function POST(request: Request) {
     // CORS validation
     const origin = request.headers.get("origin");
     if (SITE_URL && origin && origin !== SITE_URL) {
-      return NextResponse.json(
-        { error: "Forbidden" },
-        { status: 403 },
-      );
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const body = await request.json();
@@ -173,11 +170,18 @@ export async function POST(request: Request) {
       // Log failures to Sentry
       results.forEach((result, index) => {
         if (result.status === "rejected") {
-          const labels = ["CRM lead creation", "Confirmation email", "Notification email"];
+          const labels = [
+            "CRM lead creation",
+            "Confirmation email",
+            "Notification email",
+          ];
           Sentry.captureException(result.reason, {
             tags: { operation: labels[index] ?? "unknown" },
           });
-          console.error(`${labels[index] ?? "Operation"} failed:`, result.reason);
+          console.error(
+            `${labels[index] ?? "Operation"} failed:`,
+            result.reason,
+          );
         }
       });
     });

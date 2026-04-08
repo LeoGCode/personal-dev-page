@@ -6,12 +6,8 @@
  */
 
 import { render } from "@react-email/components";
-import ConfirmationEmail, {
-  type ConfirmationEmailProps,
-} from "./confirmation";
-import NotificationEmail, {
-  type NotificationEmailProps,
-} from "./notification";
+import ConfirmationEmail, { type ConfirmationEmailProps } from "./confirmation";
+import NotificationEmail, { type NotificationEmailProps } from "./notification";
 
 export type { ConfirmationEmailProps } from "./confirmation";
 export type { NotificationEmailProps } from "./notification";

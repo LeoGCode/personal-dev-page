@@ -146,8 +146,7 @@ export default function TechMatrix({
                               viewport={{ once: true, amount: 0.3 }}
                               transition={{
                                 duration: 0.25,
-                                delay:
-                                  rowIndex * 0.06 + skillIndex * 0.04,
+                                delay: rowIndex * 0.06 + skillIndex * 0.04,
                                 ease: "easeOut",
                               }}
                             >

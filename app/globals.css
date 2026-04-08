@@ -48,12 +48,14 @@
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.45 0.16 163); /* emerald accent — aligned with Tailwind emerald */
+  --primary: oklch(
+    0.45 0.16 163
+  ); /* emerald accent — aligned with Tailwind emerald */
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.93 0 0);
   --secondary-foreground: oklch(0.15 0 0);
   --muted: oklch(0.93 0 0);
-  --muted-foreground: oklch(0.40 0 0);
+  --muted-foreground: oklch(0.4 0 0);
   --accent: oklch(0.93 0.02 163);
   --accent-foreground: oklch(0.15 0 0);
   --destructive: oklch(0.55 0.2 25);
@@ -72,7 +74,9 @@
   --card-foreground: oklch(0.93 0 0);
   --popover: oklch(0.16 0 0);
   --popover-foreground: oklch(0.93 0 0);
-  --primary: oklch(0.6 0.18 163); /* brighter emerald for dark — aligned with Tailwind emerald */
+  --primary: oklch(
+    0.6 0.18 163
+  ); /* brighter emerald for dark — aligned with Tailwind emerald */
   --primary-foreground: oklch(0.1 0 0);
   --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.93 0 0);
@@ -267,8 +271,12 @@ html.cursor-none * {
 /* ── Micro-interaction utilities ── */
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .animate-shimmer {

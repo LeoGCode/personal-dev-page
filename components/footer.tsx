@@ -69,9 +69,15 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="rounded-md p-2 text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 aria-label={link.ariaLabel}
-                whileHover={prefersReducedMotion ? undefined : { scale: 1.1, y: -2 }}
+                whileHover={
+                  prefersReducedMotion ? undefined : { scale: 1.1, y: -2 }
+                }
                 whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
-                transition={prefersReducedMotion ? undefined : { type: "spring", stiffness: 400, damping: 17 }}
+                transition={
+                  prefersReducedMotion
+                    ? undefined
+                    : { type: "spring", stiffness: 400, damping: 17 }
+                }
                 onClick={() =>
                   posthog?.capture("outbound_link_clicked", {
                     url: link.href,

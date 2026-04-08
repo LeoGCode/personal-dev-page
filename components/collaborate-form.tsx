@@ -85,7 +85,11 @@ export function CollaborateForm() {
 
   if (status === "success") {
     return (
-      <div role="status" aria-live="polite" className="flex flex-col items-center gap-4 py-16 text-center">
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex flex-col items-center gap-4 py-16 text-center"
+      >
         <CheckCircle className="h-12 w-12 text-primary" />
         <h3 className="font-mono text-xl font-bold">{t("success_title")}</h3>
         <p className="max-w-md text-muted-foreground">{t("success_message")}</p>
@@ -120,7 +124,9 @@ export function CollaborateForm() {
           {...register("name")}
         />
         {errors.name && (
-          <p id="name-error" className="text-sm text-destructive">{errors.name.message}</p>
+          <p id="name-error" className="text-sm text-destructive">
+            {errors.name.message}
+          </p>
         )}
       </div>
 
@@ -138,7 +144,9 @@ export function CollaborateForm() {
           {...register("email")}
         />
         {errors.email && (
-          <p id="email-error" className="text-sm text-destructive">{errors.email.message}</p>
+          <p id="email-error" className="text-sm text-destructive">
+            {errors.email.message}
+          </p>
         )}
       </div>
 
@@ -180,7 +188,9 @@ export function CollaborateForm() {
           rows={5}
           placeholder={t("placeholders.description")}
           aria-invalid={!!errors.description}
-          aria-describedby={errors.description ? "description-error" : undefined}
+          aria-describedby={
+            errors.description ? "description-error" : undefined
+          }
           {...register("description")}
         />
         {errors.description && (
@@ -267,12 +277,14 @@ export function CollaborateForm() {
 
       {/* Inline error banner */}
       {status === "error" && (
-        <div role="alert" aria-live="assertive" className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4"
+        >
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
           <div className="flex-1">
-            <p className="font-mono text-sm font-medium">
-              {t("error_title")}
-            </p>
+            <p className="font-mono text-sm font-medium">{t("error_title")}</p>
             <p className="mt-1 text-sm text-muted-foreground">
               {errorMessage || t("error_message")}
             </p>

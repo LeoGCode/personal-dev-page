@@ -50,7 +50,9 @@ export function CTABanner() {
         initial={prefersReducedMotion ? undefined : { opacity: 0, y: 30 }}
         whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={prefersReducedMotion ? undefined : { duration: 0.6, ease: "easeOut" }}
+        transition={
+          prefersReducedMotion ? undefined : { duration: 0.6, ease: "easeOut" }
+        }
       >
         <div className="relative overflow-hidden rounded-2xl p-[2px]">
           {/* Animated rotating gradient border */}

@@ -66,7 +66,10 @@ export function getBlogPosts(locale: string): BlogPost[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export const getBlogPost = cache(function getBlogPost(slug: string, locale: string): BlogPost | null {
+export const getBlogPost = cache(function getBlogPost(
+  slug: string,
+  locale: string,
+): BlogPost | null {
   const filePath = path.join(BLOG_DIR, `${slug}.${locale}.mdx`);
 
   if (!fs.existsSync(filePath)) return null;

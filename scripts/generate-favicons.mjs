@@ -34,7 +34,10 @@ const PUBLIC_DIR = resolve(ROOT, "public");
 /** Render the SVG source to a sharp PNG pipeline at the given size. */
 function svgToPng(svgBuffer, size) {
   return sharp(svgBuffer, { density: 400 })
-    .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(size, size, {
+      fit: "contain",
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
     .png();
 }
 
@@ -57,9 +60,9 @@ function buildIco(pngBuffers) {
 
   // ICO header: reserved (2) + type (2) + count (2)
   const header = Buffer.alloc(headerSize);
-  header.writeUInt16LE(0, 0);      // reserved
-  header.writeUInt16LE(1, 2);      // type: 1 = ICO
-  header.writeUInt16LE(count, 4);  // image count
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: 1 = ICO
+  header.writeUInt16LE(count, 4); // image count
 
   const dirEntries = [];
   const sizes = [16, 32, 48];
@@ -69,14 +72,14 @@ function buildIco(pngBuffers) {
     const size = sizes[i] || 0;
     const entry = Buffer.alloc(dirEntrySize);
 
-    entry.writeUInt8(size >= 256 ? 0 : size, 0);  // width  (0 = 256)
-    entry.writeUInt8(size >= 256 ? 0 : size, 1);  // height (0 = 256)
-    entry.writeUInt8(0, 2);                         // color palette
-    entry.writeUInt8(0, 3);                         // reserved
-    entry.writeUInt16LE(1, 4);                      // color planes
-    entry.writeUInt16LE(32, 6);                     // bits per pixel
-    entry.writeUInt32LE(png.length, 8);             // image data size
-    entry.writeUInt32LE(dataOffset, 12);            // offset to image data
+    entry.writeUInt8(size >= 256 ? 0 : size, 0); // width  (0 = 256)
+    entry.writeUInt8(size >= 256 ? 0 : size, 1); // height (0 = 256)
+    entry.writeUInt8(0, 2); // color palette
+    entry.writeUInt8(0, 3); // reserved
+    entry.writeUInt16LE(1, 4); // color planes
+    entry.writeUInt16LE(32, 6); // bits per pixel
+    entry.writeUInt32LE(png.length, 8); // image data size
+    entry.writeUInt32LE(dataOffset, 12); // offset to image data
 
     dirEntries.push(entry);
     dataOffset += png.length;
@@ -100,17 +103,17 @@ async function main() {
     pngSizes.map(async (size) => {
       const buf = await svgToPng(svgBuffer, size).toBuffer();
       pngMap[size] = buf;
-    })
+    }),
   );
 
   // Write individual PNG files
   const pngOutputs = [
-    { size: 16,  name: "favicon-16x16.png",           dir: PUBLIC_DIR },
-    { size: 32,  name: "favicon-32x32.png",           dir: PUBLIC_DIR },
-    { size: 48,  name: "favicon-48x48.png",           dir: PUBLIC_DIR },
-    { size: 180, name: "apple-touch-icon.png",        dir: PUBLIC_DIR },
-    { size: 192, name: "android-chrome-192x192.png",  dir: PUBLIC_DIR },
-    { size: 512, name: "android-chrome-512x512.png",  dir: PUBLIC_DIR },
+    { size: 16, name: "favicon-16x16.png", dir: PUBLIC_DIR },
+    { size: 32, name: "favicon-32x32.png", dir: PUBLIC_DIR },
+    { size: 48, name: "favicon-48x48.png", dir: PUBLIC_DIR },
+    { size: 180, name: "apple-touch-icon.png", dir: PUBLIC_DIR },
+    { size: 192, name: "android-chrome-192x192.png", dir: PUBLIC_DIR },
+    { size: 512, name: "android-chrome-512x512.png", dir: PUBLIC_DIR },
   ];
 
   for (const { size, name, dir } of pngOutputs) {
@@ -129,7 +132,9 @@ async function main() {
   console.log("\nDone! All favicon assets generated.\n");
 
   // Print suggested metadata additions
-  console.log("Add this to your <head> or Next.js metadata (if not already present):");
+  console.log(
+    "Add this to your <head> or Next.js metadata (if not already present):",
+  );
   console.log(`
   icons: {
     icon: [

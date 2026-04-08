@@ -85,15 +85,18 @@ export async function searchLead(page: Page, query: string) {
   const listViewBtn = page.locator(
     'button.o_switch_view.o_list, [data-tooltip="List"], .o_cp_switch_buttons button:nth-child(2)',
   );
-  if (await listViewBtn.first().isVisible({ timeout: 3_000 }).catch(() => false)) {
+  if (
+    await listViewBtn
+      .first()
+      .isVisible({ timeout: 3_000 })
+      .catch(() => false)
+  ) {
     await listViewBtn.first().click();
     await page.waitForTimeout(1_500);
   }
 
   // Clear default filters (e.g. "My Pipeline") that hide unassigned leads
-  const filterPills = page.locator(
-    ".o_searchview .o_facet_remove",
-  );
+  const filterPills = page.locator(".o_searchview .o_facet_remove");
   const pillCount = await filterPills.count();
   for (let i = pillCount - 1; i >= 0; i--) {
     await filterPills.nth(i).click();
@@ -176,9 +179,7 @@ export async function verifyLeadDetails(
 
   if (expected.email) {
     // Email may be in an input, a mailto link, or a span
-    const emailInput = page.locator(
-      '.o_field_widget[name="email_from"] input',
-    );
+    const emailInput = page.locator('.o_field_widget[name="email_from"] input');
     const emailLink = page.locator(
       '.o_field_widget[name="email_from"] a, .o_field_email a',
     );
@@ -233,14 +234,14 @@ export async function addLogNote(page: Page, text: string) {
 
   // Odoo 18 uses a fake hidden textarea + a real visible one.
   // Target the visible, non-disabled composer input.
-  const composer = page.locator(
-    '.o-mail-Composer-input:not(.o-mail-Composer-fake):not([disabled]), .o-mail-Composer textarea:visible, .o-mail-Composer [contenteditable="true"]',
-  ).first();
+  const composer = page
+    .locator(
+      '.o-mail-Composer-input:not(.o-mail-Composer-fake):not([disabled]), .o-mail-Composer textarea:visible, .o-mail-Composer [contenteditable="true"]',
+    )
+    .first();
 
   // If the composer isn't visible yet, click "Log note" again to toggle it
-  if (
-    !(await composer.isVisible({ timeout: 3_000 }).catch(() => false))
-  ) {
+  if (!(await composer.isVisible({ timeout: 3_000 }).catch(() => false))) {
     // Try clicking directly in the composer area to activate it
     const composerArea = page.locator(".o-mail-Composer").first();
     if (await composerArea.isVisible({ timeout: 2_000 }).catch(() => false)) {
@@ -264,7 +265,10 @@ export async function addLogNote(page: Page, text: string) {
 
   // Wait for the note to appear in the chatter thread
   await expect(
-    page.locator(".o-mail-Message-body, .o_mail_body").filter({ hasText: text }).first(),
+    page
+      .locator(".o-mail-Message-body, .o_mail_body")
+      .filter({ hasText: text })
+      .first(),
   ).toBeVisible({ timeout: 10_000 });
 }
 

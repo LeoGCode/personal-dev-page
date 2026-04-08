@@ -16,7 +16,11 @@ export function About() {
           initial={prefersReducedMotion ? undefined : { scaleY: 0 }}
           whileInView={prefersReducedMotion ? undefined : { scaleY: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={prefersReducedMotion ? undefined : { duration: 0.8, ease: "easeOut" }}
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : { duration: 0.8, ease: "easeOut" }
+          }
           style={{ originY: 0 }}
         />
 
@@ -25,9 +29,15 @@ export function About() {
           <motion.h2
             className="font-mono text-2xl font-bold tracking-tight sm:text-3xl"
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            whileInView={
+              prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+            }
             viewport={{ once: true, margin: "-50px" }}
-            transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
+            transition={
+              prefersReducedMotion
+                ? undefined
+                : { duration: 0.5, ease: "easeOut" }
+            }
           >
             {t("title")}
           </motion.h2>
@@ -35,18 +45,30 @@ export function About() {
           <div className="mt-8 space-y-5 leading-relaxed text-muted-foreground">
             <motion.p
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+              }
               viewport={{ once: true, margin: "-50px" }}
-              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0, ease: "easeOut" }}
+              transition={
+                prefersReducedMotion
+                  ? undefined
+                  : { duration: 0.5, delay: 0, ease: "easeOut" }
+              }
             >
               {t("paragraph_1")}
             </motion.p>
 
             <motion.p
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+              }
               viewport={{ once: true, margin: "-50px" }}
-              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.1, ease: "easeOut" }}
+              transition={
+                prefersReducedMotion
+                  ? undefined
+                  : { duration: 0.5, delay: 0.1, ease: "easeOut" }
+              }
             >
               {t.rich("paragraph_2", {
                 nexora: (chunks) => (
@@ -64,9 +86,15 @@ export function About() {
 
             <motion.p
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
+              }
               viewport={{ once: true, margin: "-50px" }}
-              transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.2, ease: "easeOut" }}
+              transition={
+                prefersReducedMotion
+                  ? undefined
+                  : { duration: 0.5, delay: 0.2, ease: "easeOut" }
+              }
             >
               {t("paragraph_3")}
             </motion.p>

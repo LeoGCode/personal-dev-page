@@ -4,21 +4,21 @@ A bilingual (English/Spanish) developer portfolio and lead-generation site built
 
 ## Tech Stack
 
-| Layer | Technologies |
-|---|---|
-| **Framework** | Next.js 16 (App Router, React Server Components), React 19, TypeScript 6 |
-| **Styling** | Tailwind CSS 4, Radix UI, Shadcn UI components, Motion (Framer Motion) |
-| **Content** | MDX with Rehype Pretty Code (Shiki), Gray Matter frontmatter |
-| **Forms** | React Hook Form, Zod validation, honeypot spam protection |
-| **Email** | Resend + React Email templates (Mailpit for local dev) |
-| **CRM** | Odoo XML-RPC integration (optional) |
-| **Rate Limiting** | Dual backend — Upstash Redis (serverless) / in-memory (self-hosted) |
-| **i18n** | next-intl with URL-based routing (`/en`, `/es`) |
-| **Analytics** | PostHog |
-| **Error Tracking** | Sentry (server + client, source maps, tunnel route) |
-| **Testing** | Vitest (unit), Playwright (E2E — desktop + mobile), Storybook |
-| **CI/CD** | GitHub Actions (lint, format, typecheck, test, build) |
-| **Deployment** | Vercel (serverless) or Docker (standalone Node.js) |
+| Layer              | Technologies                                                             |
+| ------------------ | ------------------------------------------------------------------------ |
+| **Framework**      | Next.js 16 (App Router, React Server Components), React 19, TypeScript 6 |
+| **Styling**        | Tailwind CSS 4, Radix UI, Shadcn UI components, Motion (Framer Motion)   |
+| **Content**        | MDX with Rehype Pretty Code (Shiki), Gray Matter frontmatter             |
+| **Forms**          | React Hook Form, Zod validation, honeypot spam protection                |
+| **Email**          | Resend + React Email templates (Mailpit for local dev)                   |
+| **CRM**            | Odoo XML-RPC integration (optional)                                      |
+| **Rate Limiting**  | Dual backend — Upstash Redis (serverless) / in-memory (self-hosted)      |
+| **i18n**           | next-intl with URL-based routing (`/en`, `/es`)                          |
+| **Analytics**      | PostHog                                                                  |
+| **Error Tracking** | Sentry (server + client, source maps, tunnel route)                      |
+| **Testing**        | Vitest (unit), Playwright (E2E — desktop + mobile), Storybook            |
+| **CI/CD**          | GitHub Actions (lint, format, typecheck, test, build)                    |
+| **Deployment**     | Vercel (serverless) or Docker (standalone Node.js)                       |
 
 ## Features
 
@@ -145,10 +145,10 @@ pnpm storybook
 
 The project supports two deployment targets from the same codebase:
 
-| Target | Best for |
-|---|---|
+| Target     | Best for                                                                     |
+| ---------- | ---------------------------------------------------------------------------- |
 | **Vercel** | Zero-config serverless — static pages on CDN, API routes as Lambda functions |
-| **Docker** | Self-hosted — standalone Node.js server behind a reverse proxy |
+| **Docker** | Self-hosted — standalone Node.js server behind a reverse proxy               |
 
 ### Quick Start — Docker
 
@@ -167,14 +167,14 @@ For the full deployment guide — including environment variable reference, Upst
 
 Copy `.env.example` to `.env` for a complete reference. Key variables:
 
-| Variable | Required | Description |
-|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical site URL |
-| `NEXT_PUBLIC_SENTRY_DSN` | Production | Sentry DSN for error tracking |
-| `RESEND_API_KEY` | Production | Resend API key for email delivery |
-| `UPSTASH_REDIS_REST_URL` | Vercel | Upstash Redis for serverless rate limiting |
-| `ODOO_URL` | No | Odoo CRM instance (leave empty to skip) |
-| `NEXT_PUBLIC_POSTHOG_KEY` | No | PostHog analytics key |
+| Variable                  | Required   | Description                                |
+| ------------------------- | ---------- | ------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`    | Yes        | Canonical site URL                         |
+| `NEXT_PUBLIC_SENTRY_DSN`  | Production | Sentry DSN for error tracking              |
+| `RESEND_API_KEY`          | Production | Resend API key for email delivery          |
+| `UPSTASH_REDIS_REST_URL`  | Vercel     | Upstash Redis for serverless rate limiting |
+| `ODOO_URL`                | No         | Odoo CRM instance (leave empty to skip)    |
+| `NEXT_PUBLIC_POSTHOG_KEY` | No         | PostHog analytics key                      |
 
 See [`.env.example`](.env.example) for all variables and [`docs/deployment.md`](docs/deployment.md) for detailed descriptions.
 

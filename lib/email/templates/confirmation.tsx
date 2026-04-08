@@ -135,8 +135,7 @@ export default function ConfirmationEmail({
               </Text>
               {budget && (
                 <Text style={detailRow}>
-                  <strong>{t.budget}:</strong>{" "}
-                  {budgetLabels[budget] || budget}
+                  <strong>{t.budget}:</strong> {budgetLabels[budget] || budget}
                 </Text>
               )}
               {timeline && (

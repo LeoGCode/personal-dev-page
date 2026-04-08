@@ -12,10 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { motion, useReducedMotion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
-import {
-  type ProjectStatus,
-  statusStyles,
-} from "@/lib/shared/status-styles";
+import { type ProjectStatus, statusStyles } from "@/lib/shared/status-styles";
 
 export interface ProjectCardProps {
   slug: string;
@@ -42,7 +39,11 @@ export function ProjectCard({
   return (
     <motion.div
       whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-      transition={prefersReducedMotion ? undefined : { duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
+      transition={
+        prefersReducedMotion
+          ? undefined
+          : { duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }
+      }
       className="relative"
     >
       <Link
@@ -83,17 +84,20 @@ export function ProjectCard({
               {stack.map((tech) => (
                 <motion.div
                   key={tech}
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05, y: -1 }}
-                  transition={prefersReducedMotion ? undefined : {
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 20,
-                  }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05, y: -1 }
+                  }
+                  transition={
+                    prefersReducedMotion
+                      ? undefined
+                      : {
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 20,
+                        }
+                  }
                 >
-                  <Badge
-                    variant="secondary"
-                    className="text-xs font-normal"
-                  >
+                  <Badge variant="secondary" className="text-xs font-normal">
                     {tech}
                   </Badge>
                 </motion.div>
@@ -108,13 +112,19 @@ export function ProjectCard({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={prefersReducedMotion ? undefined : { scale: 1.15, rotate: -12 }}
+          whileHover={
+            prefersReducedMotion ? undefined : { scale: 1.15, rotate: -12 }
+          }
           whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
-          transition={prefersReducedMotion ? undefined : {
-            type: "spring",
-            stiffness: 400,
-            damping: 17,
-          }}
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }
+          }
           onClick={(e) => {
             e.stopPropagation();
             posthog?.capture("outbound_link_clicked", {

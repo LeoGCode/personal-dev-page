@@ -27,8 +27,7 @@ export const Default: Story = {
                 {"// move · hover · click"}
               </span>
               <h2 className="font-mono text-4xl font-bold tracking-tight">
-                Custom Cursor{" "}
-                <span className="text-primary">Effect</span>
+                Custom Cursor <span className="text-primary">Effect</span>
               </h2>
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
                 Fluid trail · magnetic ring · click particles · hover labels.

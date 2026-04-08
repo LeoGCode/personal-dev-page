@@ -63,9 +63,7 @@ function SelectScrollDownButton({
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton> & {
-  ref?: React.Ref<
-    React.ComponentRef<typeof SelectPrimitive.ScrollDownButton>
-  >;
+  ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton>>;
 }) {
   return (
     <SelectPrimitive.ScrollDownButton

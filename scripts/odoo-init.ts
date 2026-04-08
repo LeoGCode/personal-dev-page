@@ -334,10 +334,16 @@ async function configureLeadNotification() {
       },
     ]);
 
-    log("✅", "Automated notification created — new leads will schedule a review activity");
+    log(
+      "✅",
+      "Automated notification created — new leads will schedule a review activity",
+    );
   } catch (err) {
     log("⚠️ ", `Could not create automated action: ${(err as Error).message}`);
-    log("ℹ️ ", "You can configure this manually in Odoo: Settings → Technical → Automated Actions");
+    log(
+      "ℹ️ ",
+      "You can configure this manually in Odoo: Settings → Technical → Automated Actions",
+    );
   }
 }
 
@@ -358,7 +364,10 @@ async function configureAdminNotifications() {
     ]);
     log("✅", "Admin user set to receive email notifications");
   } catch (err) {
-    log("⚠️ ", `Could not update notification preferences: ${(err as Error).message}`);
+    log(
+      "⚠️ ",
+      `Could not update notification preferences: ${(err as Error).message}`,
+    );
   }
 }
 

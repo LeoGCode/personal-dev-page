@@ -127,7 +127,7 @@ export function CursorGlow() {
     const onOver = (e: MouseEvent) => {
       const tag = (e.target as Element)?.closest?.("[data-cursor]");
       hovering.current = tag
-        ? (tag as HTMLElement).dataset.cursor ?? null
+        ? ((tag as HTMLElement).dataset.cursor ?? null)
         : null;
     };
 

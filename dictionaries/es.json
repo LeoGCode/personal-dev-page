@@ -109,7 +109,9 @@
     "title": "Construyamos Algo Juntos",
     "subtitle": "¿Tenés una idea, un proyecto, o simplemente querés charlar sobre tecnología? Me encantaría escucharte.",
     "types": {
-      "project": "Producto de Punta a Punta",      "ai_agent": "Integración de IA / Agentes",      "consulting": "Consultoría Técnica",
+      "project": "Producto de Punta a Punta",
+      "ai_agent": "Integración de IA / Agentes",
+      "consulting": "Consultoría Técnica",
       "opensource": "Open Source",
       "speaking": "Charlas / Escritura",
       "other": "Otro"

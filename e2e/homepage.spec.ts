@@ -43,9 +43,7 @@ test.describe("Homepage", () => {
 
     // Social links
     await expect(footer.getByRole("link", { name: /github/i })).toBeVisible();
-    await expect(
-      footer.getByRole("link", { name: /linkedin/i }),
-    ).toBeVisible();
+    await expect(footer.getByRole("link", { name: /linkedin/i })).toBeVisible();
   });
 
   test("switches locale from EN to ES", async ({ page }) => {

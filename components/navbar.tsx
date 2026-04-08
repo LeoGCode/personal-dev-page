@@ -81,12 +81,17 @@ export function Navbar() {
           >
             <Link href="/collaborate">{t("collaborate")}</Link>
           </Button>
-          <motion.div whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }} whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}>
+          <motion.div
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+            whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+          >
             <Button
               variant="ghost"
               size="sm"
               onClick={switchLocale}
-              aria-label={locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"}
+              aria-label={
+                locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"
+              }
               className="ml-1 font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}
@@ -98,12 +103,17 @@ export function Navbar() {
         {/* Mobile navigation */}
         <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
-          <motion.div whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }} whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}>
+          <motion.div
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+            whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+          >
             <Button
               variant="ghost"
               size="sm"
               onClick={switchLocale}
-              aria-label={locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"}
+              aria-label={
+                locale === "en" ? "Switch to Spanish" : "Cambiar a inglés"
+              }
               className="font-mono text-xs transition-colors duration-200"
             >
               {otherLocale.toUpperCase()}
@@ -112,7 +122,9 @@ export function Navbar() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <motion.div whileTap={prefersReducedMotion ? undefined : { rotate: 90 }}>
+                <motion.div
+                  whileTap={prefersReducedMotion ? undefined : { rotate: 90 }}
+                >
                   <Menu className="h-5 w-5" />
                 </motion.div>
                 <span className="sr-only">{t("menu")}</span>
@@ -124,8 +136,12 @@ export function Navbar() {
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.key}
-                    initial={prefersReducedMotion ? undefined : { opacity: 0, x: 20 }}
-                    animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                    initial={
+                      prefersReducedMotion ? undefined : { opacity: 0, x: 20 }
+                    }
+                    animate={
+                      prefersReducedMotion ? undefined : { opacity: 1, x: 0 }
+                    }
                     transition={{ delay: i * 0.05 }}
                   >
                     <Link
@@ -142,8 +158,12 @@ export function Navbar() {
                   </motion.div>
                 ))}
                 <motion.div
-                  initial={prefersReducedMotion ? undefined : { opacity: 0, x: 20 }}
-                  animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                  initial={
+                    prefersReducedMotion ? undefined : { opacity: 0, x: 20 }
+                  }
+                  animate={
+                    prefersReducedMotion ? undefined : { opacity: 1, x: 0 }
+                  }
                   transition={{ delay: navLinks.length * 0.05 }}
                 >
                   <Button asChild className="mt-2">
