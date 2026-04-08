@@ -96,7 +96,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        {/* <CursorGlow /> */}
+        <CursorGlow />
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>

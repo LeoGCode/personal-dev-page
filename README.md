@@ -9,7 +9,7 @@ A bilingual (English/Spanish) developer portfolio and lead-generation site built
 | **Framework**      | Next.js 16 (App Router, React Server Components), React 19, TypeScript 6 |
 | **Styling**        | Tailwind CSS 4, Radix UI, Shadcn UI components, Motion (Framer Motion)   |
 | **Content**        | MDX with Rehype Pretty Code (Shiki), Gray Matter frontmatter             |
-| **Forms**          | React Hook Form, Zod validation, honeypot spam protection                |
+| **Forms**          | React Hook Form, Zod validation, rate-limited submissions                |
 | **Email**          | Resend + React Email templates (Mailpit for local dev)                   |
 | **CRM**            | Odoo XML-RPC integration (optional)                                      |
 | **Rate Limiting**  | Dual backend — Upstash Redis (serverless) / in-memory (self-hosted)      |

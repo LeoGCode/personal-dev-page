@@ -43,9 +43,7 @@ export function CollaborateForm() {
     formState: { errors },
   } = useForm<CollaborateFormData>({
     resolver: zodResolver(collaborateFormSchema),
-    defaultValues: {
-      honeypot: "",
-    },
+    defaultValues: {},
   });
 
   async function onSubmit(data: CollaborateFormData) {
@@ -107,17 +105,6 @@ export function CollaborateForm() {
       })}
       className="space-y-6"
     >
-      {/* Honeypot */}
-      <div className="absolute -left-[9999px]">
-        <input
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden="true"
-          {...register("honeypot")}
-        />
-      </div>
-
       {/* Name */}
       <div className="space-y-2">
         <Label htmlFor="name">{t("fields.name")}</Label>

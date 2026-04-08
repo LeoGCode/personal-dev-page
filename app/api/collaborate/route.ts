@@ -45,14 +45,6 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    // Honeypot check
-    if (body.honeypot) {
-      console.warn("[security] Honeypot triggered", {
-        ip: getClientIp(request),
-      });
-      return NextResponse.json({ success: true });
-    }
-
     // Validate
     const result = collaborateSchema.safeParse(body);
     if (!result.success) {

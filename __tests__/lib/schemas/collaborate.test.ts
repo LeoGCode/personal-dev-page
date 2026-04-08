@@ -58,22 +58,6 @@ describe("collaborateFormSchema", () => {
     });
     expect(result.success).toBe(false);
   });
-
-  it("rejects honeypot with content", () => {
-    const result = collaborateFormSchema.safeParse({
-      ...validData,
-      honeypot: "spam bot filled this",
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("accepts empty honeypot", () => {
-    const result = collaborateFormSchema.safeParse({
-      ...validData,
-      honeypot: "",
-    });
-    expect(result.success).toBe(true);
-  });
 });
 
 describe("collaborateSchema (server-side)", () => {

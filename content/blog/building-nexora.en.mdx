@@ -25,7 +25,7 @@ Variants are resolved at build time through a simple merge strategy: base config
 
 Every landing includes a contact form that flows through a strict pipeline: client-side validation with Zod, server-side re-validation in a Next.js route handler, and then an AI-driven qualification step using an LLM. The agent extracts structured intent (budget size, timeline, specific AI integration needs) and makes a JSON-RPC call to Odoo CRM. Each lead is automatically tagged with the source landing, inferred intent, locale, and variant — so the sales view in Odoo shows exactly where every lead came from and what they want.
 
-Spam protection uses a honeypot field plus Redis-backed rate limiting per IP. No CAPTCHAs, no friction.
+Spam protection uses Redis-backed rate limiting per IP. No CAPTCHAs, no friction.
 
 ## What I Learned
 

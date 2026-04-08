@@ -5,7 +5,7 @@ export const collaborateFormSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   collaborationType: z.enum(
     ["project", "ai_agent", "consulting", "opensource", "speaking", "other"],
-    { message: "Please select a collaboration type" }
+    { message: "Please select a collaboration type" },
   ),
   description: z.string().min(20, "Please provide at least 20 characters"),
   budget: z
@@ -15,7 +15,6 @@ export const collaborateFormSchema = z.object({
   referral: z
     .enum(["google", "github", "linkedin", "referral", "other"])
     .optional(),
-  honeypot: z.string().optional(),
 });
 
 export const collaborateSchema = collaborateFormSchema.extend({
