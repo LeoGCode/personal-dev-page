@@ -96,7 +96,14 @@
   "not_found": {
     "title": "Página no encontrada",
     "message": "La página que buscás no existe o fue movida.",
-    "back_home": "Volver al inicio"
+    "back_home": "Volver al inicio",
+    "suggestions": "Estos son algunos lugares que podrían interesarte:",
+    "link_projects": "Proyectos",
+    "link_projects_desc": "Mirá lo que construí",
+    "link_blog": "Blog",
+    "link_blog_desc": "Leé mis últimos posts",
+    "link_collaborate": "Colaboremos",
+    "link_collaborate_desc": "Iniciá una conversación"
   },
   "error": {
     "title": "Algo salió mal",

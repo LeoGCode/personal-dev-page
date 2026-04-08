@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { CursorGlow } from "@/components/cursor-glow";
+import { ThemeInit } from "@/components/theme-init";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 import "./globals.css";
 
@@ -88,15 +90,15 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <script
+      <body className="min-h-screen bg-background text-foreground antialiased">
+        <Script
           id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light")return;document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("theme");var d=t==="light"?"light":"dark";document.documentElement.classList.toggle("dark",d==="dark");document.documentElement.style.colorScheme=d}catch(e){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}})()`,
           }}
         />
-      </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+        <ThemeInit />
         <CursorGlow />
         <PostHogProvider>{children}</PostHogProvider>
       </body>

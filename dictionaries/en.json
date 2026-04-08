@@ -96,7 +96,14 @@
   "not_found": {
     "title": "Page not found",
     "message": "The page you're looking for doesn't exist or has been moved.",
-    "back_home": "Back to home"
+    "back_home": "Back to home",
+    "suggestions": "Here are some places you might want to visit instead:",
+    "link_projects": "Projects",
+    "link_projects_desc": "See what I've built",
+    "link_blog": "Blog",
+    "link_blog_desc": "Read my latest posts",
+    "link_collaborate": "Let's Collaborate",
+    "link_collaborate_desc": "Start a conversation"
   },
   "error": {
     "title": "Something went wrong",
