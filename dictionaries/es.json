@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "Leonel — Ingeniero Full-Stack",
+    "title": "Leonel — Ingeniero AI Full-Stack",
     "description": "Entrego productos de punta a punta e integro IA para hacerlos 10x más potentes."
   },
   "home": {
-    "meta_title": "Leonel — Ingeniero Full-Stack",
-    "meta_description": "Ingeniero Full-Stack que entrega productos completos — desde infraestructura y backend hasta frontend — e integra IA, agentes y LLMs para hacerlos 10x más potentes."
+    "meta_title": "Leonel — Ingeniero AI Full-Stack",
+    "meta_description": "Ingeniero AI Full-Stack que entrega productos completos — desde infraestructura y backend hasta frontend — e integra IA, agentes y LLMs para hacerlos 10x más potentes."
   },
   "nav": {
     "home": "Inicio",
@@ -16,7 +16,7 @@
   },
   "hero": {
     "greeting": "Hola, soy Leonel",
-    "title": "Ingeniero Full-Stack",
+    "title": "Ingeniero AI Full-Stack",
     "subtitle": "Entrego productos de punta a punta — desde infraestructura y DevOps hasta backend y frontend — e integro IA, agentes y LLMs para hacerlos 10x más potentes.",
     "cta_primary": "Colaboremos",
     "cta_secondary": "Ver mi trabajo",
@@ -32,7 +32,7 @@
   },
   "about": {
     "title": "Sobre mí",
-    "paragraph_1": "Soy un Ingeniero Full-Stack que entrega productos completos como un one-man army — desde infraestructura y DevOps, pasando por APIs y bases de datos, hasta frontends pulidos. Cuando un producto necesita capacidades de IA, integro LLMs, flujos de trabajo con agentes y automatización inteligente para hacerlo dramáticamente más potente.",
+    "paragraph_1": "Soy un Ingeniero AI Full-Stack que entrega productos completos como un one-man army — desde infraestructura y DevOps, pasando por APIs y bases de datos, hasta frontends pulidos. Cuando un producto necesita capacidades de IA, integro LLMs, flujos de trabajo con agentes y automatización inteligente para hacerlo dramáticamente más potente.",
     "paragraph_2": "Actualmente estoy construyendo <nexora>Nexora Group</nexora>, una consultora de software donde entrego productos digitales de punta a punta. Trabajo en todo el stack — frontends con React y Next.js, backends con Python y Node.js, bases de datos PostgreSQL, infraestructura Docker — e integro IA cuando genera valor real.",
     "paragraph_3": "Soy bilingüe (inglés/español) y estoy basado en Latinoamérica. Ya sea que necesites a alguien para llevar un producto de cero a producción, agregar capacidades de IA a una plataforma existente, o simplemente un ingeniero experimentado que entrega — estoy abierto a la conversación."
   },

@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "Leonel — Full-Stack Engineer",
+    "title": "Leonel — AI Full-Stack Engineer",
     "description": "I ship products end-to-end and leverage AI to make them 10x more powerful."
   },
   "home": {
-    "meta_title": "Leonel — Full-Stack Engineer",
-    "meta_description": "Full-Stack Engineer who ships end-to-end products — from infra and backend to frontend — and integrates AI, agents, and LLMs to make them 10x more powerful."
+    "meta_title": "Leonel — AI Full-Stack Engineer",
+    "meta_description": "AI Full-Stack Engineer who ships end-to-end products — from infra and backend to frontend — and integrates AI, agents, and LLMs to make them 10x more powerful."
   },
   "nav": {
     "home": "Home",
@@ -16,7 +16,7 @@
   },
   "hero": {
     "greeting": "Hi, I'm Leonel",
-    "title": "Full-Stack Engineer",
+    "title": "AI Full-Stack Engineer",
     "subtitle": "I ship products end-to-end — from infrastructure and DevOps to backend and frontend — and leverage AI, agents, and LLMs to make them 10x more powerful.",
     "cta_primary": "Let's Collaborate",
     "cta_secondary": "View My Work",

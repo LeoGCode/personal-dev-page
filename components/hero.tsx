@@ -280,7 +280,7 @@ export function Hero() {
               </div>
               <div>
                 <div className="font-mono text-2xl font-bold">
-                  <AnimatedCounter target={3} />
+                  <AnimatedCounter target={7} />
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {t("languages_label")}
