@@ -10,8 +10,7 @@
 
 export const SITE_DOMAIN = "leogcode.dev";
 
-const rawUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
 export const SITE_URL = rawUrl.startsWith("http")
   ? rawUrl
   : `https://${rawUrl}`;

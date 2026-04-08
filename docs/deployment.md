@@ -103,14 +103,14 @@ and API requests. This gives you CDN-level performance with self-hosted control.
 
 ### Required for all deployments
 
-| Variable                 | Build/Runtime | Description                                                                                         |
-| ------------------------ | ------------- | --------------------------------------------------------------------------------------------------- |
+| Variable                 | Build/Runtime | Description                                                                                        |
+| ------------------------ | ------------- | -------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`   | Build         | Canonical site URL (e.g. `https://leogcode.dev`). Used for CORS validation, sitemap, and metadata. |
-| `NEXT_PUBLIC_SENTRY_DSN` | Build         | Sentry DSN for error tracking. **Required in production** — the app throws on startup if missing.   |
-| `SENTRY_ORG`             | Build         | Sentry organization slug (for source map uploads during build).                                     |
-| `SENTRY_PROJECT`         | Build         | Sentry project slug.                                                                                |
-| `SENTRY_AUTH_TOKEN`      | Build         | Sentry auth token (for source map uploads).                                                         |
-| `RESEND_API_KEY`         | Runtime       | Resend API key for sending emails.                                                                  |
+| `NEXT_PUBLIC_SENTRY_DSN` | Build         | Sentry DSN for error tracking. **Required in production** — the app throws on startup if missing.  |
+| `SENTRY_ORG`             | Build         | Sentry organization slug (for source map uploads during build).                                    |
+| `SENTRY_PROJECT`         | Build         | Sentry project slug.                                                                               |
+| `SENTRY_AUTH_TOKEN`      | Build         | Sentry auth token (for source map uploads).                                                        |
+| `RESEND_API_KEY`         | Runtime       | Resend API key for sending emails.                                                                 |
 | `EMAIL_FROM`             | Runtime       | Sender address for emails (e.g. `Leonel <hello@leogcode.dev>`).                                    |
 
 ### Recommended
