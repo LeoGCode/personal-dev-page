@@ -108,8 +108,14 @@ export function CollaborateForm() {
       className="space-y-6"
     >
       {/* Honeypot */}
-      <div className="absolute -left-[9999px]" aria-hidden="true">
-        <input type="text" tabIndex={-1} {...register("honeypot")} />
+      <div className="absolute -left-[9999px]">
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          {...register("honeypot")}
+        />
       </div>
 
       {/* Name */}

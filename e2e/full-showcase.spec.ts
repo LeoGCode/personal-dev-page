@@ -229,7 +229,7 @@ test("Full showcase — navigate every page + submit collaboration form + verify
   await page.getByRole("combobox").first().click();
   await page.waitForTimeout(300);
   await page
-    .getByRole("option", { name: /project collaboration/i })
+    .getByRole("option", { name: /end-to-end product build/i })
     .first()
     .click();
   await page.waitForTimeout(200);

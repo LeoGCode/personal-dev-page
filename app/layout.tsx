@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`;
 
 export const metadata: Metadata = {
   title: {
@@ -95,7 +96,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <CursorGlow />
+        {/* <CursorGlow /> */}
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>

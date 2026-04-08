@@ -23,23 +23,15 @@ test.describe("Collaborate Form", () => {
   });
 
   test("submits form successfully", async ({ page }) => {
-    // Mock the API endpoint
-    await page.route("**/api/collaborate", async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({ success: true }),
-      });
-    });
-
     // Fill required fields
+    const testEmail = `e2e-${Date.now()}@example.com`;
     await page.getByLabel(/your name/i).fill("Test User");
-    await page.getByLabel(/email/i).first().fill("test@example.com");
+    await page.getByLabel(/email/i).first().fill(testEmail);
 
     // Select collaboration type — Radix Select renders as combobox
     await page.getByRole("combobox").first().click();
     await page
-      .getByRole("option", { name: /project/i })
+      .getByRole("option", { name: /end-to-end product build/i })
       .first()
       .click();
 
@@ -52,10 +44,14 @@ test.describe("Collaborate Form", () => {
 
     await page.getByRole("button", { name: /send message/i }).click();
 
-    // Wait for success state
+    // Wait for success state — confirm the full confirmation UI renders
     await expect(page.getByText(/message sent/i)).toBeVisible({
       timeout: 10000,
     });
+    await expect(page.getByText(/thank you|i'll get back/i)).toBeVisible();
+
+    // Brief pause so the video captures the confirmation screen
+    await page.waitForTimeout(1500);
   });
 
   test("renders form in Spanish locale", async ({ page }) => {
