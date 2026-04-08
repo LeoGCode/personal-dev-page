@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import type { EmailService, SendEmailParams } from "./base";
 
-const EMAIL_FROM = process.env.EMAIL_FROM || "Leonel <hello@leoneldev.com>";
+const EMAIL_FROM = process.env.EMAIL_FROM || "Leonel <hello@leogcode.dev>";
 
 export function createResendService(): EmailService {
   const apiKey = process.env.RESEND_API_KEY;
@@ -19,6 +19,12 @@ export function createResendService(): EmailService {
         text: params.text,
         ...(params.html && { html: params.html }),
       });
+
+      if (result.error) {
+        throw new Error(
+          `Resend API error: ${result.error.message} (${result.error.name})`,
+        );
+      }
 
       return { id: result.data?.id };
     },

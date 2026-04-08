@@ -325,7 +325,7 @@ test("Full showcase — navigate every page + submit collaboration form + verify
 
     // ── 2. Notification email (to the site owner) ─────────────────
     const notificationEmail = await waitForMailpitMessage(request, {
-      to: "hello@leoneldev.com",
+      to: "hello@leogcode.dev",
       subject: "New lead",
       timeout: 15_000,
       since: sinceStart,

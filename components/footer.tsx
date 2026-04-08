@@ -36,7 +36,7 @@ const socialLinks = [
   },
   {
     key: "email",
-    href: "mailto:hello@leoneldev.com",
+    href: "mailto:hello@leogcode.dev",
     icon: Mail,
     ariaLabel: "Send email",
   },

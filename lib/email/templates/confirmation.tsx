@@ -25,7 +25,7 @@ const copy = {
     timeline: "Timeline",
     sign_off: "Talk soon,",
     footer:
-      "You received this email because you submitted a collaboration request on leoneldev.com.",
+      "You received this email because you submitted a collaboration request on leogcode.dev.",
   },
   es: {
     preview: (name: string) =>
@@ -38,7 +38,7 @@ const copy = {
     timeline: "Plazo",
     sign_off: "Hablamos pronto,",
     footer:
-      "Recibiste este email porque enviaste una solicitud de colaboración en leoneldev.com.",
+      "Recibiste este email porque enviaste una solicitud de colaboración en leogcode.dev.",
   },
 } as const;
 

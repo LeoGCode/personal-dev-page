@@ -156,7 +156,7 @@ test.describe("Odoo CRM — Lead Lifecycle", () => {
 
     await test.step("Verify notification email was sent to the site owner", async () => {
       const notificationMsg = await waitForMailpitMessage(request, {
-        to: "hello@leoneldev.com",
+        to: "hello@leogcode.dev",
         subject: "New lead",
         timeout: 15_000,
         since: sinceStart,
@@ -429,7 +429,7 @@ test.describe("Odoo CRM — Lead Lifecycle", () => {
     // Verify notification email is also localized
     await test.step("Notification email is localized to Spanish", async () => {
       const notifyMsg = await waitForMailpitMessage(request, {
-        to: "hello@leoneldev.com",
+        to: "hello@leogcode.dev",
         subject: "Nuevo lead",
         timeout: 15_000,
         since: sinceStart,
