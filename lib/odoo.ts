@@ -3,8 +3,19 @@ const ODOO_DB = process.env.ODOO_DB;
 const ODOO_USER = process.env.ODOO_USER;
 const ODOO_PASSWORD = process.env.ODOO_PASSWORD;
 
+/**
+ * Returns true when all four Odoo env vars are set.
+ *
+ * On Vercel (or any deployment without a reachable Odoo instance),
+ * simply leave these vars unset — CRM integration will be skipped
+ * gracefully and the form still works (emails are the primary channel).
+ */
+function isOdooConfigured(): boolean {
+  return !!(ODOO_URL && ODOO_DB && ODOO_USER && ODOO_PASSWORD);
+}
+
 function assertOdooConfig() {
-  if (!ODOO_URL || !ODOO_DB || !ODOO_USER || !ODOO_PASSWORD) {
+  if (!isOdooConfigured()) {
     throw new Error(
       "Missing Odoo configuration. Set ODOO_URL, ODOO_DB, ODOO_USER, and ODOO_PASSWORD environment variables.",
     );
@@ -80,6 +91,11 @@ export async function createCrmLead(data: {
   tags: string[];
   teamId?: number;
 }) {
+  if (!isOdooConfigured()) {
+    console.info("[CRM] Odoo not configured — skipping lead creation");
+    return null;
+  }
+
   const [tagIds, uid] = await Promise.all([
     ensureTags(data.tags),
     authenticate(),

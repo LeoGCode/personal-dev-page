@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { checkRateLimit, _resetStore } from "@/lib/rate-limit";
+import { checkRateLimit, _resetStore } from "@/lib/rate-limit-memory";
 
-describe("checkRateLimit", () => {
+describe("checkRateLimit (in-memory)", () => {
   beforeEach(() => {
     _resetStore();
   });

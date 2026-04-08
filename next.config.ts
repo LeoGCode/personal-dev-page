@@ -5,7 +5,11 @@ import { withSentryConfig } from "@sentry/nextjs";
 const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // "standalone" produces a self-contained Node.js server for Docker.
+  // On Vercel this is not needed — Vercel splits the app into static
+  // assets (CDN) + serverless functions automatically.  The Dockerfile
+  // sets STANDALONE=true so Docker builds still get the standalone output.
+  ...(process.env.STANDALONE === "true" && { output: "standalone" as const }),
   experimental: {
     optimizePackageImports: ["lucide-react", "motion/react"],
   },

@@ -12,6 +12,8 @@ RUN corepack enable pnpm
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Tell next.config.ts to produce standalone output for Docker
+ENV STANDALONE=true
 RUN pnpm run build
 
 FROM base AS runner

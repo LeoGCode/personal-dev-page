@@ -15,14 +15,17 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 /**
  * Extract the client IP from reverse-proxy headers.
  *
- * IMPORTANT: In production, the reverse proxy (e.g., Traefik, Nginx, Cloudflare)
- * MUST set the `x-real-ip` header to the actual client IP and strip any
- * client-provided value. Without this:
- *  - `x-forwarded-for` can be spoofed by the client (append arbitrary IPs).
- *  - The rate limiter and security logging become ineffective.
+ * Works on both self-hosted and Vercel deployments:
  *
- * Traefik sets `x-real-ip` by default. For Nginx, add:
- *   proxy_set_header X-Real-IP $remote_addr;
+ * • Self-hosted (Traefik/Nginx): the reverse proxy sets `x-real-ip` to the
+ *   actual client IP and strips any client-provided value. Traefik does this
+ *   by default. For Nginx, add: proxy_set_header X-Real-IP $remote_addr;
+ *
+ * • Vercel: sets both `x-real-ip` and `x-forwarded-for` from its edge
+ *   network. Client-spoofed values are stripped automatically.
+ *
+ * Without a trusted proxy setting these headers, `x-forwarded-for` can be
+ * spoofed and the rate limiter becomes ineffective.
  */
 function getClientIp(request: Request): string {
   return (
