@@ -73,7 +73,7 @@ export function About() {
               {t.rich("paragraph_2", {
                 nexora: (chunks) => (
                   <a
-                    href="https://nexoragroup.com"
+                    href="https://nexoragroup.dev"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary underline underline-offset-4 transition-[color,text-underline-offset] hover:text-primary/80 hover:underline-offset-8"

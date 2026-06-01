@@ -110,13 +110,13 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             {t("founder")}{" "}
             <a
-              href="https://nexoragroup.com"
+              href="https://nexoragroup.dev"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline underline-offset-4 hover:text-primary/80 transition-colors duration-200"
               onClick={() =>
                 posthog?.capture("outbound_link_clicked", {
-                  url: "https://nexoragroup.com",
+                  url: "https://nexoragroup.dev",
                   label: "nexora",
                   context: "footer",
                 })

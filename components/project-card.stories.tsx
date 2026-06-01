@@ -29,7 +29,7 @@ export const Active: Story = {
     stack: ["Next.js", "Django", "PostgreSQL", "Docker"],
     status: "active",
     statusLabel: "Active",
-    url: "https://nexoragroup.com",
+    url: "https://nexoragroup.dev",
   },
 };
 
@@ -86,7 +86,7 @@ export const WithExternalLink: Story = {
     stack: ["Next.js", "TypeScript"],
     status: "active",
     statusLabel: "Active",
-    url: "https://nexoragroup.com",
+    url: "https://nexoragroup.dev",
   },
 };
 

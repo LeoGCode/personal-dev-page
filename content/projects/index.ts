@@ -63,7 +63,7 @@ export const projects: Project[] = [
         "Calificación de leads con IA automatizando trabajo CRM que antes era manual",
       ],
     },
-    live: "https://nexoragroup.com",
+    live: "https://nexoragroup.dev",
   },
   {
     slug: "ai-credit-analyzer",
