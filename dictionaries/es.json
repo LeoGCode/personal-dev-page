@@ -198,7 +198,11 @@
       "dfw": "Presencial en la zona de DFW"
     },
     "examples": {
-      "title": "Tres cosas que te puede quitar de encima",
+      "title": "Cuatro cosas que te puede quitar de encima",
+      "admin": {
+        "title": "El admin de tu empresa, sin el trabajo manual",
+        "text": "Conectada al admin o a las herramientas internas de tu empresa, busca los productos o registros que necesitas, los reúne y arma la hoja de cálculo. Tú revisas el resultado."
+      },
       "inbox": {
         "title": "Tu correo, ordenado cada mañana",
         "text": "Lee lo que llegó, te dice qué necesita respuesta hoy y redacta las respuestas con tu tono. Tú las revisas y las envías."
@@ -214,7 +218,7 @@
     },
     "story": {
       "label": "Un caso real",
-      "text": "Una project manager de una startup de marketplace me dijo que le tenía miedo a la IA. Ocho días y dos llamadas después de conectar la suya a las herramientas de la empresa, grabó una reunión y le pidió los seguimientos por WhatsApp, la minuta por correo y la invitación del calendario. Cambió tres palabras y envió todo."
+      "text": "Una project manager de una startup de marketplace pasaba horas en el admin de la empresa buscando productos uno por uno y pasándolos a hojas de cálculo, y me dijo que le tenía miedo a la IA. En una llamada le mostré cómo conectar su IA a ese admin. Ahora la IA hace la búsqueda y arma las hojas mientras ella revisa el resultado; la primera tarde la usó tanto que se le acabó la cuota de su plan. Una semana después grabó una reunión y le pidió los seguimientos por WhatsApp, la minuta por correo y la invitación del calendario. Cambió tres palabras y envió todo."
     },
     "how": {
       "title": "Cómo funciona",

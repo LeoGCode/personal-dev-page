@@ -9,6 +9,7 @@ import {
   Check,
   ExternalLink,
   Inbox,
+  LayoutDashboard,
   Mail,
   MessageCircle,
   Mic,
@@ -23,6 +24,7 @@ import { AI_PACKAGES_URL, BOOKING_URL, WHATSAPP_NUMBER } from "@/lib/site";
 const CHIPS = ["not_course", "any_ai", "bilingual", "dfw"] as const;
 
 const EXAMPLES = [
+  { key: "admin", icon: LayoutDashboard },
   { key: "inbox", icon: Inbox },
   { key: "whatsapp", icon: MessageCircle },
   { key: "meeting", icon: Mic },
@@ -180,7 +182,7 @@ export function AiSetup() {
             <h2 id="ai-examples" className={sectionTitleClass}>
               {t("examples.title")}
             </h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {EXAMPLES.map(({ key, icon: Icon }) => (
                 <div
                   key={key}
