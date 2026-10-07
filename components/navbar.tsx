@@ -16,6 +16,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 const navLinks = [
   { href: "/", key: "home" },
+  { href: "/ai", key: "ai" },
   { href: "/projects", key: "projects" },
   { href: "/blog", key: "blog" },
 ] as const;

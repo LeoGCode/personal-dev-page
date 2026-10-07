@@ -214,6 +214,17 @@ export function Hero() {
             <p className="mt-4 max-w-md text-base text-muted-foreground sm:text-lg">
               {t("subtitle")}
             </p>
+            <Link
+              href="/ai"
+              className="group mt-5 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-sm text-primary transition-colors hover:bg-primary/10"
+            >
+              <Sparkles className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              {t("ai_pointer")}
+              <ArrowRight
+                className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Link>
           </BentoTile>
 
           {/* Code snippet tile */}

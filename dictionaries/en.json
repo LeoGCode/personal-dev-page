@@ -9,6 +9,7 @@
   },
   "nav": {
     "home": "Home",
+    "ai": "AI setup",
     "projects": "Projects",
     "blog": "Blog",
     "collaborate": "Let's Collaborate",
@@ -18,6 +19,7 @@
     "greeting": "Hi, I'm Leonel",
     "title": "Full-Stack Product Engineer",
     "subtitle": "I ship whole products end to end — infrastructure and DevOps, backend, frontend and mobile — in whatever stack the job needs, and I'm deep in AI tooling: LLMs, agents and MCP.",
+    "ai_pointer": "I also set up the AI you already pay for",
     "cta_primary": "Let's Collaborate",
     "cta_secondary": "View My Work",
     "response_time": "I typically respond within 24h",

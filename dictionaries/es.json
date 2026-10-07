@@ -9,6 +9,7 @@
   },
   "nav": {
     "home": "Inicio",
+    "ai": "Configuración de IA",
     "projects": "Proyectos",
     "blog": "Blog",
     "collaborate": "Colaboremos",
@@ -18,6 +19,7 @@
     "greeting": "Hola, soy Leonel",
     "title": "Ingeniero Full-Stack de Producto",
     "subtitle": "Entrego productos completos de punta a punta — infraestructura y DevOps, backend, frontend y mobile — en el stack que haga falta, y trabajo a fondo con herramientas de IA: LLMs, agentes y MCP.",
+    "ai_pointer": "También configuro la IA que ya pagas",
     "cta_primary": "Colaboremos",
     "cta_secondary": "Ver mi trabajo",
     "response_time": "Suelo responder en menos de 24h",
