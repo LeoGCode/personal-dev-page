@@ -20,13 +20,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_NAME} — Full-Stack Engineer`,
+    default: `${SITE_NAME} — Full-Stack Product Engineer`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
+    "Full-stack product engineer who ships whole products end to end, from infrastructure to UI, and builds with LLMs, agents and MCP where they add real value.",
   metadataBase: new URL(SITE_URL),
   keywords: [
+    "full-stack product engineer",
     "full-stack engineer",
     "software engineer",
     "AI integration",
@@ -41,9 +42,9 @@ export const metadata: Metadata = {
     "Docker",
   ],
   openGraph: {
-    title: `${SITE_NAME} — Full-Stack Engineer`,
+    title: `${SITE_NAME} — Full-Stack Product Engineer`,
     description:
-      "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
+      "Full-stack product engineer who ships whole products end to end, from infrastructure to UI, and builds with LLMs, agents and MCP where they add real value.",
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -51,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Full-Stack Engineer`,
+    title: `${SITE_NAME} — Full-Stack Product Engineer`,
     description:
-      "Full-Stack Engineer who ships products end-to-end and leverages AI, agents, and LLMs to make them 10x more powerful.",
+      "Full-stack product engineer who ships whole products end to end, from infrastructure to UI, and builds with LLMs, agents and MCP where they add real value.",
   },
   icons: {
     icon: [

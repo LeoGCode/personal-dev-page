@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Leonel — Full-Stack Engineer";
+export const alt = "Leonel — Full-Stack Product Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -229,7 +229,7 @@ export default async function Image() {
               lineHeight: 1.2,
             }}
           >
-            Full-Stack Engineer
+            Full-Stack Product Engineer
           </span>
 
           {/* Description */}
@@ -241,8 +241,8 @@ export default async function Image() {
               lineHeight: 1.65,
             }}
           >
-            I ship products end-to-end and leverage AI, agents, and LLMs to make
-            them 10x more powerful.
+            I ship whole products end to end and build with LLMs, agents and MCP
+            where they add real value.
           </span>
 
           {/* Tech tags */}

@@ -10,7 +10,7 @@ test.describe("Homepage", () => {
 
     // Hero heading
     await expect(
-      page.getByRole("heading", { name: /Software Engineer/i }).first(),
+      page.getByRole("heading", { name: /Product Engineer/i }).first(),
     ).toBeVisible();
 
     // Primary CTA — "Let's Collaborate"

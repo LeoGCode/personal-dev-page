@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "Leonel — AI Full-Stack Engineer",
-    "description": "I ship products end-to-end and leverage AI to make them 10x more powerful."
+    "title": "Leonel — Full-Stack Product Engineer",
+    "description": "I ship whole products end to end, from infrastructure to UI, and build with LLMs, agents and MCP where they add real value."
   },
   "home": {
-    "meta_title": "Leonel — AI Full-Stack Engineer",
-    "meta_description": "AI Full-Stack Engineer who ships end-to-end products — from infra and backend to frontend — and integrates AI, agents, and LLMs to make them 10x more powerful."
+    "meta_title": "Leonel — Full-Stack Product Engineer",
+    "meta_description": "Full-stack product engineer who ships whole products end to end — infrastructure, backend, frontend and mobile — in whatever stack the job needs, with LLMs, agents and MCP where they add real value."
   },
   "nav": {
     "home": "Home",
@@ -16,8 +16,8 @@
   },
   "hero": {
     "greeting": "Hi, I'm Leonel",
-    "title": "AI Full-Stack Engineer",
-    "subtitle": "I ship products end-to-end — from infrastructure and DevOps to backend and frontend — and leverage AI, agents, and LLMs to make them 10x more powerful.",
+    "title": "Full-Stack Product Engineer",
+    "subtitle": "I ship whole products end to end — infrastructure and DevOps, backend, frontend and mobile — in whatever stack the job needs, and I'm deep in AI tooling: LLMs, agents and MCP.",
     "cta_primary": "Let's Collaborate",
     "cta_secondary": "View My Work",
     "response_time": "I typically respond within 24h",
@@ -32,7 +32,7 @@
   },
   "about": {
     "title": "About Me",
-    "paragraph_1": "I'm a Full-Stack Engineer who ships entire products as a one-man army — from infrastructure and DevOps, through backend APIs and databases, to polished frontends. When a product needs AI capabilities, I integrate LLMs, agentic workflows, and intelligent automation to make it dramatically more powerful.",
+    "paragraph_1": "I'm a full-stack product engineer who ships whole products on my own — from infrastructure and DevOps, through backend APIs and databases, to polished frontends and mobile apps. When a product needs AI, I integrate LLMs, agents and MCP servers where they solve a real problem.",
     "paragraph_2": "Currently, I'm building <nexora>Nexora Group</nexora>, a software consultancy where I deliver end-to-end digital products. I work across the entire stack — React and Next.js frontends, Python and Node.js backends, PostgreSQL databases, Docker infrastructure — and layer in AI when it creates real value.",
     "paragraph_3": "I'm bilingual (English/Spanish) and based in Latin America. Whether you need someone to take a product from zero to production, add AI capabilities to an existing platform, or just an experienced engineer who ships — I'm open to the conversation."
   },
