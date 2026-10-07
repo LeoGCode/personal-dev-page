@@ -35,10 +35,10 @@ export const AI_PACKAGES_URL = "https://exprime.nexoragroup.dev";
 
 /**
  * WhatsApp number for the /ai page button, international format, digits
- * only (e.g. "12145550123"). Empty by default: the button is only rendered
- * when NEXT_PUBLIC_WHATSAPP_NUMBER is set. It is inlined at build time, so
- * changing it needs a redeploy.
+ * only. NEXT_PUBLIC_WHATSAPP_NUMBER overrides the default; an empty number
+ * hides the button. It is inlined at build time, so changing it needs a
+ * redeploy.
  */
 export const WHATSAPP_NUMBER = (
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ""
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "19453380177"
 ).replace(/\D/g, "");

@@ -133,7 +133,7 @@ and API requests. This gives you CDN-level performance with self-hosted control.
 | `ODOO_PASSWORD`               | Runtime       | Odoo password.                                                                                         |
 | `ODOO_PERSONAL_TEAM_ID`       | Runtime       | Odoo CRM team ID for lead assignment.                                                                  |
 | `RATE_LIMIT_MAX`              | Runtime       | Max form submissions per IP per hour (default: `3`).                                                   |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Build         | WhatsApp number for the `/ai` page button (digits only, international format). Empty hides the button. |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Build         | Overrides the WhatsApp number for the `/ai` page button (digits only, international format). Defaults to the one in `lib/site.ts`. |
 | `STANDALONE`                  | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile.                     |
 
 > **Note on `NEXT_PUBLIC_*` variables:** These are inlined into the JavaScript
