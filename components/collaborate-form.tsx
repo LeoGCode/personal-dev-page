@@ -21,15 +21,28 @@ import {
 import { useState, useEffect } from "react";
 import { usePostHog } from "posthog-js/react";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { SITE_EMAIL } from "@/lib/site";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
+
+/** Which error copy to show: rate limited, or the lead was not delivered. */
+type FormError = "rate_limited" | "not_sent";
+
+class SubmitError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
 
 export function CollaborateForm() {
   const t = useTranslations("collaborate");
   const locale = useLocale();
   const posthog = usePostHog();
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [formError, setFormError] = useState<FormError>("not_sent");
 
   useEffect(() => {
     posthog?.capture("collaborate_form_viewed");
@@ -48,7 +61,6 @@ export function CollaborateForm() {
 
   async function onSubmit(data: CollaborateFormData) {
     setStatus("submitting");
-    setErrorMessage("");
     posthog?.capture("collaborate_form_submitted", {
       collaboration_type: data.collaborationType,
     });
@@ -60,9 +72,14 @@ export function CollaborateForm() {
         body: JSON.stringify({ ...data, locale }),
       });
 
+      // Only a 2xx means the lead reached Leonel (the API awaits the
+      // notification email). Anything else must not look like success.
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
-        throw new Error(body.error || "Something went wrong");
+        throw new SubmitError(
+          body.error || "Something went wrong",
+          response.status,
+        );
       }
 
       posthog?.capture("collaborate_form_success", {
@@ -75,8 +92,13 @@ export function CollaborateForm() {
       posthog?.capture("collaborate_form_error", {
         collaboration_type: data.collaborationType,
         error: message,
+        status: err instanceof SubmitError ? err.status : undefined,
       });
-      setErrorMessage(message);
+      setFormError(
+        err instanceof SubmitError && err.status === 429
+          ? "rate_limited"
+          : "not_sent",
+      );
       setStatus("error");
     }
   }
@@ -154,7 +176,7 @@ export function CollaborateForm() {
             )
           }
         >
-          <SelectTrigger>
+          <SelectTrigger id="collaborationType">
             <SelectValue placeholder={t("placeholders.type")} />
           </SelectTrigger>
           <SelectContent>
@@ -204,7 +226,7 @@ export function CollaborateForm() {
             setValue("budget", value as CollaborateFormData["budget"])
           }
         >
-          <SelectTrigger>
+          <SelectTrigger id="budget">
             <SelectValue placeholder={t("placeholders.budget")} />
           </SelectTrigger>
           <SelectContent>
@@ -228,7 +250,7 @@ export function CollaborateForm() {
             setValue("timeline", value as CollaborateFormData["timeline"])
           }
         >
-          <SelectTrigger>
+          <SelectTrigger id="timeline">
             <SelectValue placeholder={t("placeholders.timeline")} />
           </SelectTrigger>
           <SelectContent>
@@ -255,7 +277,7 @@ export function CollaborateForm() {
             setValue("referral", value as CollaborateFormData["referral"])
           }
         >
-          <SelectTrigger>
+          <SelectTrigger id="referral">
             <SelectValue placeholder={t("placeholders.referral")} />
           </SelectTrigger>
           <SelectContent>
@@ -279,7 +301,21 @@ export function CollaborateForm() {
           <div className="flex-1">
             <p className="font-mono text-sm font-medium">{t("error_title")}</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {errorMessage || t("error_message")}
+              {t.rich(
+                formError === "rate_limited"
+                  ? "error_rate_limited"
+                  : "error_message",
+                {
+                  email: () => (
+                    <a
+                      href={`mailto:${SITE_EMAIL}`}
+                      className="text-primary underline underline-offset-4 hover:text-primary/80"
+                    >
+                      {SITE_EMAIL}
+                    </a>
+                  ),
+                },
+              )}
             </p>
           </div>
           <button

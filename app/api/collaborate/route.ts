@@ -1,6 +1,9 @@
 import { NextResponse, after } from "next/server";
 import * as Sentry from "@sentry/nextjs";
-import { collaborateSchema } from "@/lib/schemas/collaborate";
+import {
+  collaborateSchema,
+  type CollaborateSubmission,
+} from "@/lib/schemas/collaborate";
 import { createCrmLead, buildCrmTags } from "@/lib/odoo";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getEmailService } from "@/lib/email";
@@ -63,6 +66,84 @@ function getClientIp(request: Request): string {
   );
 }
 
+/** How long to wait for the email provider before reporting a failure. */
+const NOTIFICATION_TIMEOUT_MS = 10_000;
+
+function withTimeout<T>(
+  promise: Promise<T>,
+  ms: number,
+  label: string,
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`${label} timed out after ${ms}ms`)),
+      ms,
+    );
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+/**
+ * Send the lead notification to NOTIFICATION_EMAIL and wait for the email
+ * provider to accept it.
+ *
+ * Returns `false` (and reports to Sentry) when the lead could not be
+ * delivered: NOTIFICATION_EMAIL unset, email service misconfigured, provider
+ * error, or timeout. The caller must then tell the visitor it failed instead
+ * of showing a success message for a lead nobody will see.
+ */
+async function deliverLeadNotification(
+  data: CollaborateSubmission,
+): Promise<boolean> {
+  if (!NOTIFICATION_EMAIL) {
+    const error = new Error(
+      "NOTIFICATION_EMAIL is not configured — lead notification cannot be delivered",
+    );
+    Sentry.captureException(error, {
+      tags: { operation: "Notification email" },
+    });
+    console.error(error.message);
+    return false;
+  }
+
+  try {
+    await withTimeout(
+      (async () => {
+        const emailService = await getEmailService();
+        const notification = await renderNotificationEmail({
+          name: data.name,
+          email: data.email,
+          collaborationType: data.collaborationType,
+          description: data.description,
+          budget: data.budget,
+          timeline: data.timeline,
+          referral: data.referral,
+          locale: data.locale,
+        });
+        await emailService.send({
+          to: NOTIFICATION_EMAIL,
+          subject:
+            data.locale === "es"
+              ? `Nuevo lead: ${data.collaborationType} — ${data.name}`
+              : `New lead: ${data.collaborationType} — ${data.name}`,
+          text: notification.text,
+          html: notification.html,
+        });
+      })(),
+      NOTIFICATION_TIMEOUT_MS,
+      "Notification email",
+    );
+    return true;
+  } catch (error) {
+    Sentry.captureException(error, {
+      tags: { operation: "Notification email" },
+    });
+    console.error("Notification email failed:", error);
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     // CORS validation
@@ -118,7 +199,38 @@ export async function POST(request: Request) {
       data.description,
     ].join("\n");
 
-    // Return success immediately — do CRM sync and emails in the background
+    // Lead notification is the delivery channel that must not fail
+    // silently: await it, and only report success once the email provider
+    // has accepted it. CRM sync and the visitor's confirmation email stay
+    // best-effort and run after the response is sent.
+    const delivered = await deliverLeadNotification(data);
+
+    // CRM lead creation — best effort, also attempted when the notification
+    // failed so the lead has a second chance to be captured.
+    after(async () => {
+      try {
+        await createCrmLead({
+          name: `${data.collaborationType}: ${data.name}`,
+          contactName: data.name,
+          email: data.email,
+          description: leadDescription,
+          tags,
+        });
+      } catch (error) {
+        Sentry.captureException(error, {
+          tags: { operation: "CRM lead creation" },
+        });
+        console.error("CRM lead creation failed:", error);
+      }
+    });
+
+    if (!delivered) {
+      return NextResponse.json(
+        { error: "Lead could not be delivered" },
+        { status: 502 },
+      );
+    }
+
     const response = NextResponse.json({ success: true });
 
     // Add CORS headers — mirror the validated origin so both www and
@@ -127,84 +239,33 @@ export async function POST(request: Request) {
       response.headers.set("Access-Control-Allow-Origin", origin);
     }
 
+    // Confirmation email to the visitor — best effort, only once the lead
+    // actually reached Leonel.
     after(async () => {
-      const emailService = await getEmailService();
-
-      const results = await Promise.allSettled([
-        // CRM lead creation
-        createCrmLead({
-          name: `${data.collaborationType}: ${data.name}`,
-          contactName: data.name,
-          email: data.email,
-          description: leadDescription,
-          tags,
-        }),
-
-        // Confirmation email
-        (async () => {
-          const confirmation = await renderConfirmationEmail({
-            name: data.name,
-            collaborationType: data.collaborationType,
-            budget: data.budget,
-            timeline: data.timeline,
-            locale: data.locale,
-          });
-          await emailService.send({
-            to: data.email,
-            subject:
-              data.locale === "es"
-                ? "¡Gracias por tu mensaje!"
-                : "Thanks for reaching out!",
-            text: confirmation.text,
-            html: confirmation.html,
-          });
-        })(),
-
-        // Notification email (only if configured)
-        ...(NOTIFICATION_EMAIL
-          ? [
-              (async () => {
-                const notification = await renderNotificationEmail({
-                  name: data.name,
-                  email: data.email,
-                  collaborationType: data.collaborationType,
-                  description: data.description,
-                  budget: data.budget,
-                  timeline: data.timeline,
-                  referral: data.referral,
-                  locale: data.locale,
-                });
-                await emailService.send({
-                  to: NOTIFICATION_EMAIL,
-                  subject:
-                    data.locale === "es"
-                      ? `Nuevo lead: ${data.collaborationType} — ${data.name}`
-                      : `New lead: ${data.collaborationType} — ${data.name}`,
-                  text: notification.text,
-                  html: notification.html,
-                });
-              })(),
-            ]
-          : []),
-      ]);
-
-      // Log failures to Sentry
-      results.forEach((result, index) => {
-        if (result.status === "rejected") {
-          const labels = [
-            "CRM lead creation",
-            "Confirmation email",
-            "Notification email",
-          ];
-          Sentry.captureException(result.reason, {
-            tags: { operation: labels[index] ?? "unknown" },
-          });
-          console.error(
-            `${labels[index] ?? "Operation"} failed:`,
-            result.reason,
-          );
-        }
-      });
+      try {
+        const emailService = await getEmailService();
+        const confirmation = await renderConfirmationEmail({
+          name: data.name,
+          collaborationType: data.collaborationType,
+          budget: data.budget,
+          timeline: data.timeline,
+          locale: data.locale,
+        });
+        await emailService.send({
+          to: data.email,
+          subject:
+            data.locale === "es"
+              ? "¡Gracias por tu mensaje!"
+              : "Thanks for reaching out!",
+          text: confirmation.text,
+          html: confirmation.html,
+        });
+      } catch (error) {
+        Sentry.captureException(error, {
+          tags: { operation: "Confirmation email" },
+        });
+        console.error("Confirmation email failed:", error);
+      }
     });
 
     return response;

@@ -165,8 +165,9 @@
     "submitting": "Enviando...",
     "success_title": "¡Mensaje enviado!",
     "success_message": "Gracias por escribirme. Te respondo dentro de las próximas 48 horas.",
-    "error_title": "Algo salió mal",
-    "error_message": "Por favor intentá de nuevo o escribime directamente por email.",
+    "error_title": "Tu mensaje no se envió",
+    "error_message": "Algo falló de mi lado y no me llegó. Probá de nuevo en un minuto o escribime directamente a <email></email>.",
+    "error_rate_limited": "Demasiados mensajes desde esta conexión en la última hora. Probá más tarde o escribime directamente a <email></email>.",
     "try_again": "Intentar de nuevo",
     "optional": "opcional"
   },
