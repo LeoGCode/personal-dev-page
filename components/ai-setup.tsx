@@ -35,9 +35,12 @@ const ASKS = ["testimonial", "recording", "intro"] as const;
 type Cta = "book_call" | "whatsapp" | "write" | "packages";
 type Placement = "hero" | "final";
 
-/** Bigger tap targets on phones; buttons wrap instead of overflowing. */
+/**
+ * Bigger tap targets on phones; less side padding there so the Spanish
+ * labels fit on one line, and wrapping instead of overflowing if not.
+ */
 const ctaButtonClass =
-  "group h-auto min-h-11 w-full whitespace-normal py-2.5 text-base sm:w-auto";
+  "group h-auto min-h-11 w-full whitespace-normal px-4 py-2.5 text-base sm:w-auto sm:px-8";
 
 const sectionTitleClass =
   "font-mono text-2xl font-bold tracking-tight sm:text-3xl";
