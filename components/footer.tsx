@@ -53,10 +53,14 @@ export function Footer() {
       {/* Gradient top border */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
+      {/* Same initial/whileInView for everyone so the server HTML (which
+          starts hidden) always gets revealed; reduced motion just skips the
+          fade. Dropping `initial` client-side left the footer invisible. */}
       <motion.div
-        initial={prefersReducedMotion ? undefined : { opacity: 0 }}
-        whileInView={prefersReducedMotion ? undefined : { opacity: 1 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
+        transition={prefersReducedMotion ? { duration: 0 } : undefined}
         className="mx-auto max-w-5xl px-4 py-12"
       >
         <div className="flex flex-col items-center gap-6 text-center">

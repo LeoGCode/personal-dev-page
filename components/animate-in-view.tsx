@@ -45,21 +45,25 @@ export function AnimateInView({
   const prefersReducedMotion = useReducedMotion();
   const v = variants[variant];
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
+  // Always render the same motion.div: the server HTML carries the hidden
+  // initial style, and swapping to a plain <div> for reduced motion caused a
+  // hydration mismatch React does not patch, leaving the content invisible.
+  // Reduced motion gets an instant transition instead.
   return (
     <motion.div
       className={className}
       initial={v.initial}
       whileInView={v.whileInView}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{
-        duration: 0.55,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : {
+              duration: 0.55,
+              delay,
+              ease: [0.21, 0.47, 0.32, 0.98],
+            }
+      }
     >
       {children}
     </motion.div>
