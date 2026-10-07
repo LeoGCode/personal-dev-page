@@ -1,10 +1,11 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   collaborateFormSchema,
+  isCollaborationType,
   type CollaborateFormData,
 } from "@/lib/schemas/collaborate";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,7 @@ export function CollaborateForm() {
 
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     setFocus,
@@ -58,6 +60,18 @@ export function CollaborateForm() {
     resolver: zodResolver(collaborateFormSchema),
     defaultValues: {},
   });
+
+  const collaborationType = useWatch({ control, name: "collaborationType" });
+  const isAiSetup = collaborationType === "ai_setup";
+
+  // Pre-select the collaboration type from `?type=` (e.g. links from the
+  // /ai page use `?type=ai_setup`). Read on mount so the page stays static.
+  useEffect(() => {
+    const type = new URLSearchParams(window.location.search).get("type");
+    if (isCollaborationType(type)) {
+      setValue("collaborationType", type);
+    }
+  }, [setValue]);
 
   async function onSubmit(data: CollaborateFormData) {
     setStatus("submitting");
@@ -169,12 +183,15 @@ export function CollaborateForm() {
       <div className="space-y-2">
         <Label htmlFor="collaborationType">{t("fields.type")}</Label>
         <Select
-          onValueChange={(value) =>
-            setValue(
-              "collaborationType",
-              value as CollaborateFormData["collaborationType"],
-            )
-          }
+          value={collaborationType ?? ""}
+          onValueChange={(value) => {
+            // Radix's hidden native <select> can echo "" when the value is
+            // set programmatically (the ?type= pre-selection); ignore it.
+            if (!isCollaborationType(value)) return;
+            setValue("collaborationType", value, {
+              shouldValidate: !!errors.collaborationType,
+            });
+          }}
         >
           <SelectTrigger id="collaborationType">
             <SelectValue placeholder={t("placeholders.type")} />
@@ -182,6 +199,7 @@ export function CollaborateForm() {
           <SelectContent>
             <SelectItem value="project">{t("types.project")}</SelectItem>
             <SelectItem value="ai_agent">{t("types.ai_agent")}</SelectItem>
+            <SelectItem value="ai_setup">{t("types.ai_setup")}</SelectItem>
             <SelectItem value="consulting">{t("types.consulting")}</SelectItem>
             <SelectItem value="opensource">{t("types.opensource")}</SelectItem>
             <SelectItem value="speaking">{t("types.speaking")}</SelectItem>
@@ -197,11 +215,19 @@ export function CollaborateForm() {
 
       {/* Description */}
       <div className="space-y-2">
-        <Label htmlFor="description">{t("fields.description")}</Label>
+        <Label htmlFor="description">
+          {isAiSetup
+            ? t("fields.description_ai_setup")
+            : t("fields.description")}
+        </Label>
         <Textarea
           id="description"
           rows={5}
-          placeholder={t("placeholders.description")}
+          placeholder={
+            isAiSetup
+              ? t("placeholders.description_ai_setup")
+              : t("placeholders.description")
+          }
           aria-invalid={!!errors.description}
           aria-describedby={
             errors.description ? "description-error" : undefined

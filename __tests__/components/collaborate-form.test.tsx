@@ -8,7 +8,7 @@ import {
   beforeEach,
   afterEach,
 } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
 import messages from "@/dictionaries/en.json";
@@ -117,5 +117,56 @@ describe("CollaborateForm submission states", () => {
     await fillAndSubmit();
 
     expect(await screen.findByRole("alert")).toHaveTextContent(/wasn't sent/i);
+  });
+});
+
+describe("CollaborateForm ?type= pre-selection", () => {
+  afterEach(() => {
+    cleanup();
+    window.history.replaceState(null, "", "/");
+  });
+
+  it("pre-selects AI setup from ?type=ai_setup and adapts the prompt", async () => {
+    window.history.replaceState(null, "", "/en/collaborate?type=ai_setup");
+    renderForm();
+
+    const typeSelect = screen.getByRole("combobox", {
+      name: /what are you looking for/i,
+    });
+    expect(
+      await within(typeSelect).findByText(/set up my ai/i),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/take off your plate/i)).toHaveAttribute(
+      "placeholder",
+      expect.stringMatching(/which ai/i),
+    );
+  });
+
+  it("submits ai_setup without the visitor touching the type select", async () => {
+    window.history.replaceState(null, "", "/en/collaborate?type=ai_setup");
+    const fetchMock = mockFetch(200, { success: true });
+    const user = userEvent.setup();
+    renderForm();
+
+    await user.type(screen.getByLabelText(/your name/i), "Jane Doe");
+    await user.type(screen.getByLabelText(/^email/i), "jane@example.com");
+    await user.type(
+      await screen.findByLabelText(/take off your plate/i),
+      "Inbox triage and WhatsApp follow-ups every morning.",
+    );
+    await user.click(screen.getByRole("button", { name: /send message/i }));
+
+    expect(await screen.findByText(/message sent/i)).toBeInTheDocument();
+    const [, init] = fetchMock.mock.calls[0];
+    expect(JSON.parse(init.body).collaborationType).toBe("ai_setup");
+  });
+
+  it("ignores unknown ?type= values", () => {
+    window.history.replaceState(null, "", "/en/collaborate?type=bogus");
+    renderForm();
+
+    expect(
+      screen.getByRole("combobox", { name: /what are you looking for/i }),
+    ).toHaveTextContent(/select a collaboration type/i);
   });
 });

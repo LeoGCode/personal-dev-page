@@ -118,6 +118,7 @@
     "types": {
       "project": "Producto de Punta a Punta",
       "ai_agent": "Integración de IA / Agentes",
+      "ai_setup": "Configurar mi IA (ChatGPT, Claude, Gemini…)",
       "consulting": "Consultoría Técnica",
       "opensource": "Open Source",
       "speaking": "Charlas / Escritura",
@@ -128,6 +129,7 @@
       "email": "Correo Electrónico",
       "type": "¿Qué estás buscando?",
       "description": "Contame sobre tu proyecto",
+      "description_ai_setup": "¿Qué te gustaría que tu IA te quitara de encima?",
       "budget": "Rango de Presupuesto",
       "timeline": "Plazo",
       "referral": "¿Cómo me encontraste?"
@@ -137,6 +139,7 @@
       "email": "juan@ejemplo.com",
       "type": "Seleccioná un tipo de colaboración",
       "description": "¿Qué querés construir o discutir? Mientras más detalle, mejor.",
+      "description_ai_setup": "¿Qué IA pagás y qué se te come la semana? Correo, WhatsApp, reuniones, reportes…",
       "budget": "Seleccioná un rango",
       "timeline": "Seleccioná un plazo",
       "referral": "Seleccioná una opción"

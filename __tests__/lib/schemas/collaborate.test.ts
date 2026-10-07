@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   collaborateFormSchema,
   collaborateSchema,
+  isCollaborationType,
 } from "@/lib/schemas/collaborate";
 
 describe("collaborateFormSchema", () => {
@@ -98,6 +99,8 @@ describe("collaborateSchema (server-side)", () => {
   it("accepts all collaboration types", () => {
     const types = [
       "project",
+      "ai_agent",
+      "ai_setup",
       "consulting",
       "opensource",
       "speaking",
@@ -129,5 +132,19 @@ describe("collaborateSchema (server-side)", () => {
       });
       expect(result.success).toBe(true);
     }
+  });
+});
+
+describe("isCollaborationType", () => {
+  it("accepts known types, including ai_setup", () => {
+    expect(isCollaborationType("ai_setup")).toBe(true);
+    expect(isCollaborationType("project")).toBe(true);
+  });
+
+  it("rejects unknown, empty and missing values", () => {
+    expect(isCollaborationType("ai")).toBe(false);
+    expect(isCollaborationType("")).toBe(false);
+    expect(isCollaborationType(null)).toBe(false);
+    expect(isCollaborationType(undefined)).toBe(false);
   });
 });

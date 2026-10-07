@@ -44,6 +44,8 @@ const copy = {
 const typeLabels: Record<string, Record<string, string>> = {
   en: {
     project: "Project Collaboration",
+    ai_agent: "AI / Agent Integration",
+    ai_setup: "AI Setup",
     consulting: "Consulting",
     opensource: "Open Source",
     speaking: "Speaking",
@@ -51,6 +53,8 @@ const typeLabels: Record<string, Record<string, string>> = {
   },
   es: {
     project: "Colaboración en Proyecto",
+    ai_agent: "Integración de IA / Agentes",
+    ai_setup: "Configuración de IA",
     consulting: "Consultoría",
     opensource: "Código Abierto",
     speaking: "Charlas",

@@ -118,6 +118,7 @@
     "types": {
       "project": "End-to-End Product Build",
       "ai_agent": "AI / Agent Integration",
+      "ai_setup": "Set up my AI (ChatGPT, Claude, Gemini…)",
       "consulting": "Technical Consulting",
       "opensource": "Open Source",
       "speaking": "Speaking / Writing",
@@ -128,6 +129,7 @@
       "email": "Email",
       "type": "What are you looking for?",
       "description": "Tell me about your project",
+      "description_ai_setup": "What would you like your AI to take off your plate?",
       "budget": "Budget Range",
       "timeline": "Timeline",
       "referral": "How did you find me?"
@@ -137,6 +139,7 @@
       "email": "jane@example.com",
       "type": "Select a collaboration type",
       "description": "What do you want to build or discuss? The more detail, the better.",
+      "description_ai_setup": "Which AI do you pay for, and what eats your week? Email, WhatsApp, meetings, reports…",
       "budget": "Select a range",
       "timeline": "Select a timeline",
       "referral": "Select an option"
