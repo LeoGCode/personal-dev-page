@@ -7,7 +7,7 @@ description: "Cómo OpenClaw usa la API de Accesibilidad de Android para despach
 
 # Construyendo una App Android Accesible con Integración de LLM
 
-OpenClaw empezó con una pregunta simple: ¿qué pasa si podés controlar tu teléfono Android con lenguaje natural? No a través de un asistente de voz que abre apps, sino a través de un servicio de accesibilidad real que lee la pantalla, entiende el contexto, y despacha gestos por vos.
+OpenClaw empezó con una pregunta simple: ¿qué pasa si puedes controlar tu teléfono Android con lenguaje natural? No a través de un asistente de voz que abre apps, sino a través de un servicio de accesibilidad real que lee la pantalla, entiende el contexto, y despacha gestos por ti.
 
 ## La API de Accesibilidad de Android
 
@@ -19,7 +19,7 @@ El desafío crítico es el rendimiento. El árbol de nodos puede contener ciento
 
 ## Despacho de Gestos
 
-El `AccessibilityService` puede despachar gestos a través de `dispatchGesture()`, que acepta un `GestureDescription` — una secuencia de trazos con coordenadas y timing. Así es como OpenClaw traduce comandos de alto nivel ("scrolleá abajo", "tocá el botón de búsqueda") en eventos táctiles físicos.
+El `AccessibilityService` puede despachar gestos a través de `dispatchGesture()`, que acepta un `GestureDescription` — una secuencia de trazos con coordenadas y timing. Así es como OpenClaw traduce comandos de alto nivel ("desplázate hacia abajo", "toca el botón de búsqueda") en eventos táctiles físicos.
 
 Construir un despacho de gestos confiable requirió resolver el mapeo de coordenadas. El árbol de nodos de accesibilidad provee los bounds de pantalla para cada elemento, pero esos bounds se mueven durante animaciones y después de eventos del teclado virtual. OpenClaw espera un frame estable antes de despachar, y valida que el nodo destino todavía exista post-gesto.
 
@@ -31,7 +31,7 @@ Esta transformación es el puente entre el sistema de vistas de Android y el mod
 
 ## Integración de LLM para Comandos en Lenguaje Natural
 
-El usuario habla o escribe un comando como "abrí mi último email" o "apagá el WiFi." OpenClaw envía el estado actual de la pantalla más el comando a un LLM, que devuelve un plan de acción estructurado: una secuencia de taps, swipes, entradas de texto, y esperas.
+El usuario habla o escribe un comando como "abre mi último email" o "apaga el WiFi." OpenClaw envía el estado actual de la pantalla más el comando a un LLM, que devuelve un plan de acción estructurado: una secuencia de taps, swipes, entradas de texto, y esperas.
 
 El plan de acción se ejecuta paso a paso, con el estado de pantalla re-evaluado después de cada acción. Si la siguiente pantalla predicha por el LLM no coincide con la realidad (por ejemplo, apareció un diálogo), re-planifica desde el estado actual. Este enfoque de loop cerrado maneja la imprevisibilidad de las UIs reales de Android mucho mejor que un plan de un solo intento.
 

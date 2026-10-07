@@ -31,7 +31,7 @@ const copy = {
     preview: (name: string) =>
       `Hola ${name}, gracias por escribirme! Revisaré tu mensaje pronto.`,
     greeting: (name: string) => `Hola ${name},`,
-    body: "Gracias por contactarme. Recibí tu mensaje y lo revisaré con atención. Podés esperar una respuesta dentro de las próximas 48 horas.",
+    body: "Gracias por contactarme. Recibí tu mensaje y lo revisaré con atención. Puedes esperar una respuesta dentro de las próximas 48 horas.",
     details_heading: "Lo que enviaste",
     type: "Tipo",
     budget: "Presupuesto",

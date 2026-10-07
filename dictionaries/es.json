@@ -77,7 +77,7 @@
     "all_title": "Todos los Proyectos",
     "all_subtitle": "Todo lo que he construido o estoy construyendo.",
     "back_to_projects": "Volver a proyectos",
-    "no_projects": "Todavía no hay proyectos. Volvé pronto.",
+    "no_projects": "Todavía no hay proyectos. Vuelve pronto.",
     "highlights": "Destacados",
     "detail": {
       "tech_stack": "Stack Tecnológico",
@@ -97,26 +97,26 @@
   },
   "not_found": {
     "title": "Página no encontrada",
-    "message": "La página que buscás no existe o fue movida.",
+    "message": "La página que buscas no existe o fue movida.",
     "back_home": "Volver al inicio",
     "suggestions": "Estos son algunos lugares que podrían interesarte:",
     "link_projects": "Proyectos",
-    "link_projects_desc": "Mirá lo que construí",
+    "link_projects_desc": "Mira lo que construí",
     "link_blog": "Blog",
-    "link_blog_desc": "Leé mis últimos posts",
+    "link_blog_desc": "Lee mis últimos posts",
     "link_collaborate": "Colaboremos",
-    "link_collaborate_desc": "Iniciá una conversación"
+    "link_collaborate_desc": "Inicia una conversación"
   },
   "error": {
     "title": "Algo salió mal",
-    "message": "Ocurrió un error inesperado. Por favor intentá de nuevo.",
+    "message": "Ocurrió un error inesperado. Por favor intenta de nuevo.",
     "retry": "Intentar de nuevo"
   },
   "collaborate": {
     "meta_title": "Colaboremos",
-    "meta_description": "¿Tenés una idea de proyecto? Construyamos algo juntos.",
+    "meta_description": "¿Tienes una idea de proyecto? Construyamos algo juntos.",
     "title": "Construyamos Algo Juntos",
-    "subtitle": "¿Tenés una idea, un proyecto, o simplemente querés charlar sobre tecnología? Me encantaría escucharte.",
+    "subtitle": "¿Tienes una idea, un proyecto, o simplemente quieres charlar sobre tecnología? Me encantaría escucharte.",
     "types": {
       "project": "Producto de Punta a Punta",
       "ai_agent": "Integración de IA / Agentes",
@@ -130,7 +130,7 @@
       "name": "Tu Nombre",
       "email": "Correo Electrónico",
       "type": "¿Qué estás buscando?",
-      "description": "Contame sobre tu proyecto",
+      "description": "Cuéntame sobre tu proyecto",
       "description_ai_setup": "¿Qué te gustaría que tu IA te quitara de encima?",
       "budget": "Rango de Presupuesto",
       "timeline": "Plazo",
@@ -139,12 +139,12 @@
     "placeholders": {
       "name": "Juan Pérez",
       "email": "juan@ejemplo.com",
-      "type": "Seleccioná un tipo de colaboración",
-      "description": "¿Qué querés construir o discutir? Mientras más detalle, mejor.",
-      "description_ai_setup": "¿Qué IA pagás y qué se te come la semana? Correo, WhatsApp, reuniones, reportes…",
-      "budget": "Seleccioná un rango",
-      "timeline": "Seleccioná un plazo",
-      "referral": "Seleccioná una opción"
+      "type": "Selecciona un tipo de colaboración",
+      "description": "¿Qué quieres construir o discutir? Mientras más detalle, mejor.",
+      "description_ai_setup": "¿Qué IA pagas y qué se te come la semana? Correo, WhatsApp, reuniones, reportes…",
+      "budget": "Selecciona un rango",
+      "timeline": "Selecciona un plazo",
+      "referral": "Selecciona una opción"
     },
     "budgets": {
       "unsure": "Todavía no estoy seguro",
@@ -171,15 +171,15 @@
     "success_title": "¡Mensaje enviado!",
     "success_message": "Gracias por escribirme. Te respondo dentro de las próximas 48 horas.",
     "error_title": "Tu mensaje no se envió",
-    "error_message": "Algo falló de mi lado y no me llegó. Probá de nuevo en un minuto o escribime directamente a <email></email>.",
-    "error_rate_limited": "Demasiados mensajes desde esta conexión en la última hora. Probá más tarde o escribime directamente a <email></email>.",
+    "error_message": "Algo falló de mi lado y no me llegó. Prueba de nuevo en un minuto o escríbeme directamente a <email></email>.",
+    "error_rate_limited": "Demasiados mensajes desde esta conexión en la última hora. Prueba más tarde o escríbeme directamente a <email></email>.",
     "try_again": "Intentar de nuevo",
     "optional": "opcional"
   },
   "cta": {
-    "title": "¿Tenés una idea de producto? Yo la entrego.",
-    "subtitle": "De cero a producción — full-stack, DevOps e integración de IA incluidos. Hablemos de lo que necesitás construir.",
-    "button": "Iniciá una Conversación"
+    "title": "¿Tienes una idea de producto? Yo la entrego.",
+    "subtitle": "De cero a producción — full-stack, DevOps e integración de IA incluidos. Hablemos de lo que necesitas construir.",
+    "button": "Inicia una Conversación"
   },
   "ai_setup": {
     "meta_title": "Configuro la IA que ya pagas",
@@ -270,7 +270,7 @@
     "min_read": "min de lectura",
     "back": "Volver al blog",
     "all_posts": "Todos los Posts",
-    "no_posts": "Todavía no hay publicaciones. Volvé pronto."
+    "no_posts": "Todavía no hay publicaciones. Vuelve pronto."
   },
   "footer": {
     "built_with": "Hecho con Next.js, Tailwind CSS y Odoo",

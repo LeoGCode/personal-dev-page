@@ -40,7 +40,7 @@ const copy = {
     title: "Nuevo Lead desde tu Sitio Personal",
     message_heading: "Mensaje",
     reply_hint: (email: string) =>
-      `Respondé directamente a ${email} para contactarlo.`,
+      `Responde directamente a ${email} para contactarlo.`,
     footer:
       "Enviado automáticamente por el pipeline de leads de tu sitio personal.",
     labels: {

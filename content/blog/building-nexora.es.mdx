@@ -7,7 +7,7 @@ description: "La estrategia multi-landing basada en configuración detrás de Ne
 
 # Cómo construí 22+ landings de marca desde una sola app Next.js
 
-Cuando manejás una consultora de software que ofrece más de 22 servicios en múltiples mercados, necesitás muchas landing pages. Construir cada una a mano es una pesadilla de mantenimiento. Así que construí un sistema que las genera todas desde archivos de configuración.
+Cuando manejas una consultora de software que ofrece más de 22 servicios en múltiples mercados, necesitas muchas landing pages. Construir cada una a mano es una pesadilla de mantenimiento. Así que construí un sistema que las genera todas desde archivos de configuración.
 
 ## La Arquitectura Basada en Configuración
 
@@ -31,6 +31,6 @@ La protección contra spam usa rate limiting respaldado por Redis por IP. Sin CA
 
 La lección más grande fue que **las buenas abstracciones generan interés compuesto**. Las primeras cinco landings requirieron esfuerzo real de ingeniería para que el sistema quedara bien. Las landings seis a veintidós fueron mayormente escribir objetos de configuración tipo YAML. Cuando hay un cambio de diseño, se propaga a todos lados instantáneamente.
 
-La segunda lección: tipá tus configs agresivamente. TypeScript atrapó docenas de campos faltantes y typos que habrían sido bugs silenciosos en un setup menos estricto.
+La segunda lección: tipa tus configs agresivamente. TypeScript atrapó docenas de campos faltantes y typos que habrían sido bugs silenciosos en un setup menos estricto.
 
-Si estás construyendo un sitio de marketing multi-página y te encontrás copiando componentes entre páginas, pará. Extraé la estructura, parametrizá el contenido, y dejá que la herramienta de build haga el resto.
+Si estás construyendo un sitio de marketing multi-página y te encuentras copiando componentes entre páginas, para. Extrae la estructura, parametriza el contenido, y deja que la herramienta de build haga el resto.
