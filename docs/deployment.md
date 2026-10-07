@@ -125,15 +125,16 @@ and API requests. This gives you CDN-level performance with self-hosted control.
 
 ### Optional
 
-| Variable                | Build/Runtime | Description                                                                        |
-| ----------------------- | ------------- | ---------------------------------------------------------------------------------- |
-| `ODOO_URL`              | Runtime       | Odoo instance URL. Leave empty to skip CRM integration.                            |
-| `ODOO_DB`               | Runtime       | Odoo database name.                                                                |
-| `ODOO_USER`             | Runtime       | Odoo username.                                                                     |
-| `ODOO_PASSWORD`         | Runtime       | Odoo password.                                                                     |
-| `ODOO_PERSONAL_TEAM_ID` | Runtime       | Odoo CRM team ID for lead assignment.                                              |
-| `RATE_LIMIT_MAX`        | Runtime       | Max form submissions per IP per hour (default: `3`).                               |
-| `STANDALONE`            | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile. |
+| Variable                      | Build/Runtime | Description                                                                                            |
+| ----------------------------- | ------------- | ------------------------------------------------------------------------------------------------------ |
+| `ODOO_URL`                    | Runtime       | Odoo instance URL. Leave empty to skip CRM integration.                                                |
+| `ODOO_DB`                     | Runtime       | Odoo database name.                                                                                    |
+| `ODOO_USER`                   | Runtime       | Odoo username.                                                                                         |
+| `ODOO_PASSWORD`               | Runtime       | Odoo password.                                                                                         |
+| `ODOO_PERSONAL_TEAM_ID`       | Runtime       | Odoo CRM team ID for lead assignment.                                                                  |
+| `RATE_LIMIT_MAX`              | Runtime       | Max form submissions per IP per hour (default: `3`).                                                   |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Build         | WhatsApp number for the `/ai` page button (digits only, international format). Empty hides the button. |
+| `STANDALONE`                  | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile.                     |
 
 > **Note on `NEXT_PUBLIC_*` variables:** These are inlined into the JavaScript
 > bundle at build time. On Vercel, set them in the dashboard **before** deploying.

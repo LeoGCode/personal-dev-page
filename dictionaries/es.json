@@ -179,6 +179,88 @@
     "subtitle": "De cero a producción — full-stack, DevOps e integración de IA incluidos. Hablemos de lo que necesitás construir.",
     "button": "Iniciá una Conversación"
   },
+  "ai_setup": {
+    "meta_title": "Configuro la IA que ya pagas",
+    "meta_description": "Conecto el ChatGPT, Claude, Gemini o Copilot que ya pagas a tu correo, WhatsApp y calendario, y lo dejo funcionando. Llamada gratis de 30 minutos. Dallas–Fort Worth y remoto, en español o inglés.",
+    "hero": {
+      "eyebrow": "Configuración de IA, por Leonel",
+      "title": "Configuro la IA que ya pagas para que haga trabajo de verdad y no se quede en un chat.",
+      "subtitle": "Me siento contigo, veo cómo es tu semana de verdad y conecto tu ChatGPT, Claude, Gemini o Copilot a tu correo, tu WhatsApp y tu calendario. La dejo funcionando y queda en tus manos. Sin curso, sin listas de prompts.",
+      "cta": "Agenda la llamada gratis de 30 min"
+    },
+    "chips": {
+      "label": "En resumen",
+      "not_course": "No es un curso",
+      "any_ai": "ChatGPT, Claude, Gemini o Copilot",
+      "bilingual": "En español o inglés",
+      "dfw": "Presencial en la zona de DFW"
+    },
+    "examples": {
+      "title": "Tres cosas que te puede quitar de encima",
+      "inbox": {
+        "title": "Tu correo, ordenado cada mañana",
+        "text": "Lee lo que llegó, te dice qué necesita respuesta hoy y redacta las respuestas con tu tono. Tú las revisas y las envías."
+      },
+      "whatsapp": {
+        "title": "Respuestas y seguimientos por WhatsApp",
+        "text": "Revisa quién sigue esperando una respuesta tuya y escribe los mensajes, uno por persona, listos para enviar desde WhatsApp Web."
+      },
+      "meeting": {
+        "title": "Reunión grabada → minuta e invitación",
+        "text": "Grabas la llamada con el celular. Escribe la minuta con decisiones y responsables, y crea la próxima invitación en el calendario con las personas correctas."
+      }
+    },
+    "story": {
+      "label": "Un caso real",
+      "text": "Una project manager de una startup de marketplace me dijo que le tenía miedo a la IA. Ocho días y dos llamadas después de conectar la suya a las herramientas de la empresa, grabó una reunión y le pidió los seguimientos por WhatsApp, la minuta por correo y la invitación del calendario. Cambió tres palabras y envió todo."
+    },
+    "how": {
+      "title": "Cómo funciona",
+      "steps": {
+        "call": {
+          "title": "Una llamada gratis de 30 min, en tu pantalla",
+          "text": "Me muestras cómo es tu semana con la IA que ya tienes. No hace falta nada sensible; con una vista general alcanza."
+        },
+        "setup": {
+          "title": "La configuro en la misma semana",
+          "text": "Instrucciones con tu tono, conexiones a tu correo, calendario y WhatsApp, y límites para que nada salga sin tu visto bueno."
+        },
+        "handover": {
+          "title": "Una sesión de entrega con tu configuración",
+          "text": "Una hora juntos: la usas con tu trabajo real mientras yo miro, y te quedas con una guía de una página."
+        },
+        "yours": {
+          "title": "Es tuya",
+          "text": "Tus cuentas, tu suscripción, tus contraseñas. Sigo disponible por chat para los «¿y esto también lo puede hacer?»."
+        }
+      }
+    },
+    "offer": {
+      "label": "Primeros clientes",
+      "title": "5 cupos para gente que conozco",
+      "text": "Mis primeras cinco configuraciones son para amigos, excompañeros y gente que conozco en la zona de DFW. Te llevas la configuración completa, no una versión recortada.",
+      "price": "USD 120",
+      "price_note": "al costo · la configuración completa normalmente cuesta USD 450",
+      "asks_title": "A cambio, te pido tres cosas:",
+      "asks": {
+        "testimonial": "Un testimonio honesto de dos líneas, con tus palabras.",
+        "recording": "Permiso para grabar la pantalla con el resultado. Anónimo si lo prefieres.",
+        "intro": "Que me presentes a alguien a quien le pueda servir, si te funcionó."
+      },
+      "requirement": "Necesitas un plan de pago de cualquier IA (es lo que permite conectarla a tus herramientas). ¿Todavía no tienes uno? Lo elegimos en la llamada."
+    },
+    "cta": {
+      "title": "Trae una tarea que odies hacer. Empezamos por ahí.",
+      "text": "30 minutos, en tu propia pantalla, con la IA que ya tienes. Si no encaja, te quedas con las mejoras rápidas.",
+      "primary": "Agenda la llamada gratis de 30 min",
+      "secondary": "O mándame un mensaje",
+      "packages": "Ver todos los paquetes y precios",
+      "privacy": "No tienes que mostrarme nada sensible. Tus contraseñas y tus datos se quedan contigo.",
+      "location": "Dallas, TX · remoto en todo el mundo · presencial en DFW"
+    },
+    "whatsapp_cta": "Escríbeme por WhatsApp",
+    "whatsapp_message": "¡Hola, Leonel! Vi tu página de configuración de IA y me interesa uno de los cinco cupos."
+  },
   "blog": {
     "title": "Blog",
     "subtitle": "Reflexiones sobre construir software, decisiones de arquitectura y lecciones aprendidas.",

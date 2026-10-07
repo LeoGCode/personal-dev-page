@@ -179,6 +179,88 @@
     "subtitle": "From zero to production — full-stack, DevOps, and AI integration included. Let's talk about what you need built.",
     "button": "Start a Conversation"
   },
+  "ai_setup": {
+    "meta_title": "I set up the AI you already pay for",
+    "meta_description": "I connect the ChatGPT, Claude, Gemini or Copilot you already pay for to your email, WhatsApp and calendar, and leave it running. Free 30-minute call. Dallas–Fort Worth and remote, in English or Spanish.",
+    "hero": {
+      "eyebrow": "AI setup, by Leonel",
+      "title": "I set up the AI you already pay for so it does real work, not just chat.",
+      "subtitle": "I sit with you, look at how your week actually runs, and connect your ChatGPT, Claude, Gemini or Copilot to your email, WhatsApp and calendar. Then I leave it running, and it's yours. No course, no prompt list.",
+      "cta": "Book the free 30-min call"
+    },
+    "chips": {
+      "label": "At a glance",
+      "not_course": "Not a course",
+      "any_ai": "ChatGPT, Claude, Gemini or Copilot",
+      "bilingual": "English or Spanish",
+      "dfw": "In person around DFW"
+    },
+    "examples": {
+      "title": "Three things it can take off your plate",
+      "inbox": {
+        "title": "Your inbox, sorted every morning",
+        "text": "It reads what came in, tells you what needs an answer today and drafts the replies in your tone. You read them and hit send."
+      },
+      "whatsapp": {
+        "title": "WhatsApp answers and follow-ups",
+        "text": "It checks who is still waiting on you and writes the replies, one per person, ready to send from WhatsApp Web."
+      },
+      "meeting": {
+        "title": "Meeting recording → minutes and invite",
+        "text": "Record the call on your phone. It writes the minutes with decisions and owners, and creates the next calendar invite for the right people."
+      }
+    },
+    "story": {
+      "label": "A real case",
+      "text": "A project manager at a marketplace startup told me she was afraid of AI. Eight days and two calls after we connected hers to the company's tools, she recorded a meeting and had it write the WhatsApp follow-ups, the email minutes and the calendar invite. She changed three words and sent everything."
+    },
+    "how": {
+      "title": "How it works",
+      "steps": {
+        "call": {
+          "title": "A free 30-min call, on your screen",
+          "text": "You show me how your week runs, with the AI you already have. Nothing sensitive needed; an overview is enough."
+        },
+        "setup": {
+          "title": "I set it up within the week",
+          "text": "Instructions in your voice, connections to your email, calendar and WhatsApp, and limits so nothing goes out without your OK."
+        },
+        "handover": {
+          "title": "A hand-over session on your setup",
+          "text": "An hour together: you run it on your real work while I watch, and you keep a one-page cheat sheet."
+        },
+        "yours": {
+          "title": "It's yours",
+          "text": "Your accounts, your subscription, your passwords. I stay on chat for the \"can it also do this?\" questions."
+        }
+      }
+    },
+    "offer": {
+      "label": "Founding clients",
+      "title": "5 spots for people I know",
+      "text": "My first five setups go to friends, ex-colleagues and people I know around DFW. You get the full setup, not a trimmed-down version.",
+      "price": "USD 120",
+      "price_note": "at cost · the full setup is normally USD 450",
+      "asks_title": "In exchange, I ask for three things:",
+      "asks": {
+        "testimonial": "A two-line honest testimonial, in your words.",
+        "recording": "Permission to screen-record the result. Anonymized if you prefer.",
+        "intro": "One intro to someone who could use it, if it worked for you."
+      },
+      "requirement": "You need a paid plan of any AI (that's what lets it connect to your tools). Don't have one yet? We pick it on the call."
+    },
+    "cta": {
+      "title": "Bring one task you hate doing. We'll start there.",
+      "text": "30 minutes, on your own screen, with the AI you already have. If it's not a fit, you keep the quick wins.",
+      "primary": "Book the free 30-min call",
+      "secondary": "Or send me a message",
+      "packages": "See full packages and prices",
+      "privacy": "You don't have to show me anything sensitive. Your passwords and data stay with you.",
+      "location": "Dallas, TX · remote worldwide · in person in DFW"
+    },
+    "whatsapp_cta": "Message me on WhatsApp",
+    "whatsapp_message": "Hi Leonel! I saw your AI setup page and I'd like one of the five spots."
+  },
   "blog": {
     "title": "Blog",
     "subtitle": "Thoughts on building software, architecture decisions, and lessons learned.",

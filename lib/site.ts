@@ -23,3 +23,22 @@ export const EMAIL_FROM =
   process.env.EMAIL_FROM || `${SITE_NAME} <${SITE_EMAIL}>`;
 
 export const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || "";
+
+/** Free 30-minute intro call for the AI setup service. */
+export const BOOKING_URL = "https://calendly.com/leogcode-dev/30min";
+
+/**
+ * Full AI setup packages and prices (the Exprime landing on Nexora).
+ * It serves `/en` and `/es`; the packages section is `#packages`.
+ */
+export const AI_PACKAGES_URL = "https://exprime.nexoragroup.dev";
+
+/**
+ * WhatsApp number for the /ai page button, international format, digits
+ * only (e.g. "12145550123"). Empty by default: the button is only rendered
+ * when NEXT_PUBLIC_WHATSAPP_NUMBER is set. It is inlined at build time, so
+ * changing it needs a redeploy.
+ */
+export const WHATSAPP_NUMBER = (
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ""
+).replace(/\D/g, "");

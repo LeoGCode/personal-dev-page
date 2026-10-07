@@ -32,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   }[] = [
     { path: "", priority: 1.0, changeFrequency: "weekly" },
+    { path: "/ai", priority: 0.9, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "daily" },
     { path: "/projects", priority: 0.8, changeFrequency: "weekly" },
     { path: "/collaborate", priority: 0.7, changeFrequency: "monthly" },

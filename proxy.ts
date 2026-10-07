@@ -9,5 +9,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/(en|es)/:path*"],
+  // "/ai" is the short link printed on QR codes and shared in person: the
+  // middleware redirects it to /en/ai or /es/ai (cookie / Accept-Language),
+  // since every page lives under a locale prefix.
+  matcher: ["/", "/ai", "/(en|es)/:path*"],
 };
