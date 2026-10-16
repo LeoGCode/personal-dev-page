@@ -218,7 +218,7 @@
     },
     "story": {
       "label": "A real case",
-      "text": "A project manager at a marketplace startup was spending hours in the company's admin, searching products one by one and copying them into spreadsheets, and she told me she was afraid of AI. On a call I showed her how to connect her AI to that admin. Now it does the searching and builds the sheets while she checks the result; the first afternoon she used it so much she ran out of her plan's quota. A week later she recorded a meeting and had it write the WhatsApp follow-ups, the email minutes and the calendar invite. She changed three words and sent everything."
+      "text": "A project manager at a marketplace startup was spending a lot of her time in the company's admin, searching products one by one and copying them into spreadsheets, and she told me she was afraid of AI. On a call I showed her how to connect her AI to that admin. Now it does the searching and builds the sheets while she checks the result; the afternoon it started working, she used it so much she hit her plan's usage limit. Less than two weeks after our first call she recorded a meeting and had it write the WhatsApp message, the email minutes and the calendar event. She changed three small things and sent everything."
     },
     "how": {
       "title": "How it works",

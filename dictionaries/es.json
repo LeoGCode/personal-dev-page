@@ -218,7 +218,7 @@
     },
     "story": {
       "label": "Un caso real",
-      "text": "Una project manager de una startup de marketplace pasaba horas en el admin de la empresa buscando productos uno por uno y pasándolos a hojas de cálculo, y me dijo que le tenía miedo a la IA. En una llamada le mostré cómo conectar su IA a ese admin. Ahora la IA hace la búsqueda y arma las hojas mientras ella revisa el resultado; la primera tarde la usó tanto que se le acabó la cuota de su plan. Una semana después grabó una reunión y le pidió los seguimientos por WhatsApp, la minuta por correo y la invitación del calendario. Cambió tres palabras y envió todo."
+      "text": "Una project manager de una startup de marketplace pasaba buena parte de su tiempo en el admin de la empresa buscando productos uno por uno y pasándolos a hojas de cálculo, y me dijo que le tenía miedo a la IA. En una llamada le mostré cómo conectar su IA a ese admin. Ahora la IA hace la búsqueda y arma las hojas mientras ella revisa el resultado; la tarde en que empezó a funcionar la usó tanto que llegó al límite de uso de su plan. Menos de dos semanas después de nuestra primera llamada grabó una reunión y le pidió el mensaje de WhatsApp, la minuta por correo y la invitación del calendario. Cambió tres detalles y envió todo."
     },
     "how": {
       "title": "Cómo funciona",
