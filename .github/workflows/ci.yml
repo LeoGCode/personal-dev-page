@@ -17,8 +17,12 @@ jobs:
       skip: ${{ steps.check.outputs.skip }}
     steps:
       - id: check
+        # The message goes through env, not into the script: quotes, $ or backticks in a commit
+        # message must not break (or run inside) this step.
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          if [[ "${{ github.event.head_commit.message }}" == *"[skip ci]"* ]]; then
+          if [[ "$COMMIT_MESSAGE" == *"[skip ci]"* ]]; then
             echo "skip=true" >> $GITHUB_OUTPUT
           else
             echo "skip=false" >> $GITHUB_OUTPUT
