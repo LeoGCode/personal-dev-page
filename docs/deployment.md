@@ -141,6 +141,11 @@ and API requests. This gives you CDN-level performance with self-hosted control.
 | `NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL`    | Build         | Label of the "Lead form" conversion action.                                                                                        |
 | `STANDALONE`                           | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile.                                                 |
 
+> **PostHog before 2026-10-16:** production never had `NEXT_PUBLIC_POSTHOG_KEY` (nor the host
+> the old provider required) set on Vercel, so analytics never ran and there is no data from
+> before that day. The key now points at the PostHog US project "Web" (id 669400), shared with
+> the Nexora landings; see [analytics.md](analytics.md).
+
 > **Note on `NEXT_PUBLIC_*` variables:** These are inlined into the JavaScript
 > bundle at build time. On Vercel, set them in the dashboard **before** deploying.
 > Changing them requires a redeploy.

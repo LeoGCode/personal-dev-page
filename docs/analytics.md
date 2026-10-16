@@ -1,5 +1,8 @@
 # Analytics, ad conversions and cookie consent
 
+PostHog was never active on this site before 2026-10-16 (no key on Vercel); the project is now
+PostHog US "Web" (id 669400), shared with the Nexora landings.
+
 Same setup as the Nexora landings (`nexora-group/docs/analytics.md` has the full event table), so
 one PostHog project reads both sites: every event carries `site: leogcode`, `landing_slug` (the
 page: `home`, `ai`, `blog`, `projects`, `collaborate`, `privacy`), `variant: default` and `locale`.
