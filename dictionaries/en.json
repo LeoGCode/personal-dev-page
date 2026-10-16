@@ -285,7 +285,10 @@
   },
   "consent": {
     "label": "Cookie consent",
-    "text": "I use cookies to see which parts of this site help and to measure my ads. If you reject them, I still count the visit, but without cookies or session recordings.",
+    "text": {
+      "anonymous_counts": "With your OK I use cookies to see which parts of this site help and to measure my ads. Until you choose, I only count visits anonymously, storing nothing on your device. If you reject, nothing is sent.",
+      "nothing": "With your OK I use cookies to see which parts of this site help and to measure my ads. Until you choose, and if you reject, nothing is sent."
+    },
     "privacy": "Privacy policy",
     "accept": "Accept",
     "reject": "Reject",
@@ -303,25 +306,35 @@
     },
     "analytics": {
       "title": "Analytics (PostHog)",
-      "text": "PostHog (PostHog Inc., United States) shows me how the site is used: pages viewed, clicks, how far you scroll, which sections you see, and form and booking events, together with the ad campaign parameters of the link you arrived from. Until you accept cookies, and if you reject them, it runs without cookies or local storage and without recording your session. If you accept, it keeps an identifier in a cookie and in local storage and may record your session (what appears on screen, with everything you type masked)."
+      "text": "PostHog (PostHog Inc., hosted on PostHog Cloud US, in the United States) shows me how the site is used and which ads bring people who book a call or write to me. What it receives depends on your cookie choice, explained below: anonymous counts before you choose, nothing if you reject, full analytics if you accept. Page addresses, and the address of the page that sent you here, are always sent without their query string or #fragment, except the ad campaign parameters (utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid). PostHog also receives your browser, operating system and screen size and, after you accept, your IP address, which it uses to estimate an approximate location."
     },
     "ads": {
       "title": "Ad measurement (Meta and Google Ads)",
-      "text": "Only if you accept cookies. The Meta pixel (Meta Platforms) and the Google Ads tag (Google) tell those platforms when a visitor who came from one of my ads books a call, sends the form or opens WhatsApp, so I can see which ads work. Both set their own cookies (such as _fbp and _gcl_au) and process this data under their own privacy policies."
+      "text": "Only if you accept cookies. The Meta pixel (Meta Platforms) and the Google Ads tag (Google) tell those platforms when a visitor who came from one of my ads books a call (with the booking's id, so it counts once), sends the form or opens WhatsApp, so I can see which ads work. Both set their own cookies (such as _fbp and _gcl_au) and process this data under their own privacy policies. If you withdraw your consent, both stop at once."
     },
     "booking": {
       "title": "Booking a call (Calendly)",
-      "text": "When you click a booking button, Calendly's scheduling page (Calendly LLC, United States) opens over this site, loaded from calendly.com. Calendly receives the details you enter and the campaign parameters of the link you arrived from, and tells this page when a call is booked so I can count it. Calendly's own privacy policy applies to the booking."
+      "text": "Nothing from Calendly loads until you click a booking button. Then, whatever your cookie choice, because you asked for it, Calendly's script (from assets.calendly.com) and its scheduling page (Calendly LLC, United States, from calendly.com) open over this site. Calendly receives the details you enter and the utm_* campaign parameters of the link you arrived from, and tells this page when a call is booked; I count each booking once, by the id Calendly gives it. Calendly may set its own cookies, and its privacy policy applies to the booking."
     },
     "cookies": {
       "title": "Cookies and your choice",
-      "text": "I ask before using any analytics or advertising cookie. Your choice is saved in your browser's local storage so you are not asked on every visit. You can change or withdraw it at any time; withdrawing deletes the identifiers stored by PostHog, Meta and Google on this site."
+      "intro": "I ask before using any analytics or advertising cookie. The banner offers Accept and Reject, and this is what each state means:",
+      "beforeChoiceTitle": "Before you choose",
+      "beforeChoice": {
+        "anonymous_counts": "I only count, anonymously: page views, clicks on booking and contact buttons, the booking window opening and a call being booked, and the contact form being seen, sent and delivered. Nothing is stored on your device (no cookie, no local storage, no identifier), nothing else you do on the page is recorded, there is no session recording and no advertising tag loads. PostHog tells visits apart with a hash it calculates on its own servers from your IP address, your browser and this site's address, mixed with a random value that changes every day and is then deleted, so these counts cannot be linked to you or from one day to the next. In this mode PostHog does not store your IP address.",
+        "nothing": "Nothing is sent to PostHog, and no advertising tag or Sentry recording starts."
+      },
+      "rejectTitle": "If you reject",
+      "reject": "Nothing at all is sent to PostHog, the Meta pixel and the Google Ads tag never load, and Sentry's session replay never starts.",
+      "acceptTitle": "If you accept",
+      "accept": "PostHog keeps an identifier in a cookie (named ph_…) and in local storage, and records page views, clicks, how far you scroll, which sections you see and form and booking events. It may also record your session: what appears on screen, with everything you type masked. The Meta pixel and the Google Ads tag load with their own cookies, and Sentry's session replay can run (see below).",
+      "text": "Your choice is saved in your browser's local storage so you are not asked on every visit, and it applies to every tab of this site you have open. You can change or withdraw it at any time. Withdrawing stops analytics, session recording and the advertising tags at once in every open tab, and deletes the identifiers PostHog, Meta, Google and Sentry stored on this site."
     },
     "services": {
       "title": "Services that keep the site running",
       "items": [
         "Vercel hosts the site and Cloudflare serves its domain; Cloudflare Web Analytics counts visits without cookies.",
-        "Sentry receives error reports. Its session replay, a masked recording of the page when something breaks, runs only after you accept cookies.",
+        "Sentry receives error reports. Its session replay, a masked recording of the page when something breaks, runs only after you accept cookies and stops at once if you withdraw.",
         "Resend delivers the emails sent from the contact form.",
         "Odoo, my CRM, stores contact requests (when it is connected) so none get lost.",
         "Upstash keeps a short-lived count of form submissions per IP address to stop spam."
@@ -329,7 +342,7 @@
     },
     "retention": {
       "title": "How long I keep it",
-      "text": "Contact requests stay in my email and CRM while we are in touch and for a reasonable time after. Analytics data stays in PostHog for the retention period of my plan there. I delete either on request."
+      "text": "Contact requests stay in my email and CRM while we are in touch and for a reasonable time after. In PostHog, analytics events stay for 1 year and session recordings for 1 month; anonymous counts cannot be linked to you, so they cannot be looked up by person. I delete your data on request."
     },
     "rights": {
       "title": "Your rights",

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { BEFORE_CHOICE } from "@/lib/analytics/config";
 import { setConsent, useConsent } from "@/lib/analytics/consent";
 import { track } from "@/lib/analytics/track";
 
@@ -17,18 +18,21 @@ export function ConsentBanner() {
   if (!consent?.open) return null;
 
   function choose(choice: "granted" | "denied") {
-    track("consent_chosen", { choice });
     setConsent(choice);
+    // Only an Accept is recorded: after Reject nothing goes to PostHog, not
+    // even the click.
+    if (choice === "granted") track("consent_chosen", { choice });
   }
 
   return (
     <section
       aria-label={t("label")}
       data-testid="consent-banner"
-      className="fixed inset-x-3 bottom-3 z-50 rounded-xl border border-border bg-card p-4 text-card-foreground shadow-lg sm:inset-x-auto sm:bottom-4 sm:left-4 sm:max-w-[420px]"
+      // ph-no-capture: autocapture never records a click on these buttons.
+      className="ph-no-capture fixed inset-x-3 bottom-3 z-50 rounded-xl border border-border bg-card p-4 text-card-foreground shadow-lg sm:inset-x-auto sm:bottom-4 sm:left-4 sm:max-w-[420px]"
     >
       <p className="text-sm leading-relaxed text-card-foreground/90">
-        {t("text")}{" "}
+        {t(`text.${BEFORE_CHOICE}`)}{" "}
         <Link
           href="/privacy"
           className="font-medium text-foreground underline underline-offset-2 hover:text-primary"

@@ -1,18 +1,22 @@
 import { trackAdConversion } from "@/lib/analytics/ads";
 import {
+  bookingIdOf,
+  claimBooking,
   isCalendlyUrl,
-  loadCalendly,
+  isFromActiveEmbed,
   openBooking,
   parseCalendlyMessage,
 } from "@/lib/analytics/calendly";
+import { sanitizeUrl } from "@/lib/analytics/sanitize";
 import { getAttribution, getPageContext, track } from "@/lib/analytics/track";
 
 /**
  * Document-level tracking, so every theme gets it without wiring each button:
  * CTA / package / WhatsApp / outbound clicks, FAQ opens, sections seen, Calendly bookings.
  *
- * Markup hooks (all optional):
- * - data-section="hero"           names a section (otherwise the <section id> is used)
+ * Markup hooks:
+ * - data-section="hero"           names a section; section_viewed observes these only (/ai marks
+ *                                 hero, case, how, packages, contact)
  * - data-cta="hero"               marks a CTA and names where it sits
  * - data-cta-target="form"        CTA that leads to the contact form
  * - data-package / data-package-group / data-package-price   on a package card
@@ -133,10 +137,9 @@ function onClick(event: MouseEvent) {
   }
 
   if (kind === "outbound") {
-    const url = new URL(href);
     track("outbound_clicked", {
-      url: `${url.origin}${url.pathname}`,
-      host: url.hostname,
+      url: sanitizeUrl(href),
+      host: new URL(href).hostname,
       label: label(element),
       location,
     });
@@ -148,14 +151,6 @@ function onClick(event: MouseEvent) {
       track("booking_opened", { mode, location, ...context });
     });
   }
-}
-
-/** Starts loading the Calendly widget as soon as the visitor shows intent (hover, focus, touch). */
-function onIntent(event: Event) {
-  const anchor = (event.target as Element | null)?.closest?.<HTMLAnchorElement>(
-    "a[href]",
-  );
-  if (anchor && isCalendlyUrl(anchor.href)) loadCalendly().catch(() => {});
 }
 
 function onToggle(event: Event) {
@@ -180,9 +175,14 @@ function onToggle(event: Event) {
   });
 }
 
+/**
+ * Calendly embed events. Only messages from calendly.com AND from the Calendly iframe on this
+ * page count. A booking needs its id (invitee/event uuid) and is sent once per id, the same id
+ * going to PostHog (`booking_id`), Meta (eventID) and Google Ads (transaction_id).
+ */
 function onMessage(event: MessageEvent) {
   const message = parseCalendlyMessage(event);
-  if (!message) return;
+  if (!message || !isFromActiveEmbed(event.source)) return;
   const context = getPageContext();
   switch (message.event) {
     case "calendly.event_type_viewed":
@@ -193,34 +193,27 @@ function onMessage(event: MessageEvent) {
       });
       break;
     case "calendly.event_scheduled": {
-      const invitee = message.payload?.invitee?.uri ?? "";
+      const bookingId = bookingIdOf(message);
+      if (!bookingId || !claimBooking(bookingId)) return;
       track("booking_scheduled", {
-        calendly_event: message.payload?.event?.uri,
-        calendly_invitee: invitee,
+        booking_id: bookingId,
         ...context,
         ...getAttribution(),
       });
-      trackAdConversion("booking", invitee.split("/").pop() || undefined);
+      trackAdConversion("booking", bookingId);
       break;
     }
   }
 }
 
 export function installInteractionTracking(): () => void {
-  const intentOptions = { capture: true, passive: true } as const;
   // Capture phase: still sees clicks that a component stops from bubbling.
   document.addEventListener("click", onClick, true);
   document.addEventListener("toggle", onToggle, true);
-  document.addEventListener("pointerover", onIntent, intentOptions);
-  document.addEventListener("focusin", onIntent, intentOptions);
-  document.addEventListener("touchstart", onIntent, intentOptions);
   window.addEventListener("message", onMessage);
   return () => {
     document.removeEventListener("click", onClick, true);
     document.removeEventListener("toggle", onToggle, true);
-    document.removeEventListener("pointerover", onIntent, intentOptions);
-    document.removeEventListener("focusin", onIntent, intentOptions);
-    document.removeEventListener("touchstart", onIntent, intentOptions);
     window.removeEventListener("message", onMessage);
   };
 }
@@ -233,28 +226,53 @@ export function installInteractionTracking(): () => void {
 const DWELL_MS = 1000;
 const VISIBLE_SHARE = 0.5;
 
-function collectSections(fallback: boolean): Array<[HTMLElement, string]> {
-  const named = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-section]"),
-  );
-  if (named.length) return named.map((el) => [el, el.dataset.section!]);
-  if (!fallback) return [];
-  // Themes without explicit names: the first section is the hero, the rest go by their id.
-  return Array.from(document.querySelectorAll<HTMLElement>("main section"))
-    .map((el, i): [HTMLElement, string] => [
-      el,
-      el.id || (i === 0 ? "hero" : ""),
-    ])
+/** The sections of the page, as every theme marks them: `data-section="<name>"`. */
+export function collectSections(
+  root: ParentNode = document,
+): Array<[HTMLElement, string]> {
+  return Array.from(root.querySelectorAll<HTMLElement>("[data-section]"))
+    .map((el): [HTMLElement, string] => [el, el.dataset.section ?? ""])
     .filter(([, name]) => name !== "");
 }
 
-export function observeSections({
-  fallback,
-}: {
-  fallback: boolean;
-}): () => void {
+/** How much of an element is on screen: 1 when it fills the viewport or shows in full. */
+function visibleShare(entry: IntersectionObserverEntry): number {
+  return (
+    entry.intersectionRect.height /
+    Math.max(1, Math.min(entry.boundingClientRect.height, window.innerHeight))
+  );
+}
+
+/**
+ * Runs `callback` once, the first time `element` is actually on screen: half of it visible, or
+ * half the viewport filled by it. Returns a cleanup.
+ */
+export function onFirstVisible(
+  element: Element,
+  callback: () => void,
+): () => void {
   if (typeof IntersectionObserver === "undefined") return () => {};
-  const sections = collectSections(fallback);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (
+        entries.some(
+          (entry) =>
+            entry.isIntersecting && visibleShare(entry) >= VISIBLE_SHARE,
+        )
+      ) {
+        observer.disconnect();
+        callback();
+      }
+    },
+    { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] },
+  );
+  observer.observe(element);
+  return () => observer.disconnect();
+}
+
+export function observeSections(): () => void {
+  if (typeof IntersectionObserver === "undefined") return () => {};
+  const sections = collectSections();
   if (!sections.length) return () => {};
 
   const names = new Map(sections);
@@ -266,13 +284,7 @@ export function observeSections({
     (entries) => {
       for (const entry of entries) {
         const element = entry.target as HTMLElement;
-        const visible =
-          entry.intersectionRect.height /
-          Math.max(
-            1,
-            Math.min(entry.boundingClientRect.height, window.innerHeight),
-          );
-        if (entry.isIntersecting && visible >= VISIBLE_SHARE) {
+        if (entry.isIntersecting && visibleShare(entry) >= VISIBLE_SHARE) {
           if (timers.has(element)) continue;
           const name = names.get(element)!;
           const timer = window.setTimeout(() => {

@@ -17,3 +17,13 @@ export function enableSentryReplay() {
     }),
   );
 }
+
+/**
+ * Consent withdrawn (here or in another tab): stop recording at once, without
+ * sending what is buffered. A later Accept records again from the next page
+ * load.
+ */
+export function disableSentryReplay() {
+  const replay = Sentry.getReplay();
+  if (replay) void replay.stop();
+}

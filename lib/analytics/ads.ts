@@ -29,7 +29,10 @@ declare global {
 
 export type Conversion = "booking" | "lead" | "contact";
 
+/** Scripts injected (once per page; a script cannot be unloaded, only told to stop). */
 let loaded = false;
+/** Whether the tags may send anything: true after Accept, false again after a withdrawal. */
+let active = false;
 
 function injectScript(src: string) {
   const script = document.createElement("script");
@@ -52,8 +55,29 @@ function loadMetaPixel(pixelId: string) {
   window.fbq = fbq;
   window._fbq = fbq;
   injectScript("https://connect.facebook.net/en_US/fbevents.js");
+  fbq("consent", "grant");
   fbq("init", pixelId);
   fbq("track", "PageView");
+}
+
+const GRANTED = {
+  ad_storage: "granted",
+  ad_user_data: "granted",
+  ad_personalization: "granted",
+  analytics_storage: "granted",
+} as const;
+
+const DENIED = {
+  ad_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+  analytics_storage: "denied",
+} as const;
+
+/** Google's documented per-tag kill switch, `window["ga-disable-AW-…"]`. */
+function setGoogleDisabled(adsId: string, disabled: boolean) {
+  (window as unknown as Record<string, boolean>)[`ga-disable-${adsId}`] =
+    disabled;
 }
 
 function loadGoogleTag(adsId: string) {
@@ -65,12 +89,7 @@ function loadGoogleTag(adsId: string) {
     window.dataLayer!.push(arguments);
   };
   // Loaded only after an explicit Accept, so consent mode starts granted.
-  window.gtag("consent", "default", {
-    ad_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted",
-    analytics_storage: "granted",
-  });
+  window.gtag("consent", "default", GRANTED);
   window.gtag("js", new Date());
   window.gtag("config", adsId);
   injectScript(
@@ -78,20 +97,45 @@ function loadGoogleTag(adsId: string) {
   );
 }
 
+/** After Accept (in this tab or another): load the tags, or switch them back on. */
 export function loadAdTags() {
-  if (loaded || typeof window === "undefined") return;
+  if (typeof window === "undefined" || active) return;
+  active = true;
+  if (GOOGLE_ADS_ID) setGoogleDisabled(GOOGLE_ADS_ID, false);
+  if (loaded) {
+    window.fbq?.("consent", "grant");
+    window.gtag?.("consent", "update", GRANTED);
+    return;
+  }
   loaded = true;
   if (META_PIXEL_ID) loadMetaPixel(META_PIXEL_ID);
   if (GOOGLE_ADS_ID) loadGoogleTag(GOOGLE_ADS_ID);
+}
+
+/**
+ * Consent withdrawn (in this tab or another): stop both tags at once. The scripts stay in memory
+ * until the page reloads, so they are told to stop: Meta `consent revoke`, Google consent mode
+ * denied plus its `ga-disable-<id>` switch. Nothing here sends anything.
+ */
+export function revokeAdTags() {
+  if (typeof window === "undefined" || !active) return;
+  active = false;
+  window.fbq?.("consent", "revoke");
+  window.gtag?.("consent", "update", DENIED);
+  if (GOOGLE_ADS_ID) setGoogleDisabled(GOOGLE_ADS_ID, true);
 }
 
 export function adTagsLoaded() {
   return loaded;
 }
 
+export function adTagsActive() {
+  return active;
+}
+
 /** Client-side route change (the first page view is sent by the tags when they load). */
 export function trackAdPageView() {
-  if (!loaded) return;
+  if (!active) return;
   window.fbq?.("track", "PageView");
   if (GOOGLE_ADS_ID)
     window.gtag?.("event", "page_view", { send_to: GOOGLE_ADS_ID });
@@ -110,10 +154,12 @@ const GOOGLE_LABELS: Partial<Record<Conversion, string>> = {
 
 /**
  * Sends a conversion to Meta (Schedule / Lead / Contact) and, for bookings and leads, to the
- * matching Google Ads conversion action. `dedupeId` lets both platforms drop duplicates.
+ * matching Google Ads conversion action. `dedupeId` (the booking id for bookings, required there)
+ * goes out as Meta's eventID and Google's transaction_id, so both platforms drop duplicates.
  */
 export function trackAdConversion(kind: Conversion, dedupeId?: string) {
-  if (!loaded) return;
+  if (!active) return;
+  if (kind === "booking" && !dedupeId) return;
   window.fbq?.(
     "track",
     META_EVENTS[kind],

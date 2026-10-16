@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ConsentSettingsButton } from "@/components/analytics/consent-settings-button";
+import { BEFORE_CHOICE } from "@/lib/analytics/config";
 import { SITE_EMAIL } from "@/lib/site";
 
 export async function generateMetadata({
@@ -58,6 +59,22 @@ export default async function PrivacyPage({
 
           <section className="space-y-3">
             <h2 className={h2}>{t("cookies.title")}</h2>
+            <p>{t("cookies.intro")}</p>
+            {/* Follows the BEFORE_CHOICE switch in lib/analytics/config.ts. */}
+            {(
+              [
+                ["beforeChoiceTitle", `beforeChoice.${BEFORE_CHOICE}`],
+                ["rejectTitle", "reject"],
+                ["acceptTitle", "accept"],
+              ] as const
+            ).map(([title, text]) => (
+              <div key={title}>
+                <h3 className="font-medium text-foreground">
+                  {t(`cookies.${title}`)}
+                </h3>
+                <p>{t(`cookies.${text}`)}</p>
+              </div>
+            ))}
             <p>{t("cookies.text")}</p>
             <ConsentSettingsButton className="cursor-pointer rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent" />
           </section>

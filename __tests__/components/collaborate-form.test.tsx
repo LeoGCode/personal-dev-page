@@ -20,7 +20,10 @@ const analytics = vi.hoisted(() => ({
   trackAdConversion: vi.fn(),
 }));
 
-vi.mock("@/lib/analytics/track", () => ({ track: analytics.track }));
+vi.mock("@/lib/analytics/track", () => ({
+  track: analytics.track,
+  afterPageview: (run: () => void) => run(),
+}));
 vi.mock("@/lib/analytics/ads", () => ({
   trackAdConversion: analytics.trackAdConversion,
 }));

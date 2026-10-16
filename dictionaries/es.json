@@ -285,7 +285,10 @@
   },
   "consent": {
     "label": "Consentimiento de cookies",
-    "text": "Uso cookies para ver qué partes de este sitio ayudan y para medir mis anuncios. Si las rechazas, igual cuento la visita, pero sin cookies ni grabación de la sesión.",
+    "text": {
+      "anonymous_counts": "Con tu permiso uso cookies para ver qué partes de este sitio ayudan y para medir mis anuncios. Mientras no elijas, solo cuento las visitas de forma anónima, sin guardar nada en tu dispositivo. Si rechazas, no se envía nada.",
+      "nothing": "Con tu permiso uso cookies para ver qué partes de este sitio ayudan y para medir mis anuncios. Mientras no elijas, y si rechazas, no se envía nada."
+    },
     "privacy": "Política de privacidad",
     "accept": "Aceptar",
     "reject": "Rechazar",
@@ -303,25 +306,35 @@
     },
     "analytics": {
       "title": "Analítica (PostHog)",
-      "text": "PostHog (PostHog Inc., Estados Unidos) me muestra cómo se usa el sitio: páginas vistas, clics, cuánto te desplazas, qué secciones ves y eventos de formulario y de reserva, junto con los parámetros de campaña del enlace por el que llegaste. Mientras no aceptes las cookies, y si las rechazas, funciona sin cookies ni almacenamiento local y sin grabar tu sesión. Si las aceptas, guarda un identificador en una cookie y en el almacenamiento local y puede grabar la sesión (lo que aparece en pantalla, con todo lo que escribes enmascarado)."
+      "text": "PostHog (PostHog Inc., alojado en PostHog Cloud US, en Estados Unidos) me muestra cómo se usa el sitio y qué anuncios traen a quienes agendan una llamada o me escriben. Lo que recibe depende de tu elección de cookies, que se explica abajo: conteos anónimos mientras no elijas, nada si rechazas y analítica completa si aceptas. Las direcciones de las páginas, y la de la página que te trajo aquí, se envían siempre sin su cadena de consulta ni su #fragmento, salvo los parámetros de campaña de los anuncios (utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid). PostHog también recibe tu navegador, tu sistema operativo y el tamaño de tu pantalla y, si aceptas, tu dirección IP, que usa para estimar una ubicación aproximada."
     },
     "ads": {
       "title": "Medición de anuncios (Meta y Google Ads)",
-      "text": "Solo si aceptas las cookies. El píxel de Meta (Meta Platforms) y la etiqueta de Google Ads (Google) avisan a esas plataformas cuando alguien que llegó desde uno de mis anuncios agenda una llamada, envía el formulario o abre WhatsApp, para que pueda ver qué anuncios funcionan. Ambos usan sus propias cookies (como _fbp y _gcl_au) y tratan estos datos según sus propias políticas de privacidad."
+      "text": "Solo si aceptas las cookies. El píxel de Meta (Meta Platforms) y la etiqueta de Google Ads (Google) avisan a esas plataformas cuando alguien que llegó desde uno de mis anuncios agenda una llamada (con el identificador de la reserva, para que cuente una sola vez), envía el formulario o abre WhatsApp, para que pueda ver qué anuncios funcionan. Ambos usan sus propias cookies (como _fbp y _gcl_au) y tratan estos datos según sus propias políticas de privacidad. Si retiras tu consentimiento, los dos se detienen en el acto."
     },
     "booking": {
       "title": "Agendar una llamada (Calendly)",
-      "text": "Al pulsar un botón de reserva, la página de agenda de Calendly (Calendly LLC, Estados Unidos) se abre sobre este sitio, cargada desde calendly.com. Calendly recibe los datos que introduces y los parámetros de campaña del enlace por el que llegaste, y avisa a esta página cuando se agenda una llamada para que pueda contarla. A la reserva se le aplica la política de privacidad de Calendly."
+      "text": "Nada de Calendly se carga hasta que pulsas un botón para agendar. Entonces, sea cual sea tu elección de cookies, porque tú lo pediste, el script de Calendly (de assets.calendly.com) y su página de agenda (Calendly LLC, Estados Unidos, de calendly.com) se abren sobre este sitio. Calendly recibe los datos que escribes y los parámetros de campaña utm_* del enlace por el que llegaste, y avisa a esta página cuando se agenda una llamada; cuento cada reserva una sola vez, por el identificador que le da Calendly. Calendly puede usar sus propias cookies, y a la reserva se le aplica su política de privacidad."
     },
     "cookies": {
       "title": "Cookies y tu elección",
-      "text": "Te pido permiso antes de usar cualquier cookie de analítica o de publicidad. Tu elección se guarda en el almacenamiento local de tu navegador para no preguntarte en cada visita. Puedes cambiarla o retirarla cuando quieras; al retirarla se borran los identificadores que PostHog, Meta y Google guardaron en este sitio."
+      "intro": "Te pido permiso antes de usar cualquier cookie de analítica o de publicidad. El aviso ofrece Aceptar y Rechazar, y esto es lo que significa cada caso:",
+      "beforeChoiceTitle": "Mientras no elijas",
+      "beforeChoice": {
+        "anonymous_counts": "Solo cuento, de forma anónima: páginas vistas, clics en los botones para agendar y de contacto, la apertura de la ventana de reserva y las llamadas agendadas, y cuándo el formulario de contacto se ve, se envía y se entrega. No se guarda nada en tu dispositivo (ni cookies, ni almacenamiento local, ni identificadores), no se registra nada más de lo que haces en la página, no se graba la sesión y no se carga ninguna etiqueta publicitaria. PostHog distingue las visitas con un hash que calcula en sus propios servidores a partir de tu dirección IP, tu navegador y la dirección de este sitio, mezclados con un valor aleatorio que cambia cada día y luego se borra, así que estos conteos no se pueden vincular contigo ni de un día a otro. En este modo PostHog no guarda tu dirección IP.",
+        "nothing": "No se envía nada a PostHog, y no se carga ninguna etiqueta publicitaria ni empieza la grabación de Sentry."
+      },
+      "rejectTitle": "Si rechazas",
+      "reject": "No se envía absolutamente nada a PostHog, el píxel de Meta y la etiqueta de Google Ads no se cargan nunca y la grabación de sesión de Sentry no empieza.",
+      "acceptTitle": "Si aceptas",
+      "accept": "PostHog guarda un identificador en una cookie (que empieza por ph_) y en el almacenamiento local, y registra las páginas vistas, los clics, cuánto te desplazas, qué secciones ves y los eventos de formulario y de reserva. También puede grabar tu sesión: lo que aparece en pantalla, con todo lo que escribes enmascarado. El píxel de Meta y la etiqueta de Google Ads se cargan con sus propias cookies, y puede funcionar la grabación de sesión de Sentry (ver abajo).",
+      "text": "Tu elección se guarda en el almacenamiento local de tu navegador para no preguntarte en cada visita, y se aplica a todas las pestañas de este sitio que tengas abiertas. Puedes cambiarla o retirarla cuando quieras. Al retirarla, la analítica, la grabación de la sesión y las etiquetas publicitarias se detienen en el acto en todas las pestañas abiertas, y se borran los identificadores que PostHog, Meta, Google y Sentry guardaron en este sitio."
     },
     "services": {
       "title": "Servicios que mantienen el sitio funcionando",
       "items": [
         "Vercel aloja el sitio y Cloudflare sirve su dominio; Cloudflare Web Analytics cuenta visitas sin cookies.",
-        "Sentry recibe los informes de errores. Su grabación de sesión, una grabación enmascarada de la página cuando algo falla, solo funciona después de que aceptes las cookies.",
+        "Sentry recibe los informes de errores. Su grabación de sesión, una grabación enmascarada de la página cuando algo falla, solo funciona después de que aceptes las cookies y se detiene en el acto si retiras tu consentimiento.",
         "Resend entrega los correos que salen del formulario de contacto.",
         "Odoo, mi CRM, guarda las solicitudes de contacto (cuando está conectado) para que ninguna se pierda.",
         "Upstash guarda por poco tiempo un recuento de envíos del formulario por dirección IP para frenar el spam."
@@ -329,7 +342,7 @@
     },
     "retention": {
       "title": "Cuánto tiempo lo guardo",
-      "text": "Las solicitudes de contacto se quedan en mi correo y en mi CRM mientras estemos en contacto y un tiempo razonable después. Los datos de analítica se quedan en PostHog durante el plazo que conserve mi plan allí. Borro unos u otros si me lo pides."
+      "text": "Las solicitudes de contacto se quedan en mi correo y en mi CRM mientras estemos en contacto y un tiempo razonable después. En PostHog, los eventos de analítica se quedan 1 año y las grabaciones de sesión 1 mes; los conteos anónimos no se pueden vincular contigo, así que no se pueden buscar por persona. Borro tus datos si me lo pides."
     },
     "rights": {
       "title": "Tus derechos",

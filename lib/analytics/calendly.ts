@@ -3,7 +3,8 @@ import { getUtmParams } from "@/lib/analytics/track";
 /**
  * Calendly's official popup widget. Booking links stay plain <a href> to Calendly (works without
  * JavaScript); on click the widget opens over the page instead, so the booking happens in an
- * embed that tells us when it is scheduled (window.postMessage).
+ * embed that tells us when it is scheduled (window.postMessage). Nothing from Calendly loads
+ * before that click: no preloading on hover, focus or touch.
  */
 
 const WIDGET_JS = "https://assets.calendly.com/assets/external/widget.js";
@@ -107,8 +108,8 @@ export async function openBooking(href: string): Promise<"popup" | "link"> {
 export interface CalendlyMessage {
   event: string;
   payload?: {
-    event?: { uri?: string };
-    invitee?: { uri?: string };
+    event?: { uri?: unknown };
+    invitee?: { uri?: unknown };
   };
 }
 
@@ -125,4 +126,55 @@ export function parseCalendlyMessage(
   )
     return null;
   return data as CalendlyMessage;
+}
+
+/** Whether a message came from a Calendly iframe that is on the page right now (our popup). */
+export function isFromActiveEmbed(
+  source: MessageEventSource | null,
+  root: ParentNode = document,
+): boolean {
+  if (!source) return false;
+  const frames = root.querySelectorAll<HTMLIFrameElement>("iframe");
+  return Array.from(frames).some(
+    (frame) => isCalendlyUrl(frame.src) && frame.contentWindow === source,
+  );
+}
+
+/** `https://api.calendly.com/scheduled_events/<uuid>/invitees/<uuid>` → the last uuid. */
+function calendlyUuid(uri: unknown): string | null {
+  if (typeof uri !== "string") return null;
+  try {
+    const url = new URL(uri);
+    if (url.protocol !== "https:" || !url.hostname.endsWith("calendly.com"))
+      return null;
+    const id = url.pathname.split("/").filter(Boolean).pop() ?? "";
+    return /^[A-Za-z0-9_-]{8,64}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The stable id of a scheduled booking: the invitee's uuid, else the event's. `null` when the
+ * payload has neither, and then nothing is sent anywhere.
+ */
+export function bookingIdOf(message: CalendlyMessage): string | null {
+  return (
+    calendlyUuid(message.payload?.invitee?.uri) ??
+    calendlyUuid(message.payload?.event?.uri)
+  );
+}
+
+const processedBookings = new Set<string>();
+
+/** True the first time a booking id is seen in this page; false for any replay of it. */
+export function claimBooking(id: string): boolean {
+  if (processedBookings.has(id)) return false;
+  processedBookings.add(id);
+  return true;
+}
+
+/** Test helper. */
+export function resetProcessedBookings() {
+  processedBookings.clear();
 }

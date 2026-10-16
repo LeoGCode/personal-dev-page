@@ -15,6 +15,17 @@ import {
   setConsent,
   subscribeConsent,
 } from "@/lib/analytics/consent";
+import {
+  BEFORE_CHOICE,
+  BEFORE_CHOICE_EVENTS,
+  beforeChoiceAllows,
+} from "@/lib/analytics/config";
+import {
+  sanitizeEvent,
+  sanitizeHref,
+  sanitizeProperties,
+  sanitizeUrl,
+} from "@/lib/analytics/sanitize";
 import { adTagsLoaded, trackAdConversion } from "@/lib/analytics/ads";
 import { pageContextFor } from "@/lib/analytics/track";
 
@@ -129,7 +140,100 @@ describe("consent store", () => {
   it("reopens the banner without dropping the stored choice", () => {
     setConsent("denied");
     reopenConsent();
-    expect(getConsentSnapshot()).toEqual({ choice: "denied", open: true });
+    expect(getConsentSnapshot()).toMatchObject({
+      choice: "denied",
+      open: true,
+    });
+  });
+
+  it("follows a choice made in another tab (storage event)", () => {
+    const listener = vi.fn();
+    const unsubscribe = subscribeConsent(listener);
+    setConsent("granted");
+    window.dispatchEvent(
+      new StorageEvent("storage", {
+        key: CONSENT_STORAGE_KEY,
+        newValue: "denied",
+      }),
+    );
+    expect(getConsentSnapshot()).toEqual({
+      choice: "denied",
+      open: false,
+      origin: "other-tab",
+    });
+    window.dispatchEvent(
+      new StorageEvent("storage", { key: "other", newValue: "granted" }),
+    );
+    expect(getConsent()).toBe("denied");
+    expect(listener).toHaveBeenCalledTimes(2);
+    unsubscribe();
+  });
+});
+
+describe("before a cookie choice", () => {
+  it("counts anonymously and lets only the counting events through", () => {
+    expect(BEFORE_CHOICE).toBe("anonymous_counts");
+    for (const event of BEFORE_CHOICE_EVENTS) {
+      expect(beforeChoiceAllows(event)).toBe(true);
+    }
+    for (const event of [
+      "$autocapture",
+      "$pageleave",
+      "$snapshot",
+      "section_viewed",
+      "faq_opened",
+      "outbound_clicked",
+      "consent_chosen",
+      "project_card_clicked",
+    ]) {
+      expect(beforeChoiceAllows(event)).toBe(false);
+    }
+    expect(beforeChoiceAllows("$pageview", "nothing")).toBe(false);
+  });
+});
+
+describe("URL sanitizing", () => {
+  const dirty =
+    "https://www.leogcode.dev/en/ai?email=a%40b.c&utm_campaign=paying&fbclid=f#x";
+  const clean = "https://www.leogcode.dev/en/ai?utm_campaign=paying&fbclid=f";
+
+  it("keeps only the origin, the path and the campaign allowlist", () => {
+    expect(sanitizeUrl(dirty)).toBe(clean);
+    expect(sanitizeUrl("https://www.google.com/search?q=ana")).toBe(
+      "https://www.google.com/search",
+    );
+    expect(sanitizeHref("#case")).toBe("#case");
+    expect(sanitizeHref("/en/collaborate?type=ai_setup")).toBe(
+      "/en/collaborate",
+    );
+  });
+
+  it("covers SDK, person and replay properties, and manual events", () => {
+    const event = sanitizeEvent({
+      uuid: "1",
+      event: "$pageview",
+      properties: {
+        $current_url: dirty,
+        $referrer: "https://t.co/x?ref=me",
+        ph_keyword: "private",
+        wbraid: "w",
+      },
+      $set_once: { $initial_current_url: dirty },
+    })!;
+    expect(event.properties).toEqual({
+      $current_url: clean,
+      $referrer: "https://t.co/x",
+    });
+    expect(event.$set_once).toEqual({ $initial_current_url: clean });
+    const replay = sanitizeEvent({
+      uuid: "2",
+      event: "$snapshot",
+      properties: { $snapshot_data: [{ type: 4, data: { href: dirty } }] },
+    })!;
+    expect(replay.properties.$snapshot_data).toEqual([
+      { type: 4, data: { href: clean } },
+    ]);
+    expect(sanitizeProperties({ url: dirty })).toEqual({ url: clean });
   });
 });
 

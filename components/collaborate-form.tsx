@@ -19,8 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState, useEffect } from "react";
-import { track } from "@/lib/analytics/track";
+import { useState, useEffect, useRef } from "react";
+import { onFirstVisible } from "@/lib/analytics/dom";
+import { afterPageview, track } from "@/lib/analytics/track";
 import { trackAdConversion } from "@/lib/analytics/ads";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { SITE_EMAIL } from "@/lib/site";
@@ -45,9 +46,16 @@ export function CollaborateForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formError, setFormError] = useState<FormError>("not_sent");
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   // Same event names as the Nexora landing forms, so one funnel covers both.
+  // Once per page view, when the form is actually on screen, and after that
+  // page's $pageview.
   useEffect(() => {
-    track("lead_form_viewed", { form: "collaborate" });
+    if (!formRef.current) return;
+    return onFirstVisible(formRef.current, () =>
+      afterPageview(() => track("lead_form_viewed", { form: "collaborate" })),
+    );
   }, []);
 
   const {
@@ -139,6 +147,7 @@ export function CollaborateForm() {
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit(onSubmit, (fieldErrors) => {
         const firstField = Object.keys(fieldErrors)[0] as
           | keyof CollaborateFormData
