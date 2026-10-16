@@ -160,6 +160,14 @@ function startMain(posthog: PostHog): PostHog {
       maskCapturedNetworkRequestFn: sanitizeNetworkRequest,
     },
     before_send: [sanitizeEvent, keepIfGranted],
+    // No feature flags, surveys, tours or chat on these sites. Without this the SDK still calls
+    // /flags, and that request carries the raw $initial_current_url / $initial_referrer, which
+    // before_send never sees. Remote config (replay settings) still loads.
+    advanced_disable_feature_flags: true,
+    disable_surveys: true,
+    disable_product_tours: true,
+    disable_conversations: true,
+    disable_web_experiments: true,
     ...mainFeatures(true),
   });
   main.register({

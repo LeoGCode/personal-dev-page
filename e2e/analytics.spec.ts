@@ -112,6 +112,24 @@ interface CapturedEvent {
   page: Page | null;
 }
 
+/** The request body as text, whatever PostHog's encoding (gzip, base64 form, plain JSON). */
+function bodyText(request: Request): string {
+  const raw = request.postDataBuffer();
+  if (!raw) return "";
+  try {
+    if (request.url().includes("compression=gzip"))
+      return gunzipSync(raw).toString("utf8");
+    const text = raw.toString("utf8");
+    return text.startsWith("data=")
+      ? Buffer.from(decodeURIComponent(text.slice(5)), "base64").toString(
+          "utf8",
+        )
+      : text;
+  } catch {
+    return "";
+  }
+}
+
 function decodeEvents(
   request: Request,
 ): Omit<CapturedEvent, "at" | "captured" | "page">[] {
@@ -155,6 +173,8 @@ function capturedAt(
 
 interface PostHogLog {
   events: CapturedEvent[];
+  /** Every request body, decoded: events, but also /flags and anything else. */
+  bodies: string[];
   /** Every request to PostHog, with its time, events or not (config, flags, recorder…). */
   requests: Array<{ url: string; at: number; page: Page | null }>;
 }
@@ -163,7 +183,7 @@ const DIST = "node_modules/posthog-js/dist";
 
 /** A local PostHog: remote config with replay on, the real recorder bundles, events recorded. */
 async function fakePostHog(context: BrowserContext): Promise<PostHogLog> {
-  const log: PostHogLog = { events: [], requests: [] };
+  const log: PostHogLog = { events: [], requests: [], bodies: [] };
   const remoteConfig = {
     sessionRecording: { endpoint: "/s/" },
     supportedCompression: ["gzip-js"],
@@ -180,6 +200,7 @@ async function fakePostHog(context: BrowserContext): Promise<PostHogLog> {
         // Not from a page (service worker): no page to attribute it to.
       }
       log.requests.push({ url: request.url(), at: Date.now(), page });
+      log.bodies.push(bodyText(request));
       const staticFile = url.pathname.match(/\/static\/([\w-]+\.js)$/);
       if (staticFile) {
         return route.fulfill({
@@ -303,7 +324,7 @@ async function allowedOnly(log: PostHogLog) {
 
 /** No URL anywhere in the payloads keeps personal query values, fragments or other params. */
 function expectSanitized(log: PostHogLog) {
-  const text = JSON.stringify(log.events);
+  const text = JSON.stringify(log.events) + log.bodies.join("\n");
   for (const leak of [
     "ana%40example.com",
     "ana@example.com",
@@ -525,6 +546,8 @@ test.describe("Consent states", () => {
       choice: "granted",
     });
     expectSanitized(log);
+    // No /flags call: it would carry the raw $initial_current_url / $initial_referrer.
+    expect(log.requests.filter((r) => r.url.includes("/flags"))).toEqual([]);
     // Replay meta events carry the page URL: sanitized too.
     const replayHrefs = log.events
       .filter((e) => e.event === "$snapshot")
