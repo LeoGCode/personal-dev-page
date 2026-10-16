@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef } from "react";
-import { usePostHog } from "posthog-js/react";
+import { track } from "@/lib/analytics/track";
 import { usePathname } from "next/navigation";
 
 const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
@@ -14,7 +14,6 @@ export function BlogReadingProgress() {
     damping: 30,
     restDelta: 0.001,
   });
-  const posthog = usePostHog();
   const pathname = usePathname();
   const firedMilestones = useRef(new Set<number>());
 
@@ -26,7 +25,7 @@ export function BlogReadingProgress() {
           !firedMilestones.current.has(milestone)
         ) {
           firedMilestones.current.add(milestone);
-          posthog?.capture("blog_scroll_depth", {
+          track("blog_scroll_depth", {
             depth: milestone,
             path: pathname,
           });
@@ -35,7 +34,7 @@ export function BlogReadingProgress() {
     });
 
     return () => unsubscribe();
-  }, [scrollYProgress, posthog, pathname]);
+  }, [scrollYProgress, pathname]);
 
   return (
     <motion.div

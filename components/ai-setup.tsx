@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePostHog } from "posthog-js/react";
 import {
   ArrowRight,
   CalendarCheck,
@@ -34,9 +33,6 @@ const STEPS = ["call", "setup", "handover", "yours"] as const;
 
 const ASKS = ["testimonial", "recording", "intro"] as const;
 
-type Cta = "book_call" | "whatsapp" | "write" | "packages";
-type Placement = "hero" | "final";
-
 /**
  * Bigger tap targets on phones; less side padding there so the Spanish
  * labels fit on one line, and wrapping instead of overflowing if not.
@@ -60,21 +56,14 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function BookCallButton({
-  children,
-  onClick,
-}: {
-  children: ReactNode;
-  onClick: () => void;
-}) {
+/**
+ * Plain link to Calendly; the analytics click handler opens it as the
+ * Calendly popup (and tracks it), falling back to the link.
+ */
+function BookCallButton({ children }: { children: ReactNode }) {
   return (
     <Button asChild size="lg" className={ctaButtonClass}>
-      <a
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClick}
-      >
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
         <CalendarCheck aria-hidden="true" />
         {children}
         <ArrowRight
@@ -89,20 +78,13 @@ function BookCallButton({
 function WhatsAppButton({
   href,
   children,
-  onClick,
 }: {
   href: string;
   children: ReactNode;
-  onClick: () => void;
 }) {
   return (
     <Button asChild size="lg" variant="outline" className={ctaButtonClass}>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClick}
-      >
+      <a href={href} target="_blank" rel="noopener noreferrer">
         <WhatsAppIcon className="text-[#25D366]" />
         {children}
       </a>
@@ -113,12 +95,12 @@ function WhatsAppButton({
 /**
  * /ai — AI setup page for people Leonel knows (QR code, WhatsApp shares).
  * Phone-first, one scroll: what it does, how it works, the founding-client
- * offer and the ways to get in touch.
+ * offer and the ways to get in touch. `data-section` names the sections for
+ * analytics (section_viewed, CTA location); clicks are tracked globally.
  */
 export function AiSetup() {
   const t = useTranslations("ai_setup");
   const locale = useLocale();
-  const posthog = usePostHog();
 
   const whatsappUrl = WHATSAPP_NUMBER
     ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t("whatsapp_message"))}`
@@ -128,15 +110,11 @@ export function AiSetup() {
   const price = t("offer.price");
   const priceNote = t("offer.price_note");
 
-  function track(cta: Cta, placement: Placement, url: string) {
-    posthog?.capture("ai_page_cta_clicked", { cta, placement, url, locale });
-  }
-
   return (
     <div className="px-4 pb-20 pt-10 sm:pt-16">
       <div className="mx-auto max-w-4xl">
         {/* ── Hero ─────────────────────────────────────────────── */}
-        <section className="max-w-2xl">
+        <section data-section="hero" className="max-w-2xl">
           <p className="mb-3 font-mono text-sm text-primary">
             {t("hero.eyebrow")}
           </p>
@@ -147,16 +125,9 @@ export function AiSetup() {
             {t("hero.subtitle")}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <BookCallButton
-              onClick={() => track("book_call", "hero", BOOKING_URL)}
-            >
-              {t("hero.cta")}
-            </BookCallButton>
+            <BookCallButton>{t("hero.cta")}</BookCallButton>
             {whatsappUrl && (
-              <WhatsAppButton
-                href={whatsappUrl}
-                onClick={() => track("whatsapp", "hero", whatsappUrl)}
-              >
+              <WhatsAppButton href={whatsappUrl}>
                 {t("whatsapp_cta")}
               </WhatsAppButton>
             )}
@@ -177,7 +148,11 @@ export function AiSetup() {
         </section>
 
         {/* ── Examples + real case ─────────────────────────────── */}
-        <section aria-labelledby="ai-examples" className="mt-16 sm:mt-24">
+        <section
+          aria-labelledby="ai-examples"
+          data-section="case"
+          className="mt-16 sm:mt-24"
+        >
           <AnimateInView>
             <h2 id="ai-examples" className={sectionTitleClass}>
               {t("examples.title")}
@@ -210,7 +185,11 @@ export function AiSetup() {
         </section>
 
         {/* ── How it works ─────────────────────────────────────── */}
-        <section aria-labelledby="ai-how" className="mt-16 max-w-2xl sm:mt-24">
+        <section
+          aria-labelledby="ai-how"
+          data-section="how"
+          className="mt-16 max-w-2xl sm:mt-24"
+        >
           <AnimateInView>
             <h2 id="ai-how" className={sectionTitleClass}>
               {t("how.title")}
@@ -242,7 +221,11 @@ export function AiSetup() {
         </section>
 
         {/* ── Founding-client offer ────────────────────────────── */}
-        <section aria-labelledby="ai-offer" className="mt-16 sm:mt-24">
+        <section
+          aria-labelledby="ai-offer"
+          data-section="packages"
+          className="mt-16 sm:mt-24"
+        >
           <AnimateInView>
             <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 sm:p-10">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 font-mono text-xs font-medium text-primary">
@@ -289,6 +272,7 @@ export function AiSetup() {
         {/* ── Get in touch ─────────────────────────────────────── */}
         <section
           aria-labelledby="ai-cta"
+          data-section="contact"
           className="mx-auto mt-16 max-w-2xl text-center sm:mt-24"
         >
           <h2 id="ai-cta" className={sectionTitleClass}>
@@ -296,32 +280,20 @@ export function AiSetup() {
           </h2>
           <p className="mt-3 text-muted-foreground">{t("cta.text")}</p>
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <BookCallButton
-              onClick={() => track("book_call", "final", BOOKING_URL)}
-            >
-              {t("cta.primary")}
-            </BookCallButton>
+            <BookCallButton>{t("cta.primary")}</BookCallButton>
             <Button
               asChild
               size="lg"
               variant="outline"
               className={ctaButtonClass}
             >
-              <Link
-                href="/collaborate?type=ai_setup"
-                onClick={() =>
-                  track("write", "final", "/collaborate?type=ai_setup")
-                }
-              >
+              <Link href="/collaborate?type=ai_setup">
                 <Mail aria-hidden="true" />
                 {t("cta.secondary")}
               </Link>
             </Button>
             {whatsappUrl && (
-              <WhatsAppButton
-                href={whatsappUrl}
-                onClick={() => track("whatsapp", "final", whatsappUrl)}
-              >
+              <WhatsAppButton href={whatsappUrl}>
                 {t("whatsapp_cta")}
               </WhatsAppButton>
             )}
@@ -330,7 +302,6 @@ export function AiSetup() {
             href={packagesUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track("packages", "final", packagesUrl)}
             className="mt-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
           >
             {t("cta.packages")}

@@ -118,23 +118,28 @@ and API requests. This gives you CDN-level performance with self-hosted control.
 
 | Variable                   | Build/Runtime | Description                                                                                                         |
 | -------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_POSTHOG_KEY`  | Build         | PostHog project API key for analytics.                                                                              |
-| `NEXT_PUBLIC_POSTHOG_HOST` | Build         | PostHog instance URL.                                                                                               |
+| `NEXT_PUBLIC_POSTHOG_KEY`  | Build         | PostHog project API key for analytics. Unset = analytics off. See [analytics.md](analytics.md).                     |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Build         | PostHog ingestion host. Defaults to `https://us.i.posthog.com`.                                                     |
 | `UPSTASH_REDIS_REST_URL`   | Runtime       | Upstash Redis REST URL. **Required on Vercel** for reliable rate limiting. Leave empty for in-memory (self-hosted). |
 | `UPSTASH_REDIS_REST_TOKEN` | Runtime       | Upstash Redis REST token.                                                                                           |
 
 ### Optional
 
-| Variable                      | Build/Runtime | Description                                                                                            |
-| ----------------------------- | ------------- | ------------------------------------------------------------------------------------------------------ |
-| `ODOO_URL`                    | Runtime       | Odoo instance URL. Leave empty to skip CRM integration.                                                |
-| `ODOO_DB`                     | Runtime       | Odoo database name.                                                                                    |
-| `ODOO_USER`                   | Runtime       | Odoo username.                                                                                         |
-| `ODOO_PASSWORD`               | Runtime       | Odoo password.                                                                                         |
-| `ODOO_PERSONAL_TEAM_ID`       | Runtime       | Odoo CRM team ID for lead assignment.                                                                  |
-| `RATE_LIMIT_MAX`              | Runtime       | Max form submissions per IP per hour (default: `3`).                                                   |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Build         | Overrides the WhatsApp number for the `/ai` page button (digits only, international format). Defaults to the one in `lib/site.ts`. |
-| `STANDALONE`                  | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile.                     |
+| Variable                               | Build/Runtime | Description                                                                                                                        |
+| -------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `ODOO_URL`                             | Runtime       | Odoo instance URL. Leave empty to skip CRM integration.                                                                            |
+| `ODOO_DB`                              | Runtime       | Odoo database name.                                                                                                                |
+| `ODOO_USER`                            | Runtime       | Odoo username.                                                                                                                     |
+| `ODOO_PASSWORD`                        | Runtime       | Odoo password.                                                                                                                     |
+| `ODOO_PERSONAL_TEAM_ID`                | Runtime       | Odoo CRM team ID for lead assignment.                                                                                              |
+| `RATE_LIMIT_MAX`                       | Runtime       | Max form submissions per IP per hour (default: `3`).                                                                               |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER`          | Build         | Overrides the WhatsApp number for the `/ai` page button (digits only, international format). Defaults to the one in `lib/site.ts`. |
+| `NEXT_PUBLIC_META_PIXEL_ID`            | Build         | Meta pixel id. Loaded only after cookie consent.                                                                                   |
+| `NEXT_PUBLIC_META_DOMAIN_VERIFICATION` | Build         | Content of the `facebook-domain-verification` meta tag (server-rendered in `<head>`).                                              |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID`            | Build         | Google Ads tag id (`AW-…`). Loaded only after cookie consent.                                                                      |
+| `NEXT_PUBLIC_GOOGLE_ADS_BOOKING_LABEL` | Build         | Label of the "Booked call" conversion action.                                                                                      |
+| `NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL`    | Build         | Label of the "Lead form" conversion action.                                                                                        |
+| `STANDALONE`                           | Build         | Set to `"true"` for Docker standalone builds. Set automatically by the Dockerfile.                                                 |
 
 > **Note on `NEXT_PUBLIC_*` variables:** These are inlined into the JavaScript
 > bundle at build time. On Vercel, set them in the dashboard **before** deploying.

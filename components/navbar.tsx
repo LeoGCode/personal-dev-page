@@ -13,6 +13,7 @@ import { Menu } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion, useReducedMotion } from "motion/react";
+import { track } from "@/lib/analytics/track";
 
 const navLinks = [
   { href: "/", key: "home" },
@@ -32,6 +33,7 @@ export function Navbar() {
   const otherLocale = locale === "en" ? "es" : "en";
 
   function switchLocale() {
+    track("language_switched", { from: locale, to: otherLocale });
     router.replace(pathname, { locale: otherLocale });
   }
 

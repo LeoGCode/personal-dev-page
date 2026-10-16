@@ -3,8 +3,10 @@
 import { useTranslations } from "next-intl";
 import { Mail, FileText, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { usePostHog } from "posthog-js/react";
 import { SITE_EMAIL } from "@/lib/site";
+import { Link } from "@/lib/i18n/navigation";
+import { ConsentSettingsButton } from "@/components/analytics/consent-settings-button";
+import { track } from "@/lib/analytics/track";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -45,7 +47,6 @@ const socialLinks = [
 
 export function Footer() {
   const t = useTranslations("footer");
-  const posthog = usePostHog();
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -83,13 +84,6 @@ export function Footer() {
                     ? undefined
                     : { type: "spring", stiffness: 400, damping: 17 }
                 }
-                onClick={() =>
-                  posthog?.capture("outbound_link_clicked", {
-                    url: link.href,
-                    label: link.key,
-                    context: "footer",
-                  })
-                }
               >
                 <link.icon className="h-5 w-5" aria-hidden="true" />
               </motion.a>
@@ -99,11 +93,7 @@ export function Footer() {
               href="/resume.pdf"
               className="group inline-flex items-center gap-1 rounded-md p-2 text-muted-foreground transition-colors duration-200 hover:text-foreground"
               aria-label={t("resume")}
-              onClick={() =>
-                posthog?.capture("resume_downloaded", {
-                  context: "footer",
-                })
-              }
+              onClick={() => track("resume_downloaded", { context: "footer" })}
             >
               <FileText className="h-5 w-5" />
               <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -118,13 +108,6 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline underline-offset-4 hover:text-primary/80 transition-colors duration-200"
-              onClick={() =>
-                posthog?.capture("outbound_link_clicked", {
-                  url: "https://nexoragroup.dev",
-                  label: "nexora",
-                  context: "footer",
-                })
-              }
             >
               <span translate="no">Nexora Group</span>
             </a>
@@ -132,6 +115,18 @@ export function Footer() {
 
           {/* Built with */}
           <p className="text-xs text-muted-foreground">{t("built_with")}</p>
+
+          {/* Privacy */}
+          <p className="flex items-center gap-3 text-xs text-muted-foreground">
+            <Link
+              href="/privacy"
+              className="underline underline-offset-4 transition-colors hover:text-foreground"
+            >
+              {t("privacy")}
+            </Link>
+            <span aria-hidden="true">·</span>
+            <ConsentSettingsButton className="cursor-pointer underline underline-offset-4 transition-colors hover:text-foreground" />
+          </p>
 
           {/* Copyright */}
           <p className="text-xs text-muted-foreground">

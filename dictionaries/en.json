@@ -280,6 +280,63 @@
     "built_with": "Built with Next.js, Tailwind CSS, and Odoo",
     "founder": "Founder of",
     "resume": "Resume / CV",
-    "copyright": "© {year} Leonel. All rights reserved."
+    "copyright": "© {year} Leonel. All rights reserved.",
+    "privacy": "Privacy"
+  },
+  "consent": {
+    "label": "Cookie consent",
+    "text": "I use cookies to see which parts of this site help and to measure my ads. If you reject them, I still count the visit, but without cookies or session recordings.",
+    "privacy": "Privacy policy",
+    "accept": "Accept",
+    "reject": "Reject",
+    "change": "Cookie settings"
+  },
+  "privacy": {
+    "meta_title": "Privacy policy",
+    "meta_description": "What leogcode.dev collects, why, and which services help: PostHog, Meta, Google Ads, Calendly and the ones that keep the site running.",
+    "title": "Privacy policy",
+    "updated": "Last updated: October 16, 2026",
+    "intro": "This site is run by Leonel Guerrero. This page explains what it collects, why, and which services help process it. Paid work is contracted and billed through Nexora Group LLC, which has its own privacy policy at nexoragroup.dev.",
+    "form": {
+      "title": "What you send me",
+      "text": "When you use the contact form I receive your name, email, the kind of work you are looking for and your message, plus anything else you add. I use it only to answer you and to follow up on that conversation."
+    },
+    "analytics": {
+      "title": "Analytics (PostHog)",
+      "text": "PostHog (PostHog Inc., United States) shows me how the site is used: pages viewed, clicks, how far you scroll, which sections you see, and form and booking events, together with the ad campaign parameters of the link you arrived from. Until you accept cookies, and if you reject them, it runs without cookies or local storage and without recording your session. If you accept, it keeps an identifier in a cookie and in local storage and may record your session (what appears on screen, with everything you type masked)."
+    },
+    "ads": {
+      "title": "Ad measurement (Meta and Google Ads)",
+      "text": "Only if you accept cookies. The Meta pixel (Meta Platforms) and the Google Ads tag (Google) tell those platforms when a visitor who came from one of my ads books a call, sends the form or opens WhatsApp, so I can see which ads work. Both set their own cookies (such as _fbp and _gcl_au) and process this data under their own privacy policies."
+    },
+    "booking": {
+      "title": "Booking a call (Calendly)",
+      "text": "When you click a booking button, Calendly's scheduling page (Calendly LLC, United States) opens over this site, loaded from calendly.com. Calendly receives the details you enter and the campaign parameters of the link you arrived from, and tells this page when a call is booked so I can count it. Calendly's own privacy policy applies to the booking."
+    },
+    "cookies": {
+      "title": "Cookies and your choice",
+      "text": "I ask before using any analytics or advertising cookie. Your choice is saved in your browser's local storage so you are not asked on every visit. You can change or withdraw it at any time; withdrawing deletes the identifiers stored by PostHog, Meta and Google on this site."
+    },
+    "services": {
+      "title": "Services that keep the site running",
+      "items": [
+        "Vercel hosts the site and Cloudflare serves its domain; Cloudflare Web Analytics counts visits without cookies.",
+        "Sentry receives error reports. Its session replay, a masked recording of the page when something breaks, runs only after you accept cookies.",
+        "Resend delivers the emails sent from the contact form.",
+        "Odoo, my CRM, stores contact requests (when it is connected) so none get lost.",
+        "Upstash keeps a short-lived count of form submissions per IP address to stop spam."
+      ]
+    },
+    "retention": {
+      "title": "How long I keep it",
+      "text": "Contact requests stay in my email and CRM while we are in touch and for a reasonable time after. Analytics data stays in PostHog for the retention period of my plan there. I delete either on request."
+    },
+    "rights": {
+      "title": "Your rights",
+      "text": "You can ask for a copy of your data, ask me to correct or delete it, and object to its use. Write to the address below and I will answer within 30 days. If you are in the EU or the UK you can also complain to your data protection authority."
+    },
+    "contact": {
+      "title": "Contact"
+    }
   }
 }

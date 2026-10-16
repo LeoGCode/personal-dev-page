@@ -167,14 +167,16 @@ For the full deployment guide — including environment variable reference, Upst
 
 Copy `.env.example` to `.env` for a complete reference. Key variables:
 
-| Variable                  | Required   | Description                                |
-| ------------------------- | ---------- | ------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL`    | Yes        | Canonical site URL                         |
-| `NEXT_PUBLIC_SENTRY_DSN`  | Production | Sentry DSN for error tracking              |
-| `RESEND_API_KEY`          | Production | Resend API key for email delivery          |
-| `UPSTASH_REDIS_REST_URL`  | Vercel     | Upstash Redis for serverless rate limiting |
-| `ODOO_URL`                | No         | Odoo CRM instance (leave empty to skip)    |
-| `NEXT_PUBLIC_POSTHOG_KEY` | No         | PostHog analytics key                      |
+| Variable                    | Required   | Description                                            |
+| --------------------------- | ---------- | ------------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`      | Yes        | Canonical site URL                                     |
+| `NEXT_PUBLIC_SENTRY_DSN`    | Production | Sentry DSN for error tracking                          |
+| `RESEND_API_KEY`            | Production | Resend API key for email delivery                      |
+| `UPSTASH_REDIS_REST_URL`    | Vercel     | Upstash Redis for serverless rate limiting             |
+| `ODOO_URL`                  | No         | Odoo CRM instance (leave empty to skip)                |
+| `NEXT_PUBLIC_POSTHOG_KEY`   | No         | PostHog analytics key ([analytics](docs/analytics.md)) |
+| `NEXT_PUBLIC_META_PIXEL_ID` | No         | Meta pixel (after cookie consent)                      |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | No         | Google Ads tag (after cookie consent)                  |
 
 See [`.env.example`](.env.example) for all variables and [`docs/deployment.md`](docs/deployment.md) for detailed descriptions.
 

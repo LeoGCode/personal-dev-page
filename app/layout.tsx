@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { getLocale } from "next-intl/server";
-import { PostHogProvider } from "@/components/posthog-provider";
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
+import { META_DOMAIN_VERIFICATION } from "@/lib/analytics/config";
 import { CursorGlow } from "@/components/cursor-glow";
 import { ThemeInit } from "@/components/theme-init";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -67,6 +68,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Meta Business domain verification, only when the code is configured.
+  ...(META_DOMAIN_VERIFICATION && {
+    other: { "facebook-domain-verification": META_DOMAIN_VERIFICATION },
+  }),
 };
 
 export const viewport: Viewport = {
@@ -98,7 +103,7 @@ export default async function RootLayout({
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeInit />
         <CursorGlow />
-        <PostHogProvider>{children}</PostHogProvider>
+        <AnalyticsProvider>{children}</AnalyticsProvider>
       </body>
     </html>
   );

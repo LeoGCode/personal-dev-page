@@ -49,13 +49,46 @@ const nextConfig: NextConfig = {
         // build. A nonce-based CSP via middleware would be stricter but
         // forces all pages to be dynamic, which isn't worth it for a
         // static landing site.
+        //
+        // Third parties (lib/analytics): PostHog loads its replay / dead-click
+        // scripts from *.posthog.com; the Calendly popup is a calendly.com
+        // iframe plus assets.calendly.com script and CSS; the Meta pixel and
+        // the Google Ads tag load only after cookie consent.
         value: [
           "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
-          "style-src 'self' 'unsafe-inline'",
+          [
+            "script-src 'self' 'unsafe-inline'",
+            "https://static.cloudflareinsights.com",
+            "https://*.posthog.com",
+            "https://assets.calendly.com",
+            "https://connect.facebook.net",
+            "https://www.googletagmanager.com",
+            "https://www.googleadservices.com",
+            "https://*.doubleclick.net",
+            "https://www.google.com",
+          ].join(" "),
+          "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
           "img-src 'self' data: https:",
           "font-src 'self'",
-          "connect-src 'self' https://*.posthog.com https://*.sentry.io https://cloudflareinsights.com",
+          [
+            "connect-src 'self'",
+            "https://*.posthog.com",
+            "https://*.sentry.io",
+            "https://cloudflareinsights.com",
+            "https://www.facebook.com",
+            "https://connect.facebook.net",
+            "https://www.google.com",
+            "https://google.com",
+            "https://www.googleadservices.com",
+            "https://*.doubleclick.net",
+            "https://www.googletagmanager.com",
+            "https://*.google-analytics.com",
+          ].join(" "),
+          [
+            "frame-src https://calendly.com",
+            "https://www.googletagmanager.com",
+            "https://*.doubleclick.net",
+          ].join(" "),
           "worker-src 'self' blob:",
           "frame-ancestors 'none'",
         ].join("; "),

@@ -131,7 +131,6 @@ export default async function ProjectDetailPage({
               </CardHeader>
               <CardContent className="flex flex-wrap gap-3">
                 <ProjectDetailLinks
-                  projectName={project.title}
                   liveUrl={project.live}
                   githubUrl={project.github}
                   liveSiteLabel={t("detail.live_site")}

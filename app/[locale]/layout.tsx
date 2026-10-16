@@ -5,6 +5,7 @@ import { routing } from "@/lib/i18n/routing";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SetHtmlLang } from "@/components/set-html-lang";
+import { ConsentBanner } from "@/components/analytics/consent-banner";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -42,6 +43,7 @@ export default async function LocaleLayout({
         </main>
         <Footer />
       </div>
+      <ConsentBanner />
     </NextIntlClientProvider>
   );
 }

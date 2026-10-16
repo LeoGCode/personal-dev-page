@@ -17,6 +17,17 @@ export default defineConfig({
 
   use: {
     baseURL: BASE_URL,
+    // A cookie choice is already stored, so the consent banner never covers
+    // what a spec clicks. e2e/analytics.spec.ts starts empty to test it.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: new URL(BASE_URL).origin,
+          localStorage: [{ name: "leogcode-consent-v1", value: "denied" }],
+        },
+      ],
+    },
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: RECORD_VIDEO

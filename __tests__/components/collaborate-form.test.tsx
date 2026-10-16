@@ -15,7 +15,15 @@ import messages from "@/dictionaries/en.json";
 import { CollaborateForm } from "@/components/collaborate-form";
 import { SITE_EMAIL } from "@/lib/site";
 
-vi.mock("posthog-js/react", () => ({ usePostHog: () => undefined }));
+const analytics = vi.hoisted(() => ({
+  track: vi.fn(),
+  trackAdConversion: vi.fn(),
+}));
+
+vi.mock("@/lib/analytics/track", () => ({ track: analytics.track }));
+vi.mock("@/lib/analytics/ads", () => ({
+  trackAdConversion: analytics.trackAdConversion,
+}));
 
 // Radix Select relies on pointer-capture and scrolling APIs jsdom lacks.
 beforeAll(() => {
@@ -63,6 +71,8 @@ function mockFetch(status: number, body: unknown) {
 describe("CollaborateForm submission states", () => {
   beforeEach(() => {
     vi.unstubAllGlobals();
+    analytics.track.mockReset();
+    analytics.trackAdConversion.mockReset();
   });
 
   // Vitest globals are off, so Testing Library cannot auto-cleanup.
@@ -82,6 +92,11 @@ describe("CollaborateForm submission states", () => {
       collaborationType: "consulting",
       locale: "en",
     });
+    expect(analytics.track).toHaveBeenCalledWith("lead_form_success", {
+      form: "collaborate",
+      collaboration_type: "consulting",
+    });
+    expect(analytics.trackAdConversion).toHaveBeenCalledWith("lead");
   });
 
   it("shows an error with a direct email fallback when the lead was not delivered", async () => {
@@ -97,6 +112,7 @@ describe("CollaborateForm submission states", () => {
       screen.getByRole("link", { name: SITE_EMAIL }).getAttribute("href"),
     ).toBe(`mailto:${SITE_EMAIL}`);
     expect(screen.queryByText(/message sent/i)).not.toBeInTheDocument();
+    expect(analytics.trackAdConversion).not.toHaveBeenCalled();
   });
 
   it("explains the rate limit instead of a generic failure", async () => {

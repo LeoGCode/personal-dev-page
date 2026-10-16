@@ -10,22 +10,16 @@ import {
 } from "vitest";
 import type { ComponentProps } from "react";
 import { cleanup, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
 import en from "@/dictionaries/en.json";
 import es from "@/dictionaries/es.json";
 
 const mocks = vi.hoisted(() => ({
-  capture: vi.fn(),
   site: {
     BOOKING_URL: "https://calendly.com/leogcode-dev/30min",
     AI_PACKAGES_URL: "https://exprime.nexoragroup.dev",
     WHATSAPP_NUMBER: "",
   },
-}));
-
-vi.mock("posthog-js/react", () => ({
-  usePostHog: () => ({ capture: mocks.capture }),
 }));
 
 vi.mock("@/lib/site", () => mocks.site);
@@ -71,7 +65,6 @@ beforeAll(() => {
 
 describe("AiSetup page", () => {
   beforeEach(() => {
-    mocks.capture.mockReset();
     mocks.site.WHATSAPP_NUMBER = "";
   });
 
@@ -142,22 +135,27 @@ describe("AiSetup page", () => {
     expect(screen.getByText(/5 spots for people I know/i)).toBeInTheDocument();
   });
 
-  it("tracks CTA clicks in PostHog", async () => {
-    const user = userEvent.setup();
-    renderPage();
+  it("names its sections for analytics, CTAs inside them", () => {
+    mocks.site.WHATSAPP_NUMBER = "12145550123";
+    const { container } = renderPage();
 
-    const [heroBooking] = screen.getAllByRole("link", {
+    const sections = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-section]"),
+    ).map((el) => el.dataset.section);
+    expect(sections).toEqual(["hero", "case", "how", "packages", "contact"]);
+
+    // Clicks are tracked by the document-level handler (lib/analytics/dom),
+    // which takes the CTA location from the enclosing section.
+    const [heroBooking, finalBooking] = screen.getAllByRole("link", {
       name: /book the free 30-min call/i,
     });
-    // Keep jsdom from attempting the navigation.
-    heroBooking.addEventListener("click", (event) => event.preventDefault());
-    await user.click(heroBooking);
-
-    expect(mocks.capture).toHaveBeenCalledWith("ai_page_cta_clicked", {
-      cta: "book_call",
-      placement: "hero",
-      url: "https://calendly.com/leogcode-dev/30min",
-      locale: "en",
-    });
+    expect(heroBooking.closest("[data-section]")).toHaveAttribute(
+      "data-section",
+      "hero",
+    );
+    expect(finalBooking.closest("[data-section]")).toHaveAttribute(
+      "data-section",
+      "contact",
+    );
   });
 });

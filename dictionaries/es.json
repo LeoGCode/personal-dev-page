@@ -280,6 +280,63 @@
     "built_with": "Hecho con Next.js, Tailwind CSS y Odoo",
     "founder": "Fundador de",
     "resume": "Currículum",
-    "copyright": "© {year} Leonel. Todos los derechos reservados."
+    "copyright": "© {year} Leonel. Todos los derechos reservados.",
+    "privacy": "Privacidad"
+  },
+  "consent": {
+    "label": "Consentimiento de cookies",
+    "text": "Uso cookies para ver qué partes de este sitio ayudan y para medir mis anuncios. Si las rechazas, igual cuento la visita, pero sin cookies ni grabación de la sesión.",
+    "privacy": "Política de privacidad",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "change": "Ajustes de cookies"
+  },
+  "privacy": {
+    "meta_title": "Política de privacidad",
+    "meta_description": "Qué recopila leogcode.dev, para qué y qué servicios ayudan: PostHog, Meta, Google Ads, Calendly y los que mantienen el sitio funcionando.",
+    "title": "Política de privacidad",
+    "updated": "Última actualización: 16 de octubre de 2026",
+    "intro": "Este sitio lo gestiona Leonel Guerrero. Aquí te explico qué recopila, para qué y qué servicios ayudan a tratarlo. Los trabajos pagados se contratan y facturan a través de Nexora Group LLC, que tiene su propia política de privacidad en nexoragroup.dev.",
+    "form": {
+      "title": "Lo que me envías",
+      "text": "Cuando usas el formulario de contacto recibo tu nombre, tu correo, el tipo de trabajo que buscas y tu mensaje, además de lo que quieras añadir. Lo uso solo para responderte y dar seguimiento a esa conversación."
+    },
+    "analytics": {
+      "title": "Analítica (PostHog)",
+      "text": "PostHog (PostHog Inc., Estados Unidos) me muestra cómo se usa el sitio: páginas vistas, clics, cuánto te desplazas, qué secciones ves y eventos de formulario y de reserva, junto con los parámetros de campaña del enlace por el que llegaste. Mientras no aceptes las cookies, y si las rechazas, funciona sin cookies ni almacenamiento local y sin grabar tu sesión. Si las aceptas, guarda un identificador en una cookie y en el almacenamiento local y puede grabar la sesión (lo que aparece en pantalla, con todo lo que escribes enmascarado)."
+    },
+    "ads": {
+      "title": "Medición de anuncios (Meta y Google Ads)",
+      "text": "Solo si aceptas las cookies. El píxel de Meta (Meta Platforms) y la etiqueta de Google Ads (Google) avisan a esas plataformas cuando alguien que llegó desde uno de mis anuncios agenda una llamada, envía el formulario o abre WhatsApp, para que pueda ver qué anuncios funcionan. Ambos usan sus propias cookies (como _fbp y _gcl_au) y tratan estos datos según sus propias políticas de privacidad."
+    },
+    "booking": {
+      "title": "Agendar una llamada (Calendly)",
+      "text": "Al pulsar un botón de reserva, la página de agenda de Calendly (Calendly LLC, Estados Unidos) se abre sobre este sitio, cargada desde calendly.com. Calendly recibe los datos que introduces y los parámetros de campaña del enlace por el que llegaste, y avisa a esta página cuando se agenda una llamada para que pueda contarla. A la reserva se le aplica la política de privacidad de Calendly."
+    },
+    "cookies": {
+      "title": "Cookies y tu elección",
+      "text": "Te pido permiso antes de usar cualquier cookie de analítica o de publicidad. Tu elección se guarda en el almacenamiento local de tu navegador para no preguntarte en cada visita. Puedes cambiarla o retirarla cuando quieras; al retirarla se borran los identificadores que PostHog, Meta y Google guardaron en este sitio."
+    },
+    "services": {
+      "title": "Servicios que mantienen el sitio funcionando",
+      "items": [
+        "Vercel aloja el sitio y Cloudflare sirve su dominio; Cloudflare Web Analytics cuenta visitas sin cookies.",
+        "Sentry recibe los informes de errores. Su grabación de sesión, una grabación enmascarada de la página cuando algo falla, solo funciona después de que aceptes las cookies.",
+        "Resend entrega los correos que salen del formulario de contacto.",
+        "Odoo, mi CRM, guarda las solicitudes de contacto (cuando está conectado) para que ninguna se pierda.",
+        "Upstash guarda por poco tiempo un recuento de envíos del formulario por dirección IP para frenar el spam."
+      ]
+    },
+    "retention": {
+      "title": "Cuánto tiempo lo guardo",
+      "text": "Las solicitudes de contacto se quedan en mi correo y en mi CRM mientras estemos en contacto y un tiempo razonable después. Los datos de analítica se quedan en PostHog durante el plazo que conserve mi plan allí. Borro unos u otros si me lo pides."
+    },
+    "rights": {
+      "title": "Tus derechos",
+      "text": "Puedes pedirme una copia de tus datos, pedirme que los corrija o los borre, y oponerte a su uso. Escríbeme a la dirección de abajo y te respondo en un plazo de 30 días. Si estás en la UE o el Reino Unido también puedes reclamar ante tu autoridad de protección de datos."
+    },
+    "contact": {
+      "title": "Contacto"
+    }
   }
 }

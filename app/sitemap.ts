@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/blog", priority: 0.8, changeFrequency: "daily" },
     { path: "/projects", priority: 0.8, changeFrequency: "weekly" },
     { path: "/collaborate", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/privacy", priority: 0.2, changeFrequency: "yearly" },
   ];
 
   for (const route of staticRoutes) {

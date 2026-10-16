@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { motion, useReducedMotion } from "motion/react";
 import { ExternalLink } from "lucide-react";
-import { usePostHog } from "posthog-js/react";
+import { track } from "@/lib/analytics/track";
 import { type ProjectStatus, statusStyles } from "@/lib/shared/status-styles";
 
 export interface ProjectCardProps {
@@ -33,7 +33,6 @@ export function ProjectCard({
   url,
   statusLabel,
 }: ProjectCardProps) {
-  const posthog = usePostHog();
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -50,7 +49,7 @@ export function ProjectCard({
         href={`/projects/${slug}`}
         className="group block h-full"
         onClick={() =>
-          posthog?.capture("project_card_clicked", {
+          track("project_card_clicked", {
             project_name: name,
             project_slug: slug,
           })
@@ -125,14 +124,7 @@ export function ProjectCard({
                   damping: 17,
                 }
           }
-          onClick={(e) => {
-            e.stopPropagation();
-            posthog?.capture("outbound_link_clicked", {
-              url,
-              label: name,
-              context: "project_card",
-            });
-          }}
+          onClick={(e) => e.stopPropagation()}
           aria-label={`Open ${name} in a new tab`}
           className="absolute right-4 top-4 z-10 text-muted-foreground transition-colors hover:text-foreground"
         >

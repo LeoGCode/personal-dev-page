@@ -20,7 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState, useEffect } from "react";
-import { usePostHog } from "posthog-js/react";
+import { track } from "@/lib/analytics/track";
+import { trackAdConversion } from "@/lib/analytics/ads";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { SITE_EMAIL } from "@/lib/site";
 
@@ -41,13 +42,13 @@ class SubmitError extends Error {
 export function CollaborateForm() {
   const t = useTranslations("collaborate");
   const locale = useLocale();
-  const posthog = usePostHog();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formError, setFormError] = useState<FormError>("not_sent");
 
+  // Same event names as the Nexora landing forms, so one funnel covers both.
   useEffect(() => {
-    posthog?.capture("collaborate_form_viewed");
-  }, [posthog]);
+    track("lead_form_viewed", { form: "collaborate" });
+  }, []);
 
   const {
     register,
@@ -75,7 +76,8 @@ export function CollaborateForm() {
 
   async function onSubmit(data: CollaborateFormData) {
     setStatus("submitting");
-    posthog?.capture("collaborate_form_submitted", {
+    track("lead_form_submitted", {
+      form: "collaborate",
       collaboration_type: data.collaborationType,
     });
 
@@ -96,14 +98,18 @@ export function CollaborateForm() {
         );
       }
 
-      posthog?.capture("collaborate_form_success", {
+      track("lead_form_success", {
+        form: "collaborate",
         collaboration_type: data.collaborationType,
       });
+      // Meta "Lead" + the Google Ads "Lead form" conversion (after consent).
+      trackAdConversion("lead");
       setStatus("success");
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong";
-      posthog?.capture("collaborate_form_error", {
+      track("lead_form_error", {
+        form: "collaborate",
         collaboration_type: data.collaborationType,
         error: message,
         status: err instanceof SubmitError ? err.status : undefined,
